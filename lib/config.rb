@@ -1,0 +1,11 @@
+TMPDIR  = '/tmp'
+APP     = '/Applications/Logic Pro X.app'
+RSC     = '/Contents/Resources/logicpro1010.plist'
+URL     = 'http://audiocontentdownload.apple.com/lp10_ms3_content_2015/'
+DIRNME  = File.dirname(__FILE__)
+PLIST   = File.join(APP, RSC)
+JSN     = File.join(TMPDIR, 'content.json')
+LST     = File.join(DIRNME, '..', 'links.txt')
+PKG     = 'Packages'
+DLN     = 'DownloadName'
+@line   = []
