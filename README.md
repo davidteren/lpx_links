@@ -17,14 +17,22 @@ lpx_links is a utilty to get the direct download links for the additional sample
 
 ### Usage
 
-Simply open the terminal and paste the command below. Leave out the dollar sign ($).
+Simply open the terminal and paste the command below. 
 
 ```sh
-$ cd ~/Downloads; mkdir lpx_links ; cd lpx_links ; curl -#L https://github.com/DavidTeren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb
+ cd ~/Downloads; mkdir lpx_links ; cd lpx_links ; curl -#L https://github.com/DavidTeren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb
 
 ```
 
 ### Development
+
+TO DO:
+
+* Download Manager 
+* Content Installer (Install to User Defined Location)
+* Content Re-locator (Move content to another drive - with auto linking)
+* Content Re-linker (Attempts to fixes the links should they something go wrong)
+ 
 
 Want to contribute? Fork and let me know.
 
