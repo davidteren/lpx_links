@@ -1,6 +1,6 @@
 # lpx_links
 
-lpx_links is a utilty to get the direct download links for the additional sample packs for Logic Pro X.
+lpx_links is a utilty to get the direct download links for the additional sample/sound content for Logic Pro X.
 
 
   - It gets the most current links for version 10.1.1
@@ -8,7 +8,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
   - Importing the links file into a download manager like the DownThemAll addon for FireFox should work well.
   
 > Please note that if you do not have version 10.1.1 
-> installed the utility will fail.
+> installed the utility will most likely fail.
 
 
 ### Version
