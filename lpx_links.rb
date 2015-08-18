@@ -3,14 +3,41 @@
 require_relative './lib/config'
 require 'json'
 
-`plutil -convert json \'#{PLIST}\' -o #{JSN}`
-JSON.parse(File.read(JSN))[PKG].each do |i|
-  @line << "#{File.join(URL, i[1][DLN])}\n"
+# read the plist, creates a json & parses a list of links
+module GetLinks
+  def main
+    plist_to_json
+    json_parse
+    print_file
+    del_temp_files
+    end_msg
+  end
+
+  def plist_to_json
+    `plutil -convert json \'#{PLIST}\' -o #{JSN}`
+  end
+
+  def json_parse
+    JSON.parse(File.read(JSN))[PKG].each do |i|
+      @line << "#{File.join(URL, i[1][DLN])}\n"
+    end
+  end
+
+  def print_file
+    f = File.open(LST, 'w')
+    f.puts @line.sort
+    f.close
+  end
+
+  def del_temp_files
+    File.delete(JSN)
+  end
+
+  def end_msg
+    puts "Done! Found #{@line.to_a.length} links.
+    Check the following file: #{LST}"
+  end
 end
-f = File.open(LST, 'w')
-f.puts @line.sort
-f.close
-File.delete(JSN)
-puts "Done! Found #{@line.to_a.length} links.
-Check the following file:
-#{LST}"
+
+include GetLinks
+main
