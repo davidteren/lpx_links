@@ -3,9 +3,10 @@
 require_relative './lib/config'
 require 'json'
 
-# read the plist, creates a json & parses a list of links
+# read the plist, create a json & parse a list of links
 module GetLinks
-  def main
+
+  def launch
     plist_to_json
     json_parse
     print_file
@@ -40,4 +41,4 @@ module GetLinks
 end
 
 include GetLinks
-main
+launch
