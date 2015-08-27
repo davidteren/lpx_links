@@ -12,4 +12,5 @@ INSTALS = File.join(PARENT, 'installers')
 REPORT	= File.join(DWN_LNK, 'report.txt')
 PKG     = 'Packages'
 DLN     = 'DownloadName'
+CAT			= %w(AppleLoops JamPacks GarageBand Instruments Alchemy IRs DrumKits)
 @line   = []
