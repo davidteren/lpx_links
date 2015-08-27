@@ -6,9 +6,8 @@ require 'fileutils'
 
 # read the plist, create a json & parse a list of links
 module GetLinks
-
   def launch
-  	create_dirs
+    create_dirs
     plist_to_json
     json_parse
     print_file
@@ -18,13 +17,13 @@ module GetLinks
   end
 
   def create_dirs
-  	[DWN_LNK, INSTALS].each do |dir|
-  		FileUtils.mkdir_p(dir)
-  	end
+    [DWN_LNK, INSTALS].each do |dir|
+      FileUtils.mkdir_p(dir)
+    end
 
-  	CAT.each do |cat|
-  		FileUtils.mkdir_p(File.join(INSTALS, cat))
-  	end
+    CAT.each do |cat|
+      FileUtils.mkdir_p(File.join(INSTALS, cat))
+    end
   end
 
   def plist_to_json
@@ -48,9 +47,10 @@ module GetLinks
   end
 
   def report
-  	msg = "#{'#'*60}\nlpx_links has found #{@line.to_a.length} links.\n\nCheck the following file:\n\t#{DWN_LST}\n\n"
-
-  	rep = File.open(REPORT, 'w')
+    msg = "#{'#' * 60}"
+    msg << "lpx_links has found #{@line.to_a.length} links."
+    msg << "\nCheck the following file:\n\t#{DWN_LST}"
+    rep = File.open(REPORT, 'w')
     rep.puts msg
     rep.close
   end
