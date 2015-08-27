@@ -20,7 +20,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
 Simply open the terminal and paste the command below.
 
 ```sh
- cd ~/Downloads; mkdir lpx_links ; cd lpx_links ; curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb
+ cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb
 
 ```
 
