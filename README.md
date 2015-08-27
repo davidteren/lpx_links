@@ -3,16 +3,16 @@
 lpx_links is a utilty to get the direct download links for the additional sample/sound content for Logic Pro X.
 
 
-  - It gets the most current links for version 10.1.1
+  - It gets the most current links for version 10.2.0
   - Creates a text file with all the links in them.
   - Importing the links file into a download manager like the DownThemAll addon for FireFox should work well.
 
-> Please note that if you do not have version 10.1.1
+> Please note that if you do not have version 10.2.0
 > installed the utility will most likely fail.
 
 
 ### Version
-0.0.2
+0.0.3
 
 
 ### Usage
