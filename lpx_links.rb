@@ -37,6 +37,7 @@ module GetLinks
   def end_msg
     puts "Done! Found #{@line.to_a.length} links.
     Check the following file: #{LST}"
+    `cd #{File.join(DIRNME, '..')} ; open .`
   end
 end
 
