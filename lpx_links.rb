@@ -14,7 +14,7 @@ module GetLinks
     print_file
     del_temp_files
     report
-    end_msg
+    show_report
   end
 
   def create_dirs
@@ -51,7 +51,7 @@ module GetLinks
     rep.close
   end
 
-  def end_msg
+  def show_report
     puts "Done! Found #{@line.to_a.length} links."
     `cd #{File.join(DWN_LNK)} ; open .`
     sleep 1
