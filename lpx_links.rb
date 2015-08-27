@@ -21,6 +21,10 @@ module GetLinks
   	[DWN_LNK, INSTALS].each do |dir|
   		FileUtils.mkdir_p(dir)
   	end
+
+  	CAT.each do |cat|
+  		FileUtils.mkdir_p(File.join(INSTALS, cat))
+  	end
   end
 
   def plist_to_json
@@ -44,7 +48,7 @@ module GetLinks
   end
 
   def report
-  	msg = "lpx_links has found #{@line.to_a.length} links.\nCheck the following file: #{DWN_LST}"
+  	msg = "#{'#'*60}\nlpx_links has found #{@line.to_a.length} links.\n\nCheck the following file:\n\t#{DWN_LST}\n\n"
 
   	rep = File.open(REPORT, 'w')
     rep.puts msg
