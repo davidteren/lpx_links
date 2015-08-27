@@ -1,6 +1,6 @@
 TMPDIR  = '/tmp'
 APP     = '/Applications/Logic Pro X.app'
-RSC     = '/Contents/Resources/logicpro1010.plist'
+RSC     = '/Contents/Resources/logicpro1020.plist'
 URL     = 'http://audiocontentdownload.apple.com/lp10_ms3_content_2015/'
 DIRNME  = File.dirname(__FILE__)
 PLIST   = File.join(APP, RSC)
