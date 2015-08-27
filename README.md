@@ -12,7 +12,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
 
 
 ### Version
-0.0.3
+0.0.4
 
 
 ### Usage
