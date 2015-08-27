@@ -13,6 +13,7 @@ module GetLinks
     json_parse
     print_file
     del_temp_files
+    report
     end_msg
   end
 
@@ -42,10 +43,20 @@ module GetLinks
     File.delete(JSN)
   end
 
+  def report
+  	msg = "lpx_links has found #{@line.to_a.length} links.\nCheck the following file: #{DWN_LST}"
+
+  	rep = File.open(REPORT, 'w')
+    rep.puts msg
+    rep.close
+  end
+
   def end_msg
-    puts "Done! Found #{@line.to_a.length} links.
-    Check the following file: #{DWN_LST}"
+    puts "Done! Found #{@line.to_a.length} links."
     `cd #{File.join(DWN_LNK)} ; open .`
+    sleep 1
+    `open -a TextEdit #{REPORT}`
+    `killall Terminal`
   end
 end
 
