@@ -12,8 +12,15 @@ lpx_links is a utilty to get the direct download links for the additional sample
 
 
 ### Version
-0.0.4
+0.0.5 - final version
+This is the fianl version of lpx_links as I am working on
+LogicLinks and this will replace lpx_links.
 
+LogicLinks will feature:
+* Download Manager
+* Content Installer (Install to User Defined Location)
+* Content Re-locator (Move content to another drive - with auto linking)
+* Content Re-linker (Attempts to fixes the links should they something go
 
 ### Usage
 
@@ -24,16 +31,7 @@ Simply open the terminal and paste the command below.
 
 ```
 
-
 ### Development
-
-TO DO:
-
-* Download Manager
-* Content Installer (Install to User Defined Location)
-* Content Re-locator (Move content to another drive - with auto linking)
-* Content Re-linker (Attempts to fixes the links should they something go wrong)
-
 
 Want to contribute? Fork and let me know.
 

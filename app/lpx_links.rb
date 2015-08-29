@@ -17,14 +17,13 @@ module GetLinks
   end
 
   def create_dirs
-    [DWN_LNK, INSTALS].each do |dir|
-      FileUtils.mkdir_p(dir)
+      FileUtils.mkdir_p(DWN_LNK)
     end
 
-    CAT.each do |cat|
-      FileUtils.mkdir_p(File.join(INSTALS, cat))
-    end
-  end
+    # CAT.each do |cat|
+    #   FileUtils.mkdir_p(File.join(INSTALS, cat))
+    # end
+  # end
 
   def plist_to_json
     `plutil -convert json \'#{PLIST}\' -o #{JSN}`
@@ -48,7 +47,7 @@ module GetLinks
 
   def report
     msg = "#{'#' * 60}"
-    msg << "lpx_links has found #{@line.to_a.length} links."
+    msg << "\n\tlpx_links has found #{@line.to_a.length} links."
     msg << "\nCheck the following file:\n\t#{DWN_LST}"
     rep = File.open(REPORT, 'w')
     rep.puts msg

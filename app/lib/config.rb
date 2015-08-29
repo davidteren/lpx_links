@@ -10,7 +10,27 @@ DWN_LNK = File.join(PARENT, 'download_links')
 DWN_LST = File.join(DWN_LNK, 'links.txt')
 INSTALS = File.join(PARENT, 'installers')
 REPORT	= File.join(DWN_LNK, 'report.txt')
-PKG     = 'Packages'
-DLN     = 'DownloadName'
+
 CAT			= %w(AppleLoops JamPacks GarageBand Instruments Alchemy IRs DrumKits)
 @line = []
+
+
+PKG     = 'Packages'
+
+PKG_ID	=	'PackageID'
+DLN     = 'DownloadName'
+# DownloadSize
+# InstalledSize
+# PackageVersion
+
+
+# FileCheck
+C_ALCH	=	'ContainsAlchemyFiles'
+# ContainsAppleLoops
+
+
+
+ p 237209077 / 1000881
+
+p  706092476 / 706
+ p 706092476 / 1000130
