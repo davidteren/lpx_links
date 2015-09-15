@@ -13,8 +13,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
 
 ### Version
 0.0.5 - final version
-This is the fianl version of lpx_links as I am working on
-LogicLinks and this will replace lpx_links.
+This is the final version of lpx_links and will hopefully be replaced by LogicLinks.
 
 LogicLinks will feature:
 * Download Manager
