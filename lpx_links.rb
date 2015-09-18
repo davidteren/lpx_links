@@ -17,13 +17,8 @@ module GetLinks
   end
 
   def create_dirs
-      FileUtils.mkdir_p(DWN_LNK)
-    end
-
-    # CAT.each do |cat|
-    #   FileUtils.mkdir_p(File.join(INSTALS, cat))
-    # end
-  # end
+    FileUtils.mkdir_p(DWN_LNK)
+  end
 
   def plist_to_json
     `plutil -convert json \'#{PLIST}\' -o #{JSN}`
