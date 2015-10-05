@@ -25,7 +25,7 @@ module GetLinks
   end
 
   def json_parse
-  	@line = []
+    @line = []
     JSON.parse(File.read(JSN))[PKG].each do |i|
       @line << "#{File.join(URL, i[1][DLN])}\n"
     end
