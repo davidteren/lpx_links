@@ -19,7 +19,7 @@ LogicLinks will feature:
 * Download Manager
 * Content Installer (Install to User Defined Location)
 * Content Re-locator (Move content to another drive - with auto linking)
-* Content Re-linker (Attempts to fixes the links should they something go
+* Content Re-linker (Attempts to fix broken)
 
 ### Usage
 
