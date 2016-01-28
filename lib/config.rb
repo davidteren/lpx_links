@@ -1,7 +1,7 @@
 TMPDIR  = '/tmp'
 LPX     = '/Applications/Logic Pro X.app'
-RSC     = '/Contents/Resources/logicpro1020.plist'
-URL     = 'http://audiocontentdownload.apple.com/lp10_ms3_content_2015/'
+RSC     = '/Contents/Resources/logicpro1021.plist'
+URL     = 'http://audiocontentdownload.apple.com/lp10_ms3_content_2016/'
 ROOT  	= File.dirname(__FILE__)
 PARENT	= File.expand_path('..', Dir.pwd)
 PLIST   = File.join(LPX, RSC)
