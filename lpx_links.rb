@@ -10,7 +10,8 @@ module GetLinks
     create_dirs
     plist_to_json
     json_parse
-    print_file
+    print_file(DWN_LST, @line.sort)
+    print_file(JSN_FLE, @json_file)
     del_temp_files
     report
     show_report
@@ -18,27 +19,31 @@ module GetLinks
 
   def create_dirs
     FileUtils.mkdir_p(DWN_LNK)
+    FileUtils.mkdir_p(TMPDIR)
+    FileUtils.mkdir_p(JSN_DIR)
   end
 
   def plist_to_json
     `plutil -convert json \'#{PLIST}\' -o #{JSN}`
+    @json = JSON.parse(File.read(JSN))
+    @json_file = JSON.pretty_generate(@json[PKG])
   end
 
   def json_parse
     @line = []
-    JSON.parse(File.read(JSN))[PKG].each do |i|
+    @json[PKG].each do |i|
       @line << "#{File.join(URL, i[1][DLN])}\n"
     end
   end
 
-  def print_file
-    f = File.open(DWN_LST, 'w')
-    f.puts @line.sort
+  def print_file(file, content)
+    f = File.open(file, 'w')
+    f.puts content
     f.close
   end
 
   def del_temp_files
-    File.delete(JSN)
+    FileUtils.remove_dir(TMPDIR)
   end
 
   def report
