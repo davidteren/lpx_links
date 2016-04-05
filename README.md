@@ -26,6 +26,14 @@ Simply open the terminal and paste the command below.
 
 ```
 
+### Install All
+
+To install all the downloaded packages use the following command:
+
+```sh
+ sudo ./download_install.sh ../download_links/links.txt ../LogicX
+```
+
 ### Development
 
 Want to contribute? Fork and let me know.
