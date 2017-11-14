@@ -60,7 +60,6 @@ module GetLinks
     `cd #{File.join(DWN_LNK)} ; open .`
     sleep 1
     `open -a TextEdit #{REPORT}`
-    `killall Terminal`
   end
 end
 
