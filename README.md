@@ -22,7 +22,7 @@ LogicLinks will feature:
 Simply open the terminal and paste the command below.
 
 ```sh
- cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb
+ cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb
 
 ```
 
