@@ -6,7 +6,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
   - Creates a text file with all the links in them.
   - Importing the links file into a download manager like the DownThemAll addon for FireFox should work well.
   
-  Includes Mandatory only list. Thanks to [Matteo Ceruti](https://github.com/matatata) for the idea.
+  Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.
  
 ### Version
 
