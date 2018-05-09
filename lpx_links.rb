@@ -1,39 +1,52 @@
-#!/usr/bin/env ruby
+ #!/usr/bin/env ruby
 
-require_relative './lib/config'
 require 'json'
 require 'fileutils'
+require_relative 'file_helpers.rb'
 
 # read the plist, create a json & parse a list of links
-module GetLinks
-  def launch
+module LpxLinks
+  include FileHelpers
+
+  module_function
+
+  def run
     create_dirs
-    plist_to_json
-    json_parse
-    print_file(DWN_LST, @line.sort)
-    print_file(JSN_FLE, @json_file)
-    del_temp_files
-    report
-    show_report
+    convert_plist_to_json
+    print_file(all_download_links, download_links)
+    print_file(mandatory_download_links, download_links(true))
+    print_file(json_file, JSON.pretty_generate(packages))
+    open_lpx_download_links
+  end
+
+  def open_lpx_download_links
+    `open #{links_dir}`
   end
 
   def create_dirs
-    FileUtils.mkdir_p(DWN_LNK)
-    FileUtils.mkdir_p(TMPDIR)
-    FileUtils.mkdir_p(JSN_DIR)
+    FileUtils.mkdir_p(links_dir)
+    FileUtils.mkdir_p(json_dir)
   end
 
-  def plist_to_json
-    `plutil -convert json \'#{PLIST}\' -o #{JSN}`
-    @json = JSON.parse(File.read(JSN))
-    @json_file = JSON.pretty_generate(@json[PKG])
+  def convert_plist_to_json
+    `plutil -convert json \'#{plist_file_path}\' -o /tmp/lgp_content.json`
   end
 
-  def json_parse
-    @line = []
-    @json[PKG].each do |i|
-      @line << "#{File.join(URL, i[1][DLN])}\n"
+  def packages
+    @packages ||= read_packages
+  end
+
+  def read_packages
+    JSON.parse(File.read('/tmp/lgp_content.json'))['Packages']
+  end
+
+  def download_links(only_mandatory = false)
+    links = []
+    packages.each do |i|
+      next if only_mandatory && !i[1]['IsMandatory']
+      links << "#{File.join(url, i[1]['DownloadName'])}\n"
     end
+    links.sort
   end
 
   def print_file(file, content)
@@ -41,27 +54,6 @@ module GetLinks
     f.puts content
     f.close
   end
-
-  def del_temp_files
-    FileUtils.remove_dir(TMPDIR)
-  end
-
-  def report
-    msg = "#{'#' * 60}"
-    msg << "\n\tlpx_links has found #{@line.to_a.length} links."
-    msg << "\nCheck the following file:\n\t#{DWN_LST}"
-    rep = File.open(REPORT, 'w')
-    rep.puts msg
-    rep.close
-  end
-
-  def show_report
-    puts "Done! Found #{@line.to_a.length} links."
-    `cd #{File.join(DWN_LNK)} ; open .`
-    sleep 1
-    `open -a TextEdit #{REPORT}`
-  end
 end
 
-include GetLinks
-launch
+LpxLinks.run if $PROGRAM_NAME == __FILE__
