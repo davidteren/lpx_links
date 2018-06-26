@@ -32,11 +32,13 @@ To download I recomend using *aria2*
    
    To only download the mandatory files (32)
    
-   	aria2c -c -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
+   
+   		aria2c -c -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
    
    To download all the packages
    
-	aria2c -c -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content 
+   
+		aria2c -c -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content 
 
      
   
