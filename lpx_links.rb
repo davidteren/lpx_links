@@ -2,6 +2,8 @@
 
 require 'json'
 require 'fileutils'
+require 'pathname'
+require 'uri'
 require_relative 'lib/file_helpers.rb'
 
 # read the plist, create a json & parse a list of links
@@ -42,7 +44,27 @@ module LpxLinks
     links = []
     packages.each do |i|
       next if only_mandatory && !i[1]['IsMandatory']
-      links << "#{File.join(FileHelpers.url, i[1]['DownloadName'])}\n"
+
+      # Use File.join to concatenate URL and remove redundant separators (i.e. //)
+      unresolved_download_url = File.join(FileHelpers.url, i[1]['DownloadName'])
+
+       # Convert to URI
+      download_uri = URI(unresolved_download_url)
+
+      # Extract path
+      unresolved_download_uri_path = download_uri.path
+
+      # Resolve "../../" relative paths in the download URI path
+      resolved_download_uri_path = Pathname.new(unresolved_download_uri_path).cleanpath.to_s
+
+      # Set download URI path to the resolved path
+      download_uri.path = resolved_download_uri_path
+
+      # Convert download URI to URL string
+      resolved_download_url = download_uri.to_s
+
+      # Add the resolved download URL to the array
+      links << "#{resolved_download_url}\n"
     end
     links.sort
   end
