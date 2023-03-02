@@ -49,8 +49,14 @@ aria2c -c -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/
   
 To install all the downloaded packages use the following command:  
   
-```sh  
- sudo ./download_install.sh ../download_links/links.txt ../LogicX  
+```sh
+# for mandatory files 
+ sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/mandatory_download_links.txt ~/Downloads/logic_content 
+```  
+
+```sh
+# for all the packages
+ sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
 ```  
   
 ### Development  
