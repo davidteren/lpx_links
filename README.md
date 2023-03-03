@@ -10,7 +10,9 @@ lpx_links is a utilty to get the direct download links for the additional sample
   Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.  
    
 ### Version  
-  
+
+0.0.8 - adds logic to resolve relative parents in download URLs & Readme updates.
+
 0.0.7 - added mandatory file list & refactor of code.  
   
 0.0.6 - added version detection. Any version of Logic Pro X should work now.  
@@ -38,7 +40,6 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_d
 aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content
 ```
 
-     
 
  - -c tells aria2 to continue/resume downloads
  - --auto-file-renaming=false ensures that files will never be redownloaded if they already exist in the target directory
