@@ -7,7 +7,13 @@ module FileHelpers
   end
 
   def logic_app_path
-    '/Applications/Logic Pro X.app/Contents/Resources'
+    path = '/Applications/Logic Pro X.app/Contents/Resources'
+    return path if File.exist?(path)
+
+    path = '/Applications/Logic Pro.app/Contents/Resources'
+    return path if File.exist?(path)
+
+    raise 'Logic Pro X not found'
   end
 
   # Returns current filename: i.e. 'logicpro1040.plist'
