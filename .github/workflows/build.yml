@@ -1,4 +1,4 @@
-name: Build
+name: LPX_LINKS Build
 on: [push, pull_request]
 jobs:
  test:
