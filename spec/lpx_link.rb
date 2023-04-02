@@ -1,9 +1,9 @@
-require 'spec_helper'
-require_relative '../lpx_links'
+require "spec_helper"
+require_relative "../lpx_links"
 
 RSpec.describe LpxLinks do
-  describe '.run' do
-    xit 'creates required directories and files' do
+  describe ".run" do
+    xit "creates required directories and files" do
       LpxLinks.run
 
       expect(File).to exist(FileHelpers.links_dir)
@@ -16,12 +16,11 @@ RSpec.describe LpxLinks do
     end
   end
 
-
-  describe '.open_lpx_download_links' do
+  describe ".open_lpx_download_links" do
     # Test for opening the download_links folder
   end
 
-  describe '.create_dirs' do
+  describe ".create_dirs" do
     # Test for creating necessary directories
   end
 
