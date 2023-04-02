@@ -2,11 +2,24 @@ name: LPX_LINKS Build
 on: [push, pull_request]
 jobs:
  test:
+  name: Test and Lint
   runs-on: ubuntu-latest
+  strategy:
+   matrix:
+    ruby: ['2.6', '2.7', '3.0']
   steps:
-  - uses: actions/checkout@v3
-  - uses: ruby/setup-ruby@v1
+  - name: Checkout code
+    uses: actions/checkout@v2
+  - name: Set up Ruby
+    uses: ruby/setup-ruby@v1
     with:
-     ruby-version: '2.7'
+     ruby-version: ${{ matrix.ruby }}
      bundler-cache: true
-  - run: bundle exec rspec spec/*
+  - name: Install dependencies
+    run: bundle install
+  - name: Run Linter
+    run: bundle exec standard
+  - name: Run Tests
+    run: bundle exec rspec spec/*
+  - name: Static Analysis
+    run: bundle exec reek
