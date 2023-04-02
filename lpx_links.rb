@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'json'
-require 'fileutils'
-require 'pathname'
-require 'uri'
-require_relative 'lib/file_helpers.rb'
+require "json"
+require "fileutils"
+require "pathname"
+require "uri"
+require_relative "lib/file_helpers"
 
 # read the plist, create a json & parse a list of links
 module LpxLinks
@@ -37,18 +37,18 @@ module LpxLinks
   end
 
   def read_packages
-    JSON.parse(File.read('/tmp/lgp_content.json'))['Packages']
+    JSON.parse(File.read("/tmp/lgp_content.json"))["Packages"]
   end
 
   def download_links(only_mandatory = false)
     links = []
     packages.each do |i|
-      next if only_mandatory && !i[1]['IsMandatory']
+      next if only_mandatory && !i[1]["IsMandatory"]
 
       # Use File.join to concatenate URL and remove redundant separators (i.e. //)
-      unresolved_download_url = File.join(FileHelpers.url, i[1]['DownloadName'])
+      unresolved_download_url = File.join(FileHelpers.url, i[1]["DownloadName"])
 
-       # Convert to URI
+      # Convert to URI
       download_uri = URI(unresolved_download_url)
 
       # Extract path
@@ -70,7 +70,7 @@ module LpxLinks
   end
 
   def print_file(file, content)
-    f = File.open(file, 'w')
+    f = File.open(file, "w")
     f.puts content
     f.close
   end
