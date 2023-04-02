@@ -1,12 +1,11 @@
-name: lpx_flow
+name:
 on: [push, pull_request]
 jobs:
  test:
   strategy:
    fail-fast: false
    matrix:
-    os: macos-latest
-    # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.0'
+    os: ubuntu-latest
     ruby: '2.7'
   runs-on: ${{ matrix.os }}
   steps:
