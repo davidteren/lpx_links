@@ -56,12 +56,12 @@ To install all the downloaded packages use the following command:
 
 For mandatory files
 ```sh
- sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/mandatory_download_links.txt ~/Downloads/logic_content 
+ sudo ~/Downloads/lpx_links/app/install.sh ~/Desktop/lpx_download_links/mandatory_download_links.txt ~/Downloads/logic_content 
 ```  
 
 For all the packages
 ```sh
- sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
+ sudo ~/Downloads/lpx_links/app/install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
 ```  
   
 ### Development  
