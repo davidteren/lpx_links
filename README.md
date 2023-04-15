@@ -10,6 +10,7 @@ lpx_links is a utilty to get the direct download links for the additional sample
   Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.  
    
 ### Version  
+0.0.9 - fixes issue where the install script attempted to re-download the pkg files 🤦‍
 
 0.0.8 - adds logic to resolve relative parents in download URLs & Readme updates.
 
@@ -27,16 +28,18 @@ Simply open the terminal and paste the command below.
 ```  
   
 To download I recommend using *aria2*
-- Simply download & install - [aria2 ver1.33.0 installer](https://github.com/aria2/aria2/releases/download/release-1.33.0/aria2-1.33.0-osx-darwin.dmg)  
+- Download & install - [aria2 ver1.33.0 installer](https://github.com/aria2/aria2/releases/download/release-1.33.0/aria2-1.33.0-osx-darwin.dmg)  
 
 
 - Then in the Terminal  
-   
-```sh  
-# To only download the mandatory files (32)
-aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
 
-# To download all the packages
+To only download the mandatory files (32)
+```shell  
+
+aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
+```
+To download all the packages
+```shell
 aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content
 ```
 
@@ -50,14 +53,14 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
 ### Install All  
   
 To install all the downloaded packages use the following command:  
-  
+
+For mandatory files
 ```sh
-# for mandatory files 
  sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/mandatory_download_links.txt ~/Downloads/logic_content 
 ```  
 
+For all the packages
 ```sh
-# for all the packages
  sudo ~/Downloads/lpx_links/app/download_install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
 ```  
   
