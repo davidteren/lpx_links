@@ -30,7 +30,6 @@ Simply open the terminal and paste the command below.
 To download I recommend using *aria2*
 - Download & install - [aria2 ver1.33.0 installer](https://github.com/aria2/aria2/releases/download/release-1.33.0/aria2-1.33.0-osx-darwin.dmg)  
 
-
 - Then in the Terminal  
 
 To only download the mandatory files (32)
@@ -42,7 +41,6 @@ To download all the packages
 ```shell
 aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content
 ```
-
 
  - -c tells aria2 to continue/resume downloads
  - --auto-file-renaming=false ensures that files will never be redownloaded if they already exist in the target directory
@@ -63,13 +61,13 @@ For all the packages
 ```sh
  sudo ~/Downloads/lpx_links/app/install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
 ```  
-  
+
 ### Development  
   
 Want to contribute? Fork and let me know.  
   
 License  
 ----  
-  
+
 GNU General Public License, version 3 (GPL-3.0)  
 (http://opensource.org/licenses/GPL-3.0)
