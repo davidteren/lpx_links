@@ -4,11 +4,28 @@ require "json"
 require "fileutils"
 require "pathname"
 require "uri"
+require "optparse"
 require_relative "lib/file_helpers"
 
 # read the plist, create a json & parse a list of links
 module LpxLinks
   module_function
+  $app_name = "LOGIC" # default application name to read a list of packages from
+  options = {}
+  OptionParser.new do |opts|
+    opts.on("-nAPP_NAME", "--name=APP_NAME", "[ Logic | Mainstage ] Default is Logic") do |n|
+      if (n.upcase! == "LOGIC" || n == "MAINSTAGE")
+        $app_name = n
+      else 
+        print "Application name can only be Logic or Mainstage"
+        exit
+      end
+    end
+    opts.on("-h", "--help", "Prints this help") do
+      puts opts
+      exit
+    end
+  end.parse!
 
   def run
     create_dirs
@@ -29,7 +46,7 @@ module LpxLinks
   end
 
   def convert_plist_to_json
-    `plutil -convert json \'#{FileHelpers.plist_file_path}\' -o /tmp/lgp_content.json`
+    `plutil -convert json \'#{FileHelpers.plist_file_path($app_name)}\' -o /tmp/lgp_content.json`
   end
 
   def packages

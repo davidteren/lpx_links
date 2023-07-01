@@ -1,7 +1,7 @@
 
 # lpx_links
 
-lpx_links is a utility to get the direct download links for the additional sample/sound content for Logic Pro X.
+lpx_links is a utility to get the direct download links for the additional sample/sound content for Logic Pro X and Mainstage.
 
 - It gets the most current links
 - Creates a text file with all the links in them
@@ -10,6 +10,8 @@ lpx_links is a utility to get the direct download links for the additional sampl
 Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.
    
 ### Version  
+0.0.10 - adds support to specify Mainstage app to get direct download links for sample/sound content
+
 0.0.9 - fixes issue where the install script attempted to re-download the pkg files 🤦‍
 
 0.0.8 - adds logic to resolve relative parents in download URLs & Readme updates.
@@ -20,10 +22,17 @@ Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://g
 
 ## Usage
 
-Simply open the terminal and paste the command below. 
-  
+Simply open the terminal and paste one of the commands from below. 
+
+For Logic Pro X use the following command:
 ```sh  
- cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb  
+ cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Logic
+  
+```
+
+For Mainstage use the following command:
+```sh  
+ cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Mainstage
   
 ```  
   
@@ -52,14 +61,8 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
   
 To install all the downloaded packages use the following command:  
 
-For mandatory files
 ```sh
- sudo ~/Downloads/lpx_links/app/install.sh ~/Desktop/lpx_download_links/mandatory_download_links.txt ~/Downloads/logic_content 
-```  
-
-For all the packages
-```sh
- sudo ~/Downloads/lpx_links/app/install.sh ~/Desktop/lpx_download_links/all_download_links.txt ~/Downloads/logic_content 
+ sudo ~/Downloads/lpx_links/app/install.sh ~/Downloads/logic_content 
 ```  
 
 ### Development  

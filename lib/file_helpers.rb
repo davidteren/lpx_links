@@ -2,23 +2,37 @@
 module FileHelpers
   module_function
 
-  def plist_file_path
-    File.join(logic_app_path, plist_file_name)
+  def plist_file_path(app_name)
+    File.join(app_path(app_name), plist_file_name(app_name))
   end
 
-  def logic_app_path
-    path = "/Applications/Logic Pro X.app/Contents/Resources"
-    return path if File.exist?(path)
+  def app_path(app_name)
+    print "Searching in #{app_name}"
+    if (app_name == "LOGIC")
+      path = "/Applications/Logic Pro X.app/Contents/Resources"
+      return path if File.exist?(path)
+  
+      path = "/Applications/Logic Pro.app/Contents/Resources"
+      return path if File.exist?(path)
+  
+      raise "Logic Pro X not found"
+    end
 
-    path = "/Applications/Logic Pro.app/Contents/Resources"
-    return path if File.exist?(path)
+    if (app_name == "MAINSTAGE")
+      path = "/Applications/MainStage 3.app/Contents/Resources"
+      return path if File.exist?(path)
 
-    raise "Logic Pro X not found"
+      raise "Mainstage not found"
+    end
+
+    if (!path)
+      raise "No application paths found"
+    end
   end
 
-  # Returns current filename: i.e. 'logicpro1040.plist'
-  def plist_file_name
-    `cd '#{logic_app_path}' && find . -name  logicpro\*.plist`
+  # Returns current filename: i.e. 'logicpro1040.plist' or 'mainstage360.plist'
+  def plist_file_name(app_name)
+    `cd '#{app_path(app_name)}' && find . -name  logicpro\*.plist -o -name mainstage\*.plist`
       .gsub("./", "").chomp
   end
 
