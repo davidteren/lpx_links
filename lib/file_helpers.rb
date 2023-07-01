@@ -7,24 +7,24 @@ module FileHelpers
   end
 
   def app_path(app_name)
-    if (app_name == "LOGIC")
+    if app_name == "LOGIC"
       path = "/Applications/Logic Pro X.app/Contents/Resources"
       return path if File.exist?(path)
-  
+
       path = "/Applications/Logic Pro.app/Contents/Resources"
       return path if File.exist?(path)
-  
+
       raise "Logic Pro X not found"
     end
 
-    if (app_name == "MAINSTAGE")
+    if app_name == "MAINSTAGE"
       path = "/Applications/MainStage 3.app/Contents/Resources"
       return path if File.exist?(path)
 
       raise "Mainstage not found"
     end
 
-    if (!path)
+    if !path
       raise "No application paths found"
     end
   end

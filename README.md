@@ -69,6 +69,30 @@ To install all the downloaded packages use the following command:
   
 Want to contribute? Fork and let me know.  
   
+
+Process Flow
+
+```mermaid
+graph LR
+A[Start] --> B{Check app_name}
+B -->|LOGIC| C[Check for Logic Pro X.app]
+C -->|Exists| D[Return Logic Pro X.app path]
+C -->|Doesn't exist| E[Check for Logic Pro.app]
+E -->|Exists| F[Return Logic Pro.app path]
+E -->|Doesn't exist| G[Raise "Logic Pro X not found" error]
+B -->|MAINSTAGE| H[Check for MainStage 3.app] 
+H -->|Exists| I[Return MainStage 3.app path]
+H -->|Doesn't exist| J[Raise "Mainstage not found" error]
+B -->|Other| K[Raise "No application paths found" error]
+D --> L[End]
+F --> L
+I --> L
+G --> L
+J --> L 
+K --> L
+```
+
+
 License  
 ----  
 
