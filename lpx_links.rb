@@ -10,13 +10,14 @@ require_relative "lib/file_helpers"
 # read the plist, create a json & parse a list of links
 module LpxLinks
   module_function
+
   $app_name = "LOGIC" # default application name to read a list of packages from
 
   OptionParser.new do |opts|
     opts.on("-nAPP_NAME", "--name=APP_NAME", "[ Logic | Mainstage ] Default is Logic") do |n|
-      if (n.upcase! == "LOGIC" || n == "MAINSTAGE")
+      if n.upcase! == "LOGIC" || n == "MAINSTAGE"
         $app_name = n
-      else 
+      else
         print "Application name can only be Logic or Mainstage\n"
         puts opts
         exit
