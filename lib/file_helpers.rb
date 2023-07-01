@@ -7,7 +7,6 @@ module FileHelpers
   end
 
   def app_path(app_name)
-    print "Searching in #{app_name}"
     if (app_name == "LOGIC")
       path = "/Applications/Logic Pro X.app/Contents/Resources"
       return path if File.exist?(path)

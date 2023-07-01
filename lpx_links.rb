@@ -11,13 +11,14 @@ require_relative "lib/file_helpers"
 module LpxLinks
   module_function
   $app_name = "LOGIC" # default application name to read a list of packages from
-  options = {}
+
   OptionParser.new do |opts|
     opts.on("-nAPP_NAME", "--name=APP_NAME", "[ Logic | Mainstage ] Default is Logic") do |n|
       if (n.upcase! == "LOGIC" || n == "MAINSTAGE")
         $app_name = n
       else 
-        print "Application name can only be Logic or Mainstage"
+        print "Application name can only be Logic or Mainstage\n"
+        puts opts
         exit
       end
     end
