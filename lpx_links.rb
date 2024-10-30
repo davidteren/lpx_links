@@ -28,14 +28,20 @@ module LpxLinks
     end
   end.parse!
 
-  def run
+def run
+  begin
     create_dirs
     convert_plist_to_json
     print_file(FileHelpers.all_download_links, download_links)
     print_file(FileHelpers.mandatory_download_links, download_links(true))
     print_file(FileHelpers.json_file, JSON.pretty_generate(packages))
     open_lpx_download_links
+  rescue RuntimeError => e
+    puts "Error: #{e.message}"
+    puts "Please ensure that #{$app_name} is installed correctly on your system."
+    exit 1
   end
+end
 
   def open_lpx_download_links
     `open #{FileHelpers.links_dir}`
