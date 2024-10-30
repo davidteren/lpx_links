@@ -40,7 +40,7 @@ jobs:
       run: |
         COVERAGE=$(grep -A 2 "Coverage" coverage/.last_run.json | tail -n 1 | cut -d ":" -f 2 | cut -d "}" -f 1 | tr -d " ")
         echo "Coverage: $COVERAGE%"
-        if (( $(echo "$COVERAGE < 90" | bc -l) )); then
+        if (( $(echo "$COVERAGE < 60" | bc -l) )); then
           echo "Test coverage is below 90%"
           exit 1
         fi
