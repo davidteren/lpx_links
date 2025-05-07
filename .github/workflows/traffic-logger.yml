@@ -1,0 +1,60 @@
+name: Log GitHub Traffic
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # runs daily at 02:00 UTC
+  workflow_dispatch: # allows manual runs
+
+jobs:
+  track-traffic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch and store traffic data
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          import os, json, datetime, requests
+
+          headers = {
+              "Authorization": f"token {os.environ['GH_PAT']}",
+              "Accept": "application/vnd.github+json"
+          }
+
+          repo = os.environ["REPO"]
+          today = datetime.date.today().isoformat()
+          base_url = f"https://api.github.com/repos/{repo}/traffic"
+
+          def fetch(endpoint):
+              r = requests.get(f"{base_url}/{endpoint}", headers=headers)
+              r.raise_for_status()
+              return r.json()
+
+          data = {
+              "date": today,
+              "views": fetch("views"),
+              "clones": fetch("clones")
+          }
+
+          os.makedirs("traffic_logs", exist_ok=True)
+          with open(f"traffic_logs/{today}.json", "w") as f:
+              json.dump(data, f, indent=2)
+
+      - name: Commit and push logs
+        run: |
+          git config --global user.email "traffic-bot@example.com"
+          git config --global user.name "traffic-bot"
+          git add traffic_logs
+          git commit -m "Add traffic data for $(date +%F)" || echo "No changes"
+          git push
