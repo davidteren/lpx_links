@@ -62,8 +62,10 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
 To install all the downloaded packages use the following command:  
 
 ```sh
- sudo ~/Downloads/lpx_links/app/install.sh ~/Downloads/logic_content 
+ sudo ~/Downloads/lpx_links/install.sh ~/Downloads/logic_content 
 ```  
+
+> Note: The install script expects a directory containing `.pkg` files as its argument, not a text file with download links.
 
 ### Development  
   
