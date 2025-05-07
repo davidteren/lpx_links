@@ -81,6 +81,7 @@ jobs:
               f.write("Daily breakdown:\n")
               for day in clones["clones"]:
                   f.write(f"  {day['timestamp'][:10]}: {day['count']} clones from {day['uniques']} unique users\n")
+
           EOF
 
           # Execute the Python script
@@ -91,6 +92,7 @@ jobs:
           # Use the repository owner's email from GitHub
           git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
           git config --global user.name "${{ github.repository_owner }} (Traffic Bot)"
+
           git add traffic_logs
           git commit -m "Add traffic data for $(date +%F)" || echo "No changes"
           git push
