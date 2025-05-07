@@ -1,0 +1,107 @@
+name: Log GitHub Traffic
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # runs daily at 02:00 UTC
+  workflow_dispatch: # allows manual runs
+
+jobs:
+  track-traffic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch and store traffic data
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          import os, json, datetime, requests
+
+          headers = {
+              "Authorization": f"token {os.environ['GH_PAT']}",
+              "Accept": "application/vnd.github+json"
+          }
+
+          repo = os.environ["REPO"]
+          today = datetime.date.today().isoformat()
+          base_url = f"https://api.github.com/repos/{repo}/traffic"
+
+          def fetch(endpoint):
+              r = requests.get(f"{base_url}/{endpoint}", headers=headers)
+              r.raise_for_status()
+              return r.json()
+
+          data = {
+              "date": today,
+              "views": fetch("views"),
+              "clones": fetch("clones")
+          }
+
+          os.makedirs("traffic_logs", exist_ok=True)
+          with open(f"traffic_logs/{today}.json", "w") as f:
+              json.dump(data, f, indent=2)
+
+          # Create a summary file for email
+          with open("traffic_summary.txt", "w") as f:
+              f.write(f"GitHub Traffic Report for {repo} - {today}\n")
+              f.write("=" * 50 + "\n\n")
+
+              # Views summary
+              views = data["views"]
+              f.write(f"VIEWS (Last 14 days):\n")
+              f.write(f"Total views: {views['count']}\n")
+              f.write(f"Unique visitors: {views['uniques']}\n\n")
+
+              f.write("Daily breakdown:\n")
+              for day in views["views"]:
+                  f.write(f"  {day['timestamp'][:10]}: {day['count']} views from {day['uniques']} unique visitors\n")
+              f.write("\n")
+
+              # Clones summary
+              clones = data["clones"]
+              f.write(f"CLONES (Last 14 days):\n")
+              f.write(f"Total clones: {clones['count']}\n")
+              f.write(f"Unique cloners: {clones['uniques']}\n\n")
+
+              f.write("Daily breakdown:\n")
+              for day in clones["clones"]:
+                  f.write(f"  {day['timestamp'][:10]}: {day['count']} clones from {day['uniques']} unique users\n")
+
+      - name: Commit and push logs
+        run: |
+          git config --global user.email "drteren@gmail.com"
+          git config --global user.name "David Teren (Traffic Bot)"
+          git add traffic_logs
+          git commit -m "Add traffic data for $(date +%F)" || echo "No changes"
+          git push
+
+      - name: Send email notification
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('traffic_summary.txt', 'utf8');
+
+            // Get the repository owner's email
+            const { data: user } = await github.rest.users.getByUsername({
+              username: context.repo.owner
+            });
+
+            // Create an issue with the traffic summary
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `GitHub Traffic Report for ${context.repo.owner}/${context.repo.repo} - ${new Date().toISOString().split('T')[0]}`,
+              body: '```\n' + summary + '\n```'
+            });
