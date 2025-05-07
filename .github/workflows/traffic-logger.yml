@@ -25,7 +25,12 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |
-          import os, json, datetime, requests
+          # Create a Python script file
+          cat > fetch_traffic.py << 'EOF'
+          import os
+          import json
+          import datetime
+          import requests
 
           headers = {
               "Authorization": f"token {os.environ['GH_PAT']}",
@@ -76,11 +81,16 @@ jobs:
               f.write("Daily breakdown:\n")
               for day in clones["clones"]:
                   f.write(f"  {day['timestamp'][:10]}: {day['count']} clones from {day['uniques']} unique users\n")
+          EOF
+
+          # Execute the Python script
+          python fetch_traffic.py
 
       - name: Commit and push logs
         run: |
-          git config --global user.email "drteren@gmail.com"
-          git config --global user.name "David Teren (Traffic Bot)"
+          # Use the repository owner's email from GitHub
+          git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
+          git config --global user.name "${{ github.repository_owner }} (Traffic Bot)"
           git add traffic_logs
           git commit -m "Add traffic data for $(date +%F)" || echo "No changes"
           git push
