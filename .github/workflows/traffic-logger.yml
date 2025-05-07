@@ -87,14 +87,31 @@ jobs:
           # Execute the Python script
           python fetch_traffic.py
 
-      - name: Commit and push logs
+      - name: Archive logs to private repository
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          MAIN_REPO: ${{ github.repository }}
+          ARCHIVE_REPO: ${{ github.repository_owner }}/lpx_links-traffic-logs
         run: |
-          # Use the repository owner's email from GitHub
-          git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
-          git config --global user.name "${{ github.repository_owner }} (Traffic Bot)"
-
-          git add traffic_logs
-          git commit -m "Add traffic data for $(date +%F)" || echo "No changes"
+          # Configure Git identity for the traffic bot
+          git config --global user.email "traffic@example.com"
+          git config --global user.name "Traffic Bot"
+          
+          # Clone the private archive repository
+          echo "Cloning private archive repository..."
+          git clone https://x-access-token:${GH_PAT}@github.com/${ARCHIVE_REPO}.git archive-repo
+          
+          # Create directories if they don't exist
+          mkdir -p archive-repo/traffic_logs
+          
+          # Copy the traffic logs and summary to the archive repository
+          cp -r traffic_logs/* archive-repo/traffic_logs/
+          cp traffic_summary.txt archive-repo/
+          
+          # Commit and push the changes to the private repository
+          cd archive-repo
+          git add traffic_logs traffic_summary.txt
+          git commit -m "Add traffic data for $(date +%F) from ${MAIN_REPO}" || echo "No changes to commit"
           git push
 
       - name: Send email notification
