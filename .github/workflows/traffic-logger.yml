@@ -114,23 +114,5 @@ jobs:
           git commit -m "Add traffic data for $(date +%F) from ${MAIN_REPO}" || echo "No changes to commit"
           git push
 
-      - name: Send email notification
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const summary = fs.readFileSync('traffic_summary.txt', 'utf8');
-
-            // Get the repository owner's email
-            const { data: user } = await github.rest.users.getByUsername({
-              username: context.repo.owner
-            });
-
-            // Create an issue with the traffic summary
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `GitHub Traffic Report for ${context.repo.owner}/${context.repo.repo} - ${new Date().toISOString().split('T')[0]}`,
-              body: '```\n' + summary + '\n```'
-            });
+      # Email notification or other notification methods could be added here if needed in the future
+      # The traffic data is now only stored in the private repository
