@@ -101,9 +101,9 @@ module LpxLinks
   end
 
   def print_file(file, content)
-    f = File.open(file, 'w')
-    f.puts content
-    f.close
+    File.open(file, 'w') do |f|
+      f.puts content
+    end
   end
 end
 
