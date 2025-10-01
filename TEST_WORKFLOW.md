@@ -52,8 +52,8 @@ Simply run the script from the repository root:
    - Executes `rubocop` on the codebase
    - Fails if any offenses are found
 
-5. **Test Suite**: Runs RSpec tests
-   - Executes `bundle exec rspec`
+5. **Test Suite**: Runs Minitest tests
+   - Executes `bundle exec rake test`
    - Fails if any tests fail
 
 6. **Workflow Test**: Simulates user workflow
@@ -184,7 +184,7 @@ git push origin fix/rubocop-linting
 
 ### Code Quality
 - ✅ RuboCop linting (0 offenses)
-- ✅ All RSpec tests passing
+- ✅ All Minitest tests passing
 - ✅ Code coverage maintained
 
 ### Functionality
