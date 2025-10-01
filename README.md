@@ -1,7 +1,7 @@
 # lpx_links
 
 [![Ruby CI](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml/badge.svg)](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Ruby utility to get direct download links for additional sample/sound content for Logic Pro X and MainStage.
 
@@ -102,8 +102,14 @@ See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for detailed testing documentation.
 - **Testing**: RSpec with SimpleCov for coverage tracking
 - **CI/CD**: GitHub Actions runs linting and tests on all PRs
   
-License  
-----  
+## License
 
-GNU General Public License, version 3 (GPL-3.0)  
-(http://opensource.org/licenses/GPL-3.0)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Why MIT?
+
+This utility is licensed under MIT (changed from GPL-3.0) because:
+- **Simple utility tool** - Straightforward download link generator
+- **Maximum compatibility** - Can be used in any context without licensing concerns
+- **Community standard** - Aligns with most Ruby gems
+- **User-friendly** - No restrictions on commercial or private use
