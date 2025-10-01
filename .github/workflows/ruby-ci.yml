@@ -7,6 +7,25 @@ on:
     branches: [ master, main ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.3.1'
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        gem install rubocop
+        bundle install
+
+    - name: Run RuboCop
+      run: rubocop
+
   test:
     runs-on: ubuntu-latest
     strategy:
