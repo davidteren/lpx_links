@@ -1,7 +1,6 @@
 coverage/
 .rspec_status
 spec/examples.txt
-Gemfile.lock
 .DS_Store
 TASK.md
 traffic_logs/
