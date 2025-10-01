@@ -13,14 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RuboCop configuration file (`.rubocop.yml`) with reasonable metric limits
 - RuboCop lint check to GitHub Actions CI workflow
 - `.ruby-version` file specifying Ruby 3.3.1
+- MIT License file
 
 ### Changed
+- **License changed from GPL-3.0 to MIT** for better compatibility and community alignment
 - Replaced global variable `$app_name` with module-level accessor pattern
 - Refactored `app_path` method to reduce complexity by extracting logic into separate methods
 - Converted `download_links` method to use keyword arguments (`only_mandatory:`)
 - Standardized string quotes (double → single) throughout codebase
 - Updated all tests to match new method signatures
 - Changed `ENV['HOME']` to `Dir.home` for better Ruby idioms
+- Updated README license badge and section with MIT license rationale
 
 ### Fixed
 - All RuboCop linting issues (115 offenses → 0 offenses)
