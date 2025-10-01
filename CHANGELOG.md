@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
 
+### Changed
+- **GitHub Pages completely redesigned** (gh-pages branch) - Modern, responsive product page for musicians with clear 3-step guide, Logic Pro 11 compatibility, and user-friendly language
+
 ### Added
 - COPYRIGHT file documenting all contributors and license change rationale
 - Reference to COPYRIGHT file in README license section
