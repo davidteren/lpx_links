@@ -106,9 +106,11 @@ See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for detailed testing documentation.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+For copyright holder information and license history, see the [COPYRIGHT](COPYRIGHT) file.
+
 ### Why MIT?
 
-This utility is licensed under MIT (changed from GPL-3.0) because:
+This utility is licensed under MIT (changed from GPL-3.0 in October 2025) because:
 - **Simple utility tool** - Straightforward download link generator
 - **Maximum compatibility** - Can be used in any context without licensing concerns
 - **Community standard** - Aligns with most Ruby gems
