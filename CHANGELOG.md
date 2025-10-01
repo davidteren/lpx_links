@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated GitHub Actions CI to run Minitest instead of RSpec
 - Updated test_local_workflow.sh to run Minitest tests
 - Updated all documentation (README.md, TEST_WORKFLOW.md) to reference Minitest
+- Enabled warnings in Rakefile test configuration to catch potential code issues early
 
 ### Removed
 - RSpec gem and all RSpec-related dependencies
