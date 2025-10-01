@@ -5,16 +5,25 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 
-# Allow longer blocks in specs - tests naturally have more setup/assertions
+# Allow longer blocks in tests - tests naturally have more setup/assertions
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*_spec.rb'
+    - 'test/**/*_test.rb'
+
+# Allow longer test classes - comprehensive test coverage requires many test methods
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*_test.rb'
 
 # The download_links method is complex but clear - extracting would reduce readability
 Metrics/AbcSize:
   Max: 20
+  Exclude:
+    - 'test/**/*_test.rb'
 
 # Allow slightly longer methods for clarity
 Metrics/MethodLength:
   Max: 15
+  Exclude:
+    - 'test/**/*_test.rb'
 

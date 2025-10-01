@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minitest test framework with minitest-reporters for better output
 - Rakefile for running tests with `bundle exec rake test`
 - test/ directory structure following Rails conventions
+- Comprehensive test coverage for edge cases and error handling (22 new tests)
+- Tests for relative path resolution in download URLs
+- Tests for error handling (invalid JSON, missing files, runtime errors)
+- Tests for file system operations (directory creation, file writing)
+- Tests for command execution (plutil, open commands)
 
 ### Changed
 - **Migrated test suite from RSpec to Minitest** for better Rails alignment and TDD practices
@@ -20,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated test_local_workflow.sh to run Minitest tests
 - Updated all documentation (README.md, TEST_WORKFLOW.md) to reference Minitest
 - Enabled warnings in Rakefile test configuration to catch potential code issues early
+- **Restored test coverage threshold to 90%** in CI workflow (from 60%)
+- Increased test coverage from 62.89% to 91.75% (89/97 lines covered)
+- Updated .rubocop.yml to exclude test files from metrics cops
 
 ### Removed
 - RSpec gem and all RSpec-related dependencies
