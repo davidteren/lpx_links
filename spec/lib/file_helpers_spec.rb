@@ -1,19 +1,25 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe FileHelpers do
   describe '.plist_file_path' do
     it 'returns the correct path for Logic Pro' do
-      allow(FileHelpers).to receive(:app_path).with('LOGIC').and_return('/Applications/Logic Pro X.app/Contents/Resources')
+      logic_path = '/Applications/Logic Pro X.app/Contents/Resources'
+      allow(FileHelpers).to receive(:app_path).with('LOGIC').and_return(logic_path)
       allow(FileHelpers).to receive(:plist_file_name).with('LOGIC').and_return('logicpro1040.plist')
-      
-      expect(FileHelpers.plist_file_path('LOGIC')).to eq('/Applications/Logic Pro X.app/Contents/Resources/logicpro1040.plist')
+
+      expected_path = "#{logic_path}/logicpro1040.plist"
+      expect(FileHelpers.plist_file_path('LOGIC')).to eq(expected_path)
     end
 
     it 'returns the correct path for Mainstage' do
-      allow(FileHelpers).to receive(:app_path).with('MAINSTAGE').and_return('/Applications/MainStage 3.app/Contents/Resources')
+      mainstage_path = '/Applications/MainStage 3.app/Contents/Resources'
+      allow(FileHelpers).to receive(:app_path).with('MAINSTAGE').and_return(mainstage_path)
       allow(FileHelpers).to receive(:plist_file_name).with('MAINSTAGE').and_return('mainstage360.plist')
-      
-      expect(FileHelpers.plist_file_path('MAINSTAGE')).to eq('/Applications/MainStage 3.app/Contents/Resources/mainstage360.plist')
+
+      expected_path = "#{mainstage_path}/mainstage360.plist"
+      expect(FileHelpers.plist_file_path('MAINSTAGE')).to eq(expected_path)
     end
   end
 
@@ -52,7 +58,7 @@ RSpec.describe FileHelpers do
 
   describe '.links_dir' do
     it 'returns the correct directory path' do
-      allow(ENV).to receive(:[]).with('HOME').and_return('/Users/testuser')
+      allow(Dir).to receive(:home).and_return('/Users/testuser')
       expect(FileHelpers.links_dir).to eq('/Users/testuser/Desktop/lpx_download_links')
     end
   end

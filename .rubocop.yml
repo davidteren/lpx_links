@@ -1,0 +1,20 @@
+# RuboCop configuration for lpx_links
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+# Allow longer blocks in specs - tests naturally have more setup/assertions
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+# The download_links method is complex but clear - extracting would reduce readability
+Metrics/AbcSize:
+  Max: 20
+
+# Allow slightly longer methods for clarity
+Metrics/MethodLength:
+  Max: 15
+
