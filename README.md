@@ -12,7 +12,7 @@ A Ruby utility to get direct download links for additional sample/sound content 
 - 🎯 **Mandatory vs. All** - Separate lists for essential packages vs. complete library
 - 🎹 **Multi-App Support** - Works with both Logic Pro X and MainStage
 - 📦 **Download Manager Ready** - Compatible with aria2, DownThemAll, and other download managers
-- 🧪 **Well Tested** - Comprehensive test suite with RSpec
+- 🧪 **Well Tested** - Comprehensive test suite with Minitest
 - 🔍 **Linted Code** - RuboCop-compliant codebase
 
 > **Note**: Mandatory package list feature thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.
@@ -91,7 +91,7 @@ Want to contribute? Great! Here's how:
 
 This project includes a comprehensive local testing script that validates:
 - RuboCop linting (0 offenses required)
-- RSpec test suite (all tests must pass)
+- Minitest test suite (all tests must pass)
 - End-to-end workflow simulation
 
 See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for detailed testing documentation.
@@ -99,7 +99,7 @@ See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for detailed testing documentation.
 ### Code Quality
 
 - **Linting**: RuboCop with custom configuration (`.rubocop.yml`)
-- **Testing**: RSpec with SimpleCov for coverage tracking
+- **Testing**: Minitest with SimpleCov for coverage tracking
 - **CI/CD**: GitHub Actions runs linting and tests on all PRs
   
 ## License
