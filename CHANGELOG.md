@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved file handling robustness in `print_file` method by using block form of `File.open` to ensure automatic file closure even if exceptions occur
 
 ### Added
+- CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)
+
+### Changed
+- **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon
+- Moved all developer/technical content from README.md to CONTRIBUTING.md
+- Simplified installation and usage instructions for non-technical users
+- Updated Logic Pro version references to Logic Pro 11 (current version)
+- Reorganized documentation structure with clear separation between user and developer content
+
+### Added
 - COPYRIGHT file documenting all contributors and license change rationale
 - Reference to COPYRIGHT file in README license section
 - Minitest test framework with minitest-reporters for better output
