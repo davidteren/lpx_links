@@ -10,6 +10,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - COPYRIGHT file documenting all contributors and license change rationale
 - Reference to COPYRIGHT file in README license section
+- Minitest test framework with minitest-reporters for better output
+- Rakefile for running tests with `bundle exec rake test`
+- test/ directory structure following Rails conventions
+
+### Changed
+- **Migrated test suite from RSpec to Minitest** for better Rails alignment and TDD practices
+- Updated GitHub Actions CI to run Minitest instead of RSpec
+- Updated test_local_workflow.sh to run Minitest tests
+- Updated all documentation (README.md, TEST_WORKFLOW.md) to reference Minitest
+
+### Removed
+- RSpec gem and all RSpec-related dependencies
+- spec/ directory and all RSpec test files
+- RSpec configuration files (.rspec, spec_helper.rb)
 
 ## [0.0.11] - 2025-10-01
 
