@@ -22,8 +22,9 @@ module LpxLinks
 
   OptionParser.new do |opts|
     opts.on('-nAPP_NAME', '--name=APP_NAME', '[ Logic | Mainstage ] Default is Logic') do |n|
-      if n.upcase! == 'LOGIC' || n == 'MAINSTAGE'
-        LpxLinks.app_name = n
+      n_up = n.upcase
+      if %w[LOGIC MAINSTAGE].include?(n_up)
+        LpxLinks.app_name = n_up
       else
         print "Application name can only be Logic or Mainstage\n"
         puts opts

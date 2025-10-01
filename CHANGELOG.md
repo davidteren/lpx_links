@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
+
 ### Added
 - COPYRIGHT file documenting all contributors and license change rationale
 - Reference to COPYRIGHT file in README license section
