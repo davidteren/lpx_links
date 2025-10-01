@@ -167,12 +167,12 @@ run_rubocop() {
 # Function to run tests
 run_tests() {
     print_header "Running Test Suite"
-    
+
     cd "$REPO_ROOT"
-    
+
     if [ -f "Gemfile" ] && command -v bundle &> /dev/null; then
-        print_step "Running RSpec tests..."
-        if bundle exec rspec; then
+        print_step "Running Minitest tests..."
+        if bundle exec rake test; then
             print_success "All tests passed"
         else
             print_error "Tests failed"

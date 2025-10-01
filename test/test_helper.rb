@@ -15,4 +15,3 @@ Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
 # Load the application code
 require_relative '../lib/file_helpers'
 require_relative '../lpx_links'
-
