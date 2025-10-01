@@ -1,92 +1,360 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>LpxLinks by davidteren</title>
-  </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get direct download links for all Logic Pro and MainStage additional content. Download faster than using the in-app downloader.">
+    <title>lpx_links - Direct Download Links for Logic Pro Content</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <body>
-    <div id="container">
-      <div class="inner">
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 15px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 10px;
+            font-size: 1.3em;
+        }
+
+        .compatibility {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .compat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .compat-item strong {
+            display: block;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin: 25px 0;
+            padding-left: 60px;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            background: #764ba2;
+        }
+
+        .button-secondary {
+            background: #6c757d;
+        }
+
+        .button-secondary:hover {
+            background: #5a6268;
+        }
+
+        ul {
+            margin: 15px 0 15px 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .faq {
+            margin: 20px 0;
+        }
+
+        .faq-item {
+            margin: 15px 0;
+        }
+
+        .faq-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1.1em;
+            }
+
+            .main-content {
+                padding: 25px;
+            }
+
+            .steps li {
+                padding-left: 50px;
+            }
+
+            .steps li::before {
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
         <header>
-          <h1>LpxLinks</h1>
-          <h2>Gets the additional content download links for Logic Pro X</h2>
+            <h1>🎹 lpx_links</h1>
+            <p>Get direct download links for all Logic Pro and MainStage content. Download faster and more reliably than using the in-app downloader.</p>
+            <div style="margin-top: 30px;">
+                <a href="https://github.com/davidteren/lpx_links" class="button">View on GitHub</a>
+                <a href="https://github.com/davidteren/lpx_links/releases" class="button button-secondary">Download</a>
+            </div>
         </header>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/davidteren/lpx_links" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+        <div class="main-content">
+            <h2>What It Does</h2>
+            <p>This tool creates text files with direct download links for all Logic Pro and MainStage sounds, loops, and instruments. Perfect for:</p>
+            <ul>
+                <li>Fresh Logic Pro installations</li>
+                <li>Downloading content faster with a download manager</li>
+                <li>Managing content across multiple machines</li>
+                <li>Avoiding the slow in-app downloader</li>
+            </ul>
 
-        <hr>
+            <h2>Compatibility</h2>
+            <div class="compatibility">
+                <div class="compat-item">
+                    <strong>Logic Pro 11</strong>
+                    <span>Current version</span>
+                </div>
+                <div class="compat-item">
+                    <strong>Logic Pro X 10.x</strong>
+                    <span>All versions</span>
+                </div>
+                <div class="compat-item">
+                    <strong>MainStage 3</strong>
+                    <span>Fully supported</span>
+                </div>
+                <div class="compat-item">
+                    <strong>macOS</strong>
+                    <span>Requires Logic/MainStage</span>
+                </div>
+            </div>
 
-        <section id="main_content">
-          <h1>
-<a id="lpx_links" class="anchor" href="#lpx_links" aria-hidden="true"><span class="octicon octicon-link"></span></a>lpx_links</h1>
+            <h2>Quick Start</h2>
+            <ol class="steps">
+                <li>
+                    <h3>Run the Tool</h3>
+                    <p>Open Terminal and paste one of these commands:</p>
+                    <p><strong>For Logic Pro:</strong></p>
+                    <div class="code-block">cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Logic</div>
+                    <p><strong>For MainStage:</strong></p>
+                    <div class="code-block">cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Mainstage</div>
+                </li>
+                <li>
+                    <h3>Find Your Links</h3>
+                    <p>The tool creates a folder on your Desktop called <code>lpx_download_links</code> with two files:</p>
+                    <ul>
+                        <li><strong>mandatory_download_links.txt</strong> - Essential packages only (28 items)</li>
+                        <li><strong>all_download_links.txt</strong> - Complete library (900+ items)</li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>Download Content</h3>
+                    <p>Use any download manager or your browser to download the content from the links.</p>
+                </li>
+            </ol>
 
-<p>lpx_links is a utilty to get the direct download links for the additional sample/sound content for Logic Pro X.</p>
+            <h2>Recommended: Download with aria2</h2>
+            <p>For faster, resumable downloads, use <strong>aria2</strong> (a download manager):</p>
 
-<ul>
-<li>It gets the most current links for version 10.2.0</li>
-<li>Creates a text file with all the links in them.</li>
-<li>Importing the links file into a download manager like the DownThemAll addon for FireFox should work well.</li>
-</ul>
+            <h3>Install aria2</h3>
+            <p>Download and install: <a href="https://github.com/aria2/aria2/releases/download/release-1.33.0/aria2-1.33.0-osx-darwin.dmg">aria2 v1.33.0 installer</a></p>
 
-<blockquote>
-<p>Please note that if you do not have version 10.2.0
-installed the utility will most likely fail.</p>
-</blockquote>
+            <h3>Download Content</h3>
+            <p><strong>Essential packages only</strong> (28 items):</p>
+            <div class="code-block">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</div>
 
-<h3>
-<a id="version" class="anchor" href="#version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version</h3>
+            <p><strong>All packages</strong> (900+ items):</p>
+            <div class="code-block">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</div>
 
-<p>0.0.5 - final version
-This is the final version of lpx_links and will hopefully be replaced by LogicLinks.</p>
+            <div class="highlight">
+                <strong>What these options do:</strong>
+                <ul>
+                    <li><code>-c</code> - Resume interrupted downloads</li>
+                    <li><code>--auto-file-renaming=false</code> - Skip files that already exist (never re-download)</li>
+                    <li><code>-i</code> - Path to the file with download links</li>
+                    <li><code>-d</code> - Where to save the downloaded files</li>
+                </ul>
+            </div>
 
-<p>LogicLinks will feature:</p>
+            <h2>Install Downloaded Packages</h2>
+            <p>After downloading, install all packages with this command:</p>
+            <div class="code-block">sudo ~/Downloads/lpx_links/install.sh ~/Downloads/logic_content</div>
+            <p><em>Note: The install script needs a folder containing .pkg files, not the text file with links.</em></p>
 
-<ul>
-<li>Download Manager</li>
-<li>Content Installer (Install to User Defined Location)</li>
-<li>Content Re-locator (Move content to another drive - with auto linking)</li>
-<li>Content Re-linker (Attempts to fix broken)</li>
-</ul>
+            <h2>Troubleshooting</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <strong>"Command not found" error</strong>
+                    <p>Make sure you have Ruby installed. macOS includes Ruby by default.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>"Logic Pro not found" error</strong>
+                    <p>The tool needs Logic Pro or MainStage installed to find the content list.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Downloads are slow</strong>
+                    <p>Use aria2 (see above) for much faster downloads with resume capability.</p>
+                </div>
+                <div class="faq-item">
+                    <strong>Need help?</strong>
+                    <p><a href="https://github.com/davidteren/lpx_links/issues">Open an issue</a> on GitHub.</p>
+                </div>
+            </div>
 
-<h3>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+            <h2>For Developers</h2>
+            <p>Want to contribute or modify the code? Check out the technical documentation:</p>
+            <ul>
+                <li><a href="https://github.com/davidteren/lpx_links/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> - Developer guide</li>
+                <li><a href="https://github.com/davidteren/lpx_links/blob/main/BEST_PRACTICES.md">BEST_PRACTICES.md</a> - Code standards and architecture</li>
+                <li><a href="https://github.com/davidteren/lpx_links/blob/main/TEST_WORKFLOW.md">TEST_WORKFLOW.md</a> - Testing documentation</li>
+            </ul>
 
-<p>Simply open the terminal and paste the command below.</p>
-
-<div class="highlight highlight-source-shell"><pre> <span class="pl-c1">cd</span> <span class="pl-k">~</span>/Downloads<span class="pl-k">;</span> mkdir -p lpx_links/app <span class="pl-k">;</span> <span class="pl-c1">cd</span> lpx_links/app <span class="pl-k">;</span> curl -#L https://github.com/davidteren/lpx_links/tarball/master <span class="pl-k">|</span> tar -xzv --strip-components 1 <span class="pl-k">;</span> ./lpx_links.rb
-</pre></div>
-
-<h3>
-<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h3>
-
-<p>Want to contribute? Fork and let me know.</p>
-
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>GNU General Public License, version 3 (GPL-3.0)
-(<a href="http://opensource.org/licenses/GPL-3.0">http://opensource.org/licenses/GPL-3.0</a>)</p>
-        </section>
+            <h2>Version</h2>
+            <p><strong>Current Version:</strong> 0.0.10</p>
+            <p>See <a href="https://github.com/davidteren/lpx_links/blob/main/CHANGELOG.md">CHANGELOG.md</a> for version history and release notes.</p>
+        </div>
 
         <footer>
-          LpxLinks is maintained by <a href="https://github.com/davidteren">davidteren</a><br>
-          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            <p>
+                <strong>lpx_links</strong> is maintained by <a href="https://github.com/davidteren">David Teren</a><br>
+                MIT License - Free to use, modify, and distribute<br>
+                Special thanks to <a href="https://github.com/matatata">Matteo Ceruti (Matatata)</a> for the mandatory package list feature idea
+            </p>
         </footer>
-
-        
-      </div>
     </div>
-  </body>
+</body>
 </html>
