@@ -1,47 +1,53 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require "json"
-require "fileutils"
-require "pathname"
-require "uri"
-require "optparse"
-require_relative "lib/file_helpers"
+require 'json'
+require 'fileutils'
+require 'pathname'
+require 'uri'
+require 'optparse'
+require_relative 'lib/file_helpers'
 
 # read the plist, create a json & parse a list of links
 module LpxLinks
   module_function
-  $app_name = "LOGIC" # default application name to read a list of packages from
+
+  @app_name = 'LOGIC' # default application name to read a list of packages from
+
+  class << self
+    attr_accessor :app_name
+  end
+
+  self.app_name = 'LOGIC'
 
   OptionParser.new do |opts|
-    opts.on("-nAPP_NAME", "--name=APP_NAME", "[ Logic | Mainstage ] Default is Logic") do |n|
-      if (n.upcase! == "LOGIC" || n == "MAINSTAGE")
-        $app_name = n
-      else 
+    opts.on('-nAPP_NAME', '--name=APP_NAME', '[ Logic | Mainstage ] Default is Logic') do |n|
+      if n.upcase! == 'LOGIC' || n == 'MAINSTAGE'
+        LpxLinks.app_name = n
+      else
         print "Application name can only be Logic or Mainstage\n"
         puts opts
         exit
       end
     end
-    opts.on("-h", "--help", "Prints this help") do
+    opts.on('-h', '--help', 'Prints this help') do
       puts opts
       exit
     end
   end.parse!
 
-def run
-  begin
+  def run
     create_dirs
     convert_plist_to_json
     print_file(FileHelpers.all_download_links, download_links)
-    print_file(FileHelpers.mandatory_download_links, download_links(true))
+    print_file(FileHelpers.mandatory_download_links, download_links(only_mandatory: true))
     print_file(FileHelpers.json_file, JSON.pretty_generate(packages))
     open_lpx_download_links
   rescue RuntimeError => e
     puts "Error: #{e.message}"
-    puts "Please ensure that #{$app_name} is installed correctly on your system."
+    puts "Please ensure that #{LpxLinks.app_name} is installed correctly on your system."
     exit 1
   end
-end
 
   def open_lpx_download_links
     `open #{FileHelpers.links_dir}`
@@ -53,7 +59,7 @@ end
   end
 
   def convert_plist_to_json
-    `plutil -convert json \'#{FileHelpers.plist_file_path($app_name)}\' -o /tmp/lgp_content.json`
+    `plutil -convert json \'#{FileHelpers.plist_file_path(LpxLinks.app_name)}\' -o /tmp/lgp_content.json`
   end
 
   def packages
@@ -61,16 +67,16 @@ end
   end
 
   def read_packages
-    JSON.parse(File.read("/tmp/lgp_content.json"))["Packages"]
+    JSON.parse(File.read('/tmp/lgp_content.json'))['Packages']
   end
 
-  def download_links(only_mandatory = false)
+  def download_links(only_mandatory: false)
     links = []
     packages.each do |i|
-      next if only_mandatory && !i[1]["IsMandatory"]
+      next if only_mandatory && !i[1]['IsMandatory']
 
       # Use File.join to concatenate URL and remove redundant separators (i.e. //)
-      unresolved_download_url = File.join(FileHelpers.url, i[1]["DownloadName"])
+      unresolved_download_url = File.join(FileHelpers.url, i[1]['DownloadName'])
 
       # Convert to URI
       download_uri = URI(unresolved_download_url)
@@ -94,7 +100,7 @@ end
   end
 
   def print_file(file, content)
-    f = File.open(file, "w")
+    f = File.open(file, 'w')
     f.puts content
     f.close
   end
