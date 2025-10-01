@@ -107,10 +107,14 @@ enable_review_labels_security = true
 # Enable effort labels to help with review planning
 enable_review_labels_effort = true
 
-# Enable ticket compliance labels when issues are linked
-require_ticket_labels = true
+# Disable ticket compliance labels to reduce label noise
+# Only flag PRs that are missing tickets (via require_no_ticket_labels)
+# This aligns with Qodo Merge defaults and reduces clutter while still
+# encouraging issue linking for PRs that should have tickets
+require_ticket_labels = false
 
 # Enable "no ticket found" label to encourage issue linking
+# This will add a label only when a ticket is missing, not on every PR
 require_no_ticket_labels = true
 
 # -----------------------------------------------------------------------------
@@ -162,10 +166,13 @@ output_relevant_configurations = false
 # Uncomment and customize the section below to enable automatic reviews
 # when PRs are opened. By default, this is handled by GitHub App settings.
 #
+# Note: /describe is intentionally excluded from this example to prevent
+# accidental overwriting of user-written PR descriptions. Add it manually
+# if you want automatic PR description generation.
+#
 # [github_app]
 # pr_commands = [
-#     "/review",
-#     "/describe --pr_description.add_original_user_description=true"
+#     "/review"
 # ]
 
 # =============================================================================
