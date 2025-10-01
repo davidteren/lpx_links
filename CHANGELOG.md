@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- COPYRIGHT file documenting all contributors and license change rationale
+- Reference to COPYRIGHT file in README license section
+
+## [0.0.11] - 2025-10-01
+
+### Added
 - Local workflow testing script (`test_local_workflow.sh`) for validating changes before pushing to GitHub
 - Comprehensive testing documentation (`TEST_WORKFLOW.md`)
 - RuboCop configuration file (`.rubocop.yml`) with reasonable metric limits
