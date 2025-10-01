@@ -28,12 +28,12 @@ Open Terminal and paste one of these commands:
 
 **For Logic Pro**:
 ```bash
-cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Logic
+cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Logic
 ```
 
 **For MainStage**:
 ```bash
-cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://goo.gl/nUrpPi | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Mainstage
+cd ~/Downloads; mkdir -p lpx_links/app ; cd lpx_links/app ; curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 ; ./lpx_links.rb -n Mainstage
 ```
 
 ### 2. Find Your Links
@@ -79,7 +79,7 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
 After downloading, install all packages with this command:
 
 ```bash
-sudo ~/Downloads/lpx_links/install.sh ~/Downloads/logic_content
+sudo ~/Downloads/lpx_links/app/install.sh ~/Downloads/logic_content
 ```
 
 > **Note**: The install script needs a folder containing `.pkg` files, not the text file with links.
