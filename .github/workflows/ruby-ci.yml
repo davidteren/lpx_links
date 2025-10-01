@@ -45,7 +45,7 @@ jobs:
       run: bundle install
 
     - name: Run tests
-      run: bundle exec rspec
+      run: bundle exec rake test
 
     - name: Upload coverage results
       uses: actions/upload-artifact@v4
@@ -60,6 +60,6 @@ jobs:
         COVERAGE=$(grep -A 2 "Coverage" coverage/.last_run.json | tail -n 1 | cut -d ":" -f 2 | cut -d "}" -f 1 | tr -d " ")
         echo "Coverage: $COVERAGE%"
         if (( $(echo "$COVERAGE < 60" | bc -l) )); then
-          echo "Test coverage is below 90%"
+          echo "Test coverage is below 60%"
           exit 1
         fi
