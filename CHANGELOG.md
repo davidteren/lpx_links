@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **GitHub Pages completely redesigned** - Modern, user-friendly product page for musicians with responsive design, clear 3-step guide, and Logic Pro 11 compatibility
+
 ### Added
 - COPYRIGHT file documenting all contributors and license change rationale
 - Reference to COPYRIGHT file in README license section
