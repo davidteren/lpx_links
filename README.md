@@ -1,24 +1,27 @@
-
 # lpx_links
 
-lpx_links is a utility to get the direct download links for the additional sample/sound content for Logic Pro X and Mainstage.
+[![Ruby CI](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml/badge.svg)](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-- It gets the most current links
-- Creates a text file with all the links in them
-- Importing the links file into a download manager like the DownThemAll addon for FireFox should work well
+A Ruby utility to get direct download links for additional sample/sound content for Logic Pro X and MainStage.
 
-Includes Mandatory only list. Thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.
-   
-### Version  
-0.0.10 - adds support to specify Mainstage app to get direct download links for sample/sound content
+## Features
 
-0.0.9 - fixes issue where the install script attempted to re-download the pkg files 🤦‍
+- 🔗 **Direct Download Links** - Extracts current download URLs from Apple's content servers
+- 📝 **Text File Generation** - Creates organized text files with all download links
+- 🎯 **Mandatory vs. All** - Separate lists for essential packages vs. complete library
+- 🎹 **Multi-App Support** - Works with both Logic Pro X and MainStage
+- 📦 **Download Manager Ready** - Compatible with aria2, DownThemAll, and other download managers
+- 🧪 **Well Tested** - Comprehensive test suite with RSpec
+- 🔍 **Linted Code** - RuboCop-compliant codebase
 
-0.0.8 - adds logic to resolve relative parents in download URLs & Readme updates.
+> **Note**: Mandatory package list feature thanks to _Matteo Ceruti_ aka [Matatata](https://github.com/matatata) for the idea.
 
-0.0.7 - added mandatory file list & refactor of code.
+## Version
 
-0.0.6 - added version detection. Any version of Logic Pro X should work now.
+**Current Version**: 0.0.10
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
 
 ## Usage
 
@@ -67,9 +70,37 @@ To install all the downloaded packages use the following command:
 
 > Note: The install script expects a directory containing `.pkg` files as its argument, not a text file with download links.
 
-### Development  
-  
-Want to contribute? Fork and let me know.  
+## Development
+
+### Contributing
+
+Want to contribute? Great! Here's how:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run the local test script to validate your changes:
+   ```bash
+   ./test_local_workflow.sh
+   ```
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Testing
+
+This project includes a comprehensive local testing script that validates:
+- RuboCop linting (0 offenses required)
+- RSpec test suite (all tests must pass)
+- End-to-end workflow simulation
+
+See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for detailed testing documentation.
+
+### Code Quality
+
+- **Linting**: RuboCop with custom configuration (`.rubocop.yml`)
+- **Testing**: RSpec with SimpleCov for coverage tracking
+- **CI/CD**: GitHub Actions runs linting and tests on all PRs
   
 License  
 ----  
