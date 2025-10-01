@@ -1,0 +1,193 @@
+# Qodo Merge Configuration for lpx_links
+# ========================================
+# This configuration is optimized for a small Ruby utility project using Minitest
+# with high code quality standards (90% test coverage, 0 RuboCop offenses).
+#
+# Configuration Philosophy:
+# - Focus on code logic efficiency and Ruby best practices
+# - Emphasize test quality and comprehensive coverage
+# - Encourage focused, single-purpose PRs
+# - Disable enterprise features not needed for open-source utilities
+#
+# Documentation: https://qodo-merge-docs.qodo.ai/usage-guide/configuration_options/
+
+# =============================================================================
+# PR REVIEWER CONFIGURATION
+# =============================================================================
+[pr_reviewer]
+
+# -----------------------------------------------------------------------------
+# Custom Instructions for Ruby/Minitest Projects
+# -----------------------------------------------------------------------------
+# These instructions guide the AI to provide feedback tailored to our project's
+# specific needs and quality standards.
+extra_instructions = """\
+In the 'Code feedback' section, emphasize:
+- **Ruby Idioms**: Is the code following Ruby best practices and idiomatic patterns?
+- **Logic Efficiency**: Is the code logic efficient and avoiding unnecessary complexity?
+- **Edge Cases**: Does the code handle edge cases appropriately (nil values, empty arrays, missing keys)?
+- **Error Handling**: Are errors handled gracefully with appropriate error types?
+
+In the 'Tests feedback' section, emphasize:
+- **Test Value**: Are the tests valuable and focused on implementation behavior (not just syntax)?
+- **Test Efficiency**: Are tests efficient, avoiding unnecessary setup or redundant assertions?
+- **Branch Coverage**: Are all logic branches covered by tests (target: 90%+ coverage)?
+- **Minitest Patterns**: Are Minitest assertions used appropriately (assert_equal, assert_raises, assert_nil, etc.)?
+- **Test Isolation**: Are tests properly isolated with setup/teardown methods to prevent test pollution?
+- **Stubbing Quality**: Is stubbing used appropriately to isolate units under test?
+
+In the 'Possible issues' section, emphasize:
+- **Security**: Any potential security vulnerabilities (command injection, path traversal, etc.)?
+- **Performance**: Any obvious performance bottlenecks or inefficiencies?
+- **Maintainability**: Is the code clear and maintainable for future developers?
+"""
+
+# -----------------------------------------------------------------------------
+# Review Sections - Enable/Disable Specific Feedback
+# -----------------------------------------------------------------------------
+
+# Enable PR scoring to track quality trends over time
+require_score_review = true
+
+# Enable test coverage review (critical for our 90% coverage standard)
+require_tests_review = true
+
+# Enable effort estimation to help reviewers plan their time
+require_estimate_effort_to_review = true
+
+# Disable contribution time estimation (not needed for small utility)
+require_estimate_contribution_time_cost = false
+
+# Enable "can be split" review to encourage focused PRs
+require_can_be_split_review = true
+
+# Enable security review (important even for small utilities)
+require_security_review = true
+
+# Enable TODO scanning to track technical debt
+require_todo_scan = true
+
+# Enable ticket analysis when GitHub issues are linked
+require_ticket_analysis_review = true
+
+# -----------------------------------------------------------------------------
+# Code Suggestions
+# -----------------------------------------------------------------------------
+
+# Number of code suggestions to generate (8 is good for small PRs)
+# Adjust down to 5 for very small changes, up to 10 for larger PRs
+num_code_suggestions = 8
+
+# Maximum number of findings in the review (3 is focused and actionable)
+num_max_findings = 3
+
+# -----------------------------------------------------------------------------
+# Review Presentation
+# -----------------------------------------------------------------------------
+
+# Use persistent comments (edit previous review instead of creating new ones)
+persistent_comment = true
+
+# Add update notification when persistent comment is edited
+final_update_message = true
+
+# Disable help text to keep reviews concise
+enable_help_text = false
+
+# Enable inline code comments for better context
+inline_code_comments = true
+
+# -----------------------------------------------------------------------------
+# PR Labels
+# -----------------------------------------------------------------------------
+
+# Enable security issue labels (important for all projects)
+enable_review_labels_security = true
+
+# Enable effort labels to help with review planning
+enable_review_labels_effort = true
+
+# Enable ticket compliance labels when issues are linked
+require_ticket_labels = true
+
+# Enable "no ticket found" label to encourage issue linking
+require_no_ticket_labels = true
+
+# -----------------------------------------------------------------------------
+# SOC2 and Enterprise Features
+# -----------------------------------------------------------------------------
+
+# Disable SOC2 ticket requirements (not applicable to open-source utility)
+require_soc2_ticket = false
+
+# =============================================================================
+# PR DESCRIPTION CONFIGURATION
+# =============================================================================
+[pr_description]
+
+# Generate AI-powered PR titles
+generate_ai_title = true
+
+# Use bullet points for better readability
+use_bullet_points = true
+
+# Add usage tips to help PR authors
+enable_help_text = false
+
+# =============================================================================
+# PR CODE SUGGESTIONS (IMPROVE TOOL) CONFIGURATION
+# =============================================================================
+[pr_code_suggestions]
+
+# Number of code suggestions for the improve tool
+num_code_suggestions = 6
+
+# Enable commitable suggestions (allows applying suggestions directly)
+commitable_code_suggestions = true
+
+# Enable persistent comments
+persistent_comment = true
+
+# =============================================================================
+# GENERAL CONFIGURATION
+# =============================================================================
+[config]
+
+# Output relevant configurations in collapsible section (useful for debugging)
+output_relevant_configurations = false
+
+# =============================================================================
+# AUTOMATION CONFIGURATION
+# =============================================================================
+# Uncomment and customize the section below to enable automatic reviews
+# when PRs are opened. By default, this is handled by GitHub App settings.
+#
+# [github_app]
+# pr_commands = [
+#     "/review",
+#     "/describe --pr_description.add_original_user_description=true"
+# ]
+
+# =============================================================================
+# NOTES FOR MAINTAINERS
+# =============================================================================
+# 
+# Testing the Configuration:
+# 1. Trigger a review on an existing PR: Comment `/review` on any PR
+# 2. Check that the review includes all enabled sections
+# 3. Verify that extra instructions are reflected in the feedback
+# 4. Adjust num_code_suggestions based on PR size and feedback quality
+#
+# Customization Tips:
+# - For very small PRs (< 50 lines): Set num_code_suggestions = 5
+# - For larger PRs (> 200 lines): Set num_code_suggestions = 10
+# - If reviews are too verbose: Disable less critical sections
+# - If reviews miss important issues: Add more specific extra_instructions
+#
+# Related Tools:
+# - RuboCop: Handles style and syntax (this config focuses on logic/tests)
+# - SimpleCov: Measures coverage (this config emphasizes coverage quality)
+# - Minitest: Test framework (this config optimizes for Minitest patterns)
+#
+# =============================================================================
+
