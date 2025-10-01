@@ -56,6 +56,47 @@ class LpxLinksTest < Minitest::Test
     end
   end
 
+  def test_read_packages_handles_missing_packages_key
+    json_without_packages = { 'SomeOtherKey' => 'value' }.to_json
+
+    File.stub(:read, json_without_packages) do
+      result = LpxLinks.read_packages
+
+      assert_nil result
+    end
+  end
+
+  def test_download_links_handles_empty_packages_array
+    empty_packages = { 'Packages' => {} }.to_json
+
+    File.stub(:read, empty_packages) do
+      FileHelpers.stub(:url, 'http://example.com/') do
+        links = LpxLinks.download_links
+
+        assert_equal 0, links.length
+      end
+    end
+  end
+
+  def test_download_links_handles_malformed_package_data
+    malformed_packages = {
+      'Packages' => {
+        'package1' => { 'DownloadName' => 'valid.pkg', 'IsMandatory' => true },
+        'package2' => { 'IsMandatory' => true }, # Missing DownloadName
+        'package3' => { 'DownloadName' => 'another.pkg' } # Missing IsMandatory
+      }
+    }.to_json
+
+    File.stub(:read, malformed_packages) do
+      FileHelpers.stub(:url, 'http://example.com/') do
+        # Should raise TypeError when DownloadName is nil (can't convert nil to String in File.join)
+        assert_raises(TypeError) do
+          LpxLinks.download_links
+        end
+      end
+    end
+  end
+
   def test_read_packages_raises_error_when_file_not_found
     File.stub(:read, ->(_path) { raise Errno::ENOENT, 'No such file' }) do
       assert_raises(Errno::ENOENT) do
@@ -106,13 +147,12 @@ class LpxLinksTest < Minitest::Test
 
     Tempfile.create('test_output') do |tempfile|
       content = %w[line1 line2 line3]
+      expected_content = "line1\nline2\nline3\n"
 
       LpxLinks.print_file(tempfile.path, content)
 
       written_content = File.read(tempfile.path)
-      assert_includes written_content, 'line1'
-      assert_includes written_content, 'line2'
-      assert_includes written_content, 'line3'
+      assert_equal expected_content, written_content
     end
   end
 
