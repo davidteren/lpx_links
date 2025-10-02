@@ -506,6 +506,7 @@
             overflow: hidden;
             margin: 1rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .terminal-header {
@@ -514,6 +515,38 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            justify-content: space-between;
+        }
+
+        .terminal-dots {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .copy-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .copy-btn.copied {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.5);
+            color: var(--success);
         }
 
         .terminal-dot {
@@ -839,10 +872,16 @@
 
                     <div class="terminal-mini">
                         <div class="terminal-header">
-                            <div class="terminal-dot dot-red"></div>
-                            <div class="terminal-dot dot-yellow"></div>
-                            <div class="terminal-dot dot-green"></div>
-                            <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            <div class="terminal-dots">
+                                <div class="terminal-dot dot-red"></div>
+                                <div class="terminal-dot dot-yellow"></div>
+                                <div class="terminal-dot dot-green"></div>
+                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            </div>
+                            <button class="copy-btn" onclick="copyTerminalCommands(this)">
+                                <span class="copy-icon">📋</span>
+                                <span class="copy-text">Copy</span>
+                            </button>
                         </div>
                         <div class="terminal-content-mini">
                             <div class="terminal-line">
@@ -884,10 +923,16 @@
                         <strong>Install aria2 (one-time setup):</strong>
                         <div class="terminal-mini">
                             <div class="terminal-header">
-                                <div class="terminal-dot dot-red"></div>
-                                <div class="terminal-dot dot-yellow"></div>
-                                <div class="terminal-dot dot-green"></div>
-                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
+                                    <span class="copy-icon">📋</span>
+                                    <span class="copy-text">Copy</span>
+                                </button>
                             </div>
                             <div class="terminal-content-mini">
                                 <div class="terminal-line">
@@ -902,10 +947,16 @@
                         <strong>Download packages:</strong>
                         <div class="terminal-mini">
                             <div class="terminal-header">
-                                <div class="terminal-dot dot-red"></div>
-                                <div class="terminal-dot dot-yellow"></div>
-                                <div class="terminal-dot dot-green"></div>
-                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
+                                    <span class="copy-icon">📋</span>
+                                    <span class="copy-text">Copy</span>
+                                </button>
                             </div>
                             <div class="terminal-content-mini">
                                 <div class="terminal-line">
@@ -940,10 +991,16 @@
 
                     <div class="terminal-mini">
                         <div class="terminal-header">
-                            <div class="terminal-dot dot-red"></div>
-                            <div class="terminal-dot dot-yellow"></div>
-                            <div class="terminal-dot dot-green"></div>
-                            <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            <div class="terminal-dots">
+                                <div class="terminal-dot dot-red"></div>
+                                <div class="terminal-dot dot-yellow"></div>
+                                <div class="terminal-dot dot-green"></div>
+                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            </div>
+                            <button class="copy-btn" onclick="copyTerminalCommands(this)">
+                                <span class="copy-icon">📋</span>
+                                <span class="copy-text">Copy</span>
+                            </button>
                         </div>
                         <div class="terminal-content-mini">
                             <div class="terminal-line">
@@ -1062,29 +1119,36 @@
             });
         });
 
-        // Terminal click to copy for mini terminals
-        document.querySelectorAll('.terminal-content-mini').forEach(terminal => {
-            terminal.addEventListener('click', function() {
-                const commands = [];
-                this.querySelectorAll('.command').forEach(cmd => {
-                    commands.push(cmd.textContent.trim());
-                });
-
-                if (commands.length > 0) {
-                    navigator.clipboard.writeText(commands.join(' && ')).then(() => {
-                        // Visual feedback
-                        this.style.background = 'rgba(16, 185, 129, 0.1)';
-                        setTimeout(() => {
-                            this.style.background = '';
-                        }, 300);
-                    });
-                }
+        // Copy terminal commands function
+        function copyTerminalCommands(button) {
+            const terminal = button.closest('.terminal-mini');
+            const commands = [];
+            terminal.querySelectorAll('.command').forEach(cmd => {
+                commands.push(cmd.textContent.trim());
             });
 
-            // Add click hint
-            terminal.style.cursor = 'pointer';
-            terminal.title = 'Click to copy commands';
-        });
+            if (commands.length > 0) {
+                navigator.clipboard.writeText(commands.join(' && ')).then(() => {
+                    // Update button state
+                    const copyText = button.querySelector('.copy-text');
+                    const copyIcon = button.querySelector('.copy-icon');
+                    const originalText = copyText.textContent;
+                    const originalIcon = copyIcon.textContent;
+
+                    button.classList.add('copied');
+                    copyText.textContent = 'Copied!';
+                    copyIcon.textContent = '✓';
+
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        copyText.textContent = originalText;
+                        copyIcon.textContent = originalIcon;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+        }
 
         // Parallax effect for orbs
         document.addEventListener('mousemove', (e) => {
