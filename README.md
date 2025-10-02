@@ -52,18 +52,20 @@ For faster, resumable downloads, use **aria2** (a download manager):
 
 ### Install aria2
 
-**Easy Installation** (Recommended for Apple Silicon):
+**Easy Installation** (Recommended):
 ```bash
 curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
 ```
 
 The installation script automatically:
-- Installs bundled aria2 v1.37.0 (no download required)
-- Works on Apple Silicon Macs (M1, M2, M3, M4)
+- **Detects Homebrew** - If you have Homebrew installed, you'll be offered a choice:
+  - Install via Homebrew (works on Intel & Apple Silicon, auto-updates)
+  - Install bundled binary (faster, Apple Silicon only)
+- **No Homebrew?** - Installs bundled aria2 v1.37.0 directly (Apple Silicon only)
 - Requires macOS 12+ (Monterey or later)
 - Takes less than a minute
 
-**For Intel Macs or if you have Homebrew**:
+**Manual Homebrew Installation**:
 ```bash
 brew install aria2
 ```
