@@ -130,27 +130,62 @@ if [ "$MACOS_VERSION" -lt 12 ]; then
 fi
 print_green "macOS $(sw_vers -productVersion) detected"
 
-# Determine script location to find bundled binary
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-REPO_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
-BUNDLED_BINARY="$REPO_ROOT/vendor/aria2/bin/aria2c"
+# Determine if we're running from a local clone or via curl | bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" 2>/dev/null && pwd )"
+BUNDLED_BINARY=""
 
-# Check if bundled binary exists
-if [ ! -f "$BUNDLED_BINARY" ]; then
-    print_red "Bundled aria2 binary not found at: $BUNDLED_BINARY"
-    print_yellow "This may indicate a corrupted installation or incomplete download"
-    print_yellow "Please try downloading lpx_links again from:"
-    print_yellow "  https://github.com/davidteren/lpx_links"
+# Try to find bundled binary in local repository first
+if [ -n "$SCRIPT_DIR" ]; then
+    REPO_ROOT="$( cd "$SCRIPT_DIR/.." 2>/dev/null && pwd )"
+    if [ -f "$REPO_ROOT/vendor/aria2/bin/aria2c" ]; then
+        BUNDLED_BINARY="$REPO_ROOT/vendor/aria2/bin/aria2c"
+        print_blue "Found bundled aria2 binary in local repository"
+    fi
+fi
+
+# If not found locally, download from GitHub
+if [ -z "$BUNDLED_BINARY" ] || [ ! -f "$BUNDLED_BINARY" ]; then
+    print_blue "Downloading aria2 binary from GitHub..."
+
+    # Create temporary directory
+    TEMP_DIR=$(mktemp -d)
+    trap "rm -rf $TEMP_DIR" EXIT
+
+    BUNDLED_BINARY="$TEMP_DIR/aria2c"
+    BINARY_URL="https://raw.githubusercontent.com/davidteren/lpx_links/main/vendor/aria2/bin/aria2c"
+
+    if ! curl -fsSL -o "$BUNDLED_BINARY" "$BINARY_URL"; then
+        print_red "Failed to download aria2 binary from GitHub"
+        print_yellow "Please check your internet connection and try again"
+        print_yellow "Or clone the repository and run the script locally:"
+        print_yellow "  git clone https://github.com/davidteren/lpx_links.git"
+        print_yellow "  cd lpx_links"
+        print_yellow "  bash scripts/install_aria2.sh"
+        exit 1
+    fi
+
+    print_green "Download complete"
+fi
+
+# Verify binary integrity with SHA256 checksum
+print_blue "Verifying binary integrity..."
+EXPECTED_SHA="70cdce6d22c5208a8175e5906bf04220806850a4c97efa6676e66b0a9c1de751"
+ACTUAL_SHA=$(shasum -a 256 "$BUNDLED_BINARY" | awk '{print $1}')
+
+if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
+    print_red "Binary integrity check failed!"
+    print_red "Expected SHA256: $EXPECTED_SHA"
+    print_red "Actual SHA256:   $ACTUAL_SHA"
+    print_yellow "This may indicate a corrupted download or tampered binary"
+    print_yellow "Please try again or report this issue at:"
+    print_yellow "  https://github.com/davidteren/lpx_links/issues"
     exit 1
 fi
 
-print_blue "Found bundled aria2 binary"
+print_green "Binary integrity verified"
 
-# Verify the bundled binary is executable
-if [ ! -x "$BUNDLED_BINARY" ]; then
-    print_blue "Making bundled binary executable..."
-    chmod +x "$BUNDLED_BINARY"
-fi
+# Make the binary executable
+chmod +x "$BUNDLED_BINARY"
 
 # Install to /usr/local/bin
 print_blue "Installing aria2c to /usr/local/bin..."

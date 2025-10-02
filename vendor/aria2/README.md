@@ -8,6 +8,7 @@ This directory contains a pre-compiled aria2 binary for macOS to simplify instal
 - **Architecture**: ARM64 (Apple Silicon)
 - **Source**: Official Homebrew bottle
 - **License**: GPL-2.0-or-later
+- **SHA256 Checksum**: `70cdce6d22c5208a8175e5906bf04220806850a4c97efa6676e66b0a9c1de751`
 
 ## Why Bundle the Binary?
 
@@ -28,8 +29,10 @@ To update the aria2 binary in the future:
 
 1. Install aria2 via Homebrew: `brew install aria2`
 2. Copy the binary: `cp /opt/homebrew/Cellar/aria2/VERSION/bin/aria2c vendor/aria2/bin/`
-3. Update this README with the new version information
-4. Test the installation script
+3. Calculate the new SHA256 checksum: `shasum -a 256 vendor/aria2/bin/aria2c`
+4. Update this README with the new version information and checksum
+5. Update the checksum in `scripts/install_aria2.sh` (search for `EXPECTED_SHA`)
+6. Test the installation script
 
 ## License
 

@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
 - **aria2 installation script** - Fixed 401 Unauthorized error by bundling aria2 binary instead of downloading from GitHub Container Registry
+- **aria2 installation script** - Fixed `curl | bash` installation method by downloading binary from GitHub when not running from local repository
+- **aria2 installation script** - Added SHA256 checksum verification for binary integrity and security
 
 ### Changed
 - **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon
