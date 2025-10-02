@@ -7,14 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
+### Added
+- **aria2 installation script** (`scripts/install_aria2.sh`) - One-command installation of aria2 without requiring Homebrew
+  - Automatic detection of macOS version and architecture (Intel/Apple Silicon)
+  - Downloads official Homebrew bottles (aria2 v1.37.0)
+  - Installs to `/usr/local/bin/aria2c` with verification
+  - Color-coded output and error handling
+- CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)
 
 ### Changed
+- **README.md aria2 installation instructions** - Replaced outdated v1.33.0 DMG installer with new one-command installation script
+  - Updated from aria2 v1.33.0 (2017) to v1.37.0 (2023)
+  - Simplified installation from manual DMG to single command
+  - Added Homebrew as alternative installation method
 - Improved file handling robustness in `print_file` method by using block form of `File.open` to ensure automatic file closure even if exceptions occur
 
-### Added
-- CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)
+### Fixed
+- Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
 
 ### Changed
 - **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon

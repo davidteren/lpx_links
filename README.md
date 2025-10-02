@@ -52,7 +52,21 @@ For faster, resumable downloads, use **aria2** (a download manager):
 
 ### Install aria2
 
-Download and install: [aria2 v1.33.0 installer](https://github.com/aria2/aria2/releases/download/release-1.33.0/aria2-1.33.0-osx-darwin.dmg)
+**Easy Installation** (Recommended):
+```bash
+curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
+```
+
+**Alternative - Using Homebrew**:
+```bash
+brew install aria2
+```
+
+The installation script automatically:
+- Detects your Mac type (Intel or Apple Silicon)
+- Downloads the latest aria2 (v1.37.0)
+- Installs it without requiring Homebrew
+- Takes less than a minute
 
 ### Download Content
 
