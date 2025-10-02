@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **aria2 installation script** - Fixed 401 Unauthorized error by bundling aria2 binary instead of downloading from GitHub Container Registry
 - **aria2 installation script** - Fixed `curl | bash` installation method by downloading binary from GitHub when not running from local repository
 - **aria2 installation script** - Added SHA256 checksum verification for binary integrity and security
+- **aria2 installation script** - Fixed user input prompts not working with `curl | bash` by reading from `/dev/tty` instead of stdin
 
 ### Changed
 - **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon
