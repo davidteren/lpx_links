@@ -410,38 +410,115 @@
             line-height: 1.6;
         }
 
-        /* Interactive Terminal */
-        .terminal-section {
+        /* Steps Section */
+        .steps-section {
             padding: 6rem 2rem;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(20px);
         }
 
-        .terminal-container {
-            max-width: 800px;
+        .steps-container {
+            max-width: 1400px;
             margin: 0 auto;
-            text-align: center;
         }
 
-        .terminal {
-            background: #1e293b;
-            border-radius: 12px;
+        .steps-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            margin-top: 2rem;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .step-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .sub-step {
+            margin: 1.5rem 0;
+        }
+
+        .sub-step strong {
+            display: block;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .terminal-mini {
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .terminal-header {
             background: #334155;
-            padding: 1rem;
+            padding: 0.5rem 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .terminal-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
 
@@ -449,31 +526,75 @@
         .dot-yellow { background: #f59e0b; }
         .dot-green { background: #10b981; }
 
-        .terminal-content {
-            padding: 2rem;
+        .terminal-content-mini {
+            padding: 1rem;
             text-align: left;
             font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            overflow-x: auto;
         }
 
         .terminal-line {
-            margin-bottom: 0.5rem;
-            opacity: 0;
-            animation: type-in 0.5s ease-out forwards;
-        }
-
-        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
-        .terminal-line:nth-child(2) { animation-delay: 1s; }
-        .terminal-line:nth-child(3) { animation-delay: 1.5s; }
-
-        @keyframes type-in {
-            to { opacity: 1; }
+            margin-bottom: 0.3rem;
+            white-space: nowrap;
         }
 
         .prompt { color: var(--success); }
         .command { color: var(--accent); }
         .output { color: var(--gray); }
+        .comment { color: #64748b; font-style: italic; }
+
+        .step-result {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .step-result strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-result ul {
+            margin: 0.5rem 0 0 1.5rem;
+            color: var(--gray);
+        }
+
+        .step-result li {
+            margin: 0.3rem 0;
+        }
+
+        .step-result code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .step-note {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 3px solid var(--warning);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .step-note strong {
+            color: var(--warning);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .step-note code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
 
         /* Stats Section */
         .stats-section {
@@ -561,6 +682,18 @@
 
             .cards-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .steps-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .step-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .terminal-content-mini {
+                font-size: 0.7rem;
             }
 
             .stats-grid {
@@ -687,41 +820,145 @@
         </div>
     </section>
 
-    <section id="quickstart" class="terminal-section">
-        <div class="terminal-container">
+    <section id="quickstart" class="steps-section">
+        <div class="steps-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">Get Started in Seconds</h2>
+                <h2 class="section-title">Three Simple Steps</h2>
                 <p class="section-subtitle">
-                    Just copy, paste, and run. It's that simple.
+                    Get your Logic Pro content downloaded and installed in minutes
                 </p>
             </div>
 
-            <div class="terminal fade-in">
-                <div class="terminal-header">
-                    <div class="terminal-dot dot-red"></div>
-                    <div class="terminal-dot dot-yellow"></div>
-                    <div class="terminal-dot dot-green"></div>
-                    <span style="margin-left: 1rem; color: #94a3b8; font-size: 0.9rem;">Terminal</span>
+            <div class="steps-cards">
+                <!-- Step 1: Generate Links -->
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📝</div>
+                    <h3>Generate Download Links</h3>
+                    <p class="step-description">Run the tool to create text files with direct download links for all Logic Pro content.</p>
+
+                    <div class="terminal-mini">
+                        <div class="terminal-header">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                            <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                        </div>
+                        <div class="terminal-content-mini">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cd ~/Downloads; mkdir -p lpx_links/app</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cd lpx_links/app</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">./lpx_links.rb -n Logic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-result">
+                        <strong>✅ Result:</strong> Creates <code>~/Desktop/lpx_download_links/</code> with:
+                        <ul>
+                            <li><code>mandatory_download_links.txt</code> - 28 essential packages</li>
+                            <li><code>all_download_links.txt</code> - 900+ complete library</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="terminal-content">
-                    <div class="terminal-line">
-                        <span class="prompt">$</span> 
-                        <span class="command">cd ~/Downloads; mkdir -p lpx_links/app</span>
+
+                <!-- Step 2: Download Content -->
+                <div class="step-card fade-in">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">⬇️</div>
+                    <h3>Download Content</h3>
+                    <p class="step-description">Use aria2 for fast, resumable downloads. Install aria2 first if you don't have it.</p>
+
+                    <div class="sub-step">
+                        <strong>Install aria2 (one-time setup):</strong>
+                        <div class="terminal-mini">
+                            <div class="terminal-header">
+                                <div class="terminal-dot dot-red"></div>
+                                <div class="terminal-dot dot-yellow"></div>
+                                <div class="terminal-dot dot-green"></div>
+                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            </div>
+                            <div class="terminal-content-mini">
+                                <div class="terminal-line">
+                                    <span class="prompt">$</span>
+                                    <span class="command">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="terminal-line">
-                        <span class="prompt">$</span> 
-                        <span class="command">cd lpx_links/app</span>
+
+                    <div class="sub-step">
+                        <strong>Download packages:</strong>
+                        <div class="terminal-mini">
+                            <div class="terminal-header">
+                                <div class="terminal-dot dot-red"></div>
+                                <div class="terminal-dot dot-yellow"></div>
+                                <div class="terminal-dot dot-green"></div>
+                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                            </div>
+                            <div class="terminal-content-mini">
+                                <div class="terminal-line">
+                                    <span class="comment"># Essential packages only (28 items):</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="prompt">$</span>
+                                    <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span>
+                                </div>
+                                <div class="terminal-line" style="margin-top: 0.5rem;">
+                                    <span class="comment"># OR all packages (900+ items):</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="prompt">$</span>
+                                    <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="terminal-line">
-                        <span class="prompt">$</span> 
-                        <span class="command">curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1</span>
+
+                    <div class="step-result">
+                        <strong>✅ Result:</strong> All <code>.pkg</code> files downloaded to <code>~/Downloads/logic_content/</code>
                     </div>
-                    <div class="terminal-line">
-                        <span class="prompt">$</span> 
-                        <span class="command">./lpx_links.rb -n Logic</span>
+                </div>
+
+                <!-- Step 3: Install Packages -->
+                <div class="step-card fade-in">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📦</div>
+                    <h3>Install Packages</h3>
+                    <p class="step-description">Run the install script to install all downloaded packages at once.</p>
+
+                    <div class="terminal-mini">
+                        <div class="terminal-header">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                            <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
+                        </div>
+                        <div class="terminal-content-mini">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="terminal-line">
-                        <span class="output">✅ Generated download links in ~/Desktop/lpx_download_links/</span>
+
+                    <div class="step-result">
+                        <strong>✅ Result:</strong> All Logic Pro content installed and ready to use!
+                    </div>
+
+                    <div class="step-note">
+                        <strong>⚠️ Note:</strong> The install script needs a folder containing <code>.pkg</code> files, not the text file with links.
                     </div>
                 </div>
             </div>
@@ -825,27 +1062,29 @@
             });
         });
 
-        // Terminal click to copy
-        document.querySelector('.terminal-content').addEventListener('click', function() {
-            const commands = [
-                'cd ~/Downloads; mkdir -p lpx_links/app',
-                'cd lpx_links/app',
-                'curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1',
-                './lpx_links.rb -n Logic'
-            ];
-            
-            navigator.clipboard.writeText(commands.join(' && ')).then(() => {
-                // Visual feedback
-                this.style.background = 'rgba(16, 185, 129, 0.1)';
-                setTimeout(() => {
-                    this.style.background = '';
-                }, 300);
-            });
-        });
+        // Terminal click to copy for mini terminals
+        document.querySelectorAll('.terminal-content-mini').forEach(terminal => {
+            terminal.addEventListener('click', function() {
+                const commands = [];
+                this.querySelectorAll('.command').forEach(cmd => {
+                    commands.push(cmd.textContent.trim());
+                });
 
-        // Add click hint to terminal
-        document.querySelector('.terminal-content').style.cursor = 'pointer';
-        document.querySelector('.terminal-content').title = 'Click to copy all commands';
+                if (commands.length > 0) {
+                    navigator.clipboard.writeText(commands.join(' && ')).then(() => {
+                        // Visual feedback
+                        this.style.background = 'rgba(16, 185, 129, 0.1)';
+                        setTimeout(() => {
+                            this.style.background = '';
+                        }, 300);
+                    });
+                }
+            });
+
+            // Add click hint
+            terminal.style.cursor = 'pointer';
+            terminal.title = 'Click to copy commands';
+        });
 
         // Parallax effect for orbs
         document.addEventListener('mousemove', (e) => {
