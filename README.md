@@ -62,6 +62,8 @@ The installation script automatically:
   - Install via Homebrew (works on Intel & Apple Silicon, auto-updates)
   - Install bundled binary (faster, Apple Silicon only)
 - **No Homebrew?** - Installs bundled aria2 v1.37.0 directly (Apple Silicon only)
+- **No sudo required** - Installs to `~/.local/bin` in your home directory
+- **Automatic PATH setup** - Adds to your `.zshrc` so `aria2c` command works immediately
 - Requires macOS 12+ (Monterey or later)
 - Takes less than a minute
 

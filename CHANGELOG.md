@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **aria2 installation script** - Added SHA256 checksum verification for binary integrity and security
 - **aria2 installation script** - Fixed user input prompts not working with `curl | bash` by reading from `/dev/tty` instead of stdin
 - **aria2 installation script** - Added non-interactive environment detection with graceful fallbacks (skip reinstall prompt, exit with helpful message for installation method choice)
+- **aria2 installation script** - Changed installation location from `/usr/local/bin` (requires sudo) to `~/.local/bin` (user directory, no sudo needed)
+- **aria2 installation script** - Automatically adds `~/.local/bin` to PATH in `.zshrc` for immediate availability of `aria2c` command
 
 ### Changed
 - **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon

@@ -207,54 +207,84 @@ print_green "Binary integrity verified"
 # Make the binary executable
 chmod +x "$BUNDLED_BINARY"
 
-# Install to /usr/local/bin
-print_blue "Installing aria2c to /usr/local/bin..."
-print_yellow "This step requires administrator privileges (sudo)"
+# Install to user's local bin directory (no sudo needed)
+INSTALL_DIR="$HOME/.local/bin"
+print_blue "Installing aria2c to $INSTALL_DIR..."
+print_blue "(No administrator privileges required)"
 
-# Validate sudo privileges upfront to avoid multiple prompts
-sudo -v
-
-# Create /usr/local/bin if it doesn't exist
-if [ ! -d "/usr/local/bin" ]; then
-    sudo mkdir -p /usr/local/bin
+# Create ~/.local/bin if it doesn't exist
+if [ ! -d "$INSTALL_DIR" ]; then
+    mkdir -p "$INSTALL_DIR"
 fi
 
 # Copy binary
-if ! sudo cp "$BUNDLED_BINARY" /usr/local/bin/aria2c; then
+if ! cp "$BUNDLED_BINARY" "$INSTALL_DIR/aria2c"; then
     print_red "Failed to install aria2c"
     exit 1
 fi
 
 # Make executable
-sudo chmod +x /usr/local/bin/aria2c
+chmod +x "$INSTALL_DIR/aria2c"
 
 print_green "Installation complete"
 
+# Add to PATH in .zshrc if not already there
+ZSHRC="$HOME/.zshrc"
+PATH_EXPORT="export PATH=\"\$HOME/.local/bin:\$PATH\""
+
+if [ -f "$ZSHRC" ]; then
+    if ! grep -q "\.local/bin" "$ZSHRC"; then
+        print_blue "Adding $INSTALL_DIR to PATH in .zshrc..."
+        echo "" >> "$ZSHRC"
+        echo "# Added by lpx_links aria2 installer" >> "$ZSHRC"
+        echo "$PATH_EXPORT" >> "$ZSHRC"
+        print_green "PATH updated in .zshrc"
+        print_yellow "Please restart your terminal or run: source ~/.zshrc"
+    else
+        print_blue ".local/bin already in PATH"
+    fi
+else
+    print_yellow "Warning: .zshrc not found. Creating it..."
+    echo "# Added by lpx_links aria2 installer" > "$ZSHRC"
+    echo "$PATH_EXPORT" >> "$ZSHRC"
+    print_green "Created .zshrc with PATH configuration"
+    print_yellow "Please restart your terminal or run: source ~/.zshrc"
+fi
+
+# Add to current session PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # Verify installation
 print_blue "Verifying installation..."
-if [ -x "/usr/local/bin/aria2c" ]; then
-    INSTALLED_VERSION=$(/usr/local/bin/aria2c --version | head -n 1)
+if [ -x "$INSTALL_DIR/aria2c" ]; then
+    INSTALLED_VERSION=$("$INSTALL_DIR/aria2c" --version | head -n 1)
     print_green "aria2 successfully installed!"
     echo ""
     print_blue "═══════════════════════════════════════════════════════"
     print_green "$INSTALLED_VERSION"
     print_blue "═══════════════════════════════════════════════════════"
     echo ""
+    print_green "Installation location: $INSTALL_DIR/aria2c"
+    echo ""
     print_blue "You can now use aria2c to download Logic Pro content:"
     echo ""
     echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
     echo ""
 
-    # Check if aria2c is in PATH
-    if ! command -v aria2c &> /dev/null; then
-        print_yellow "Note: aria2c is not in your PATH. You may need to:"
-        print_yellow "  - Restart your terminal, or"
-        print_yellow "  - Add /usr/local/bin to your PATH"
-        print_yellow "  - Use the full path: /usr/local/bin/aria2c"
+    # Test if aria2c is accessible in current session
+    if command -v aria2c &> /dev/null; then
+        print_green "✓ aria2c is ready to use in this terminal session"
+    else
+        print_yellow "Note: To use 'aria2c' command in this terminal:"
+        print_yellow "  Run: source ~/.zshrc"
+        print_yellow "  Or restart your terminal"
+        print_yellow ""
+        print_yellow "For now, you can use the full path:"
+        print_yellow "  $INSTALL_DIR/aria2c"
     fi
 else
     print_red "Installation verification failed"
-    print_yellow "Could not find an executable aria2c at /usr/local/bin/aria2c"
+    print_yellow "Could not find an executable aria2c at $INSTALL_DIR/aria2c"
     exit 1
 fi
 
