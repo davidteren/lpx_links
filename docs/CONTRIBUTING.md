@@ -51,18 +51,23 @@ lpx_links/
 │   ├── lpx_links_test.rb     # Main application tests
 │   └── lib/
 │       └── file_helpers_test.rb  # Helper module tests
+├── scripts/
+│   ├── test_local_workflow.sh    # Local validation script
+│   └── install.sh                # Package installation script
+├── docs/
+│   ├── CONTRIBUTING.md       # Developer guide
+│   ├── BEST_PRACTICES.md     # Code standards
+│   └── TEST_WORKFLOW.md      # Testing documentation
 ├── Rakefile                  # Test task definitions
 ├── Gemfile                   # Dependency management
-├── .rubocop.yml              # RuboCop linting configuration
-├── test_local_workflow.sh    # Local validation script
-└── install.sh                # Package installation script
+└── .rubocop.yml              # RuboCop linting configuration
 ```
 
 ### Key Files
 
 - **`lpx_links.rb`**: Main executable that handles CLI argument parsing, orchestrates the workflow, and generates output files
 - **`lib/file_helpers.rb`**: Module containing path resolution, URL construction, and application discovery logic
-- **`test_local_workflow.sh`**: Comprehensive local testing script that validates RuboCop compliance, runs tests, and simulates end-user workflow
+- **`scripts/test_local_workflow.sh`**: Comprehensive local testing script that validates RuboCop compliance, runs tests, and simulates end-user workflow
 
 ## Testing
 
@@ -92,7 +97,7 @@ After running tests, open `coverage/index.html` in your browser to view the cove
 
 **Always run the local workflow script before submitting a PR**:
 ```bash
-./test_local_workflow.sh
+./scripts/test_local_workflow.sh
 ```
 
 This script:
@@ -253,7 +258,7 @@ Follow [Keep a Changelog](https://keepachangelog.com/) format.
 
 ### Before Submitting
 
-1. ✅ Run `./test_local_workflow.sh` - all checks must pass
+1. ✅ Run `./scripts/test_local_workflow.sh` - all checks must pass
 2. ✅ Update CHANGELOG.md in the `[Unreleased]` section
 3. ✅ Ensure RuboCop has 0 offenses
 4. ✅ Verify all tests pass with 90%+ coverage
@@ -340,7 +345,7 @@ Automated PR review tool configured in `.qodo_merge.toml`:
 
 - **Issues**: Check [existing issues](https://github.com/davidteren/lpx_links/issues) or create a new one
 - **Discussions**: Use GitHub Discussions for questions
-- **Documentation**: See [README.md](README.md), [BEST_PRACTICES.md](BEST_PRACTICES.md), and [TEST_WORKFLOW.md](TEST_WORKFLOW.md)
+- **Documentation**: See [README.md](../README.md), [BEST_PRACTICES.md](BEST_PRACTICES.md), and [TEST_WORKFLOW.md](TEST_WORKFLOW.md)
 
 ## Additional Resources
 

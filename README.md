@@ -79,7 +79,7 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
 After downloading, install all packages with this command:
 
 ```bash
-sudo ~/Downloads/lpx_links/app/install.sh ~/Downloads/logic_content
+sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content
 ```
 
 > **Note**: The install script needs a folder containing `.pkg` files, not the text file with links.
@@ -106,16 +106,16 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
 
 ## For Developers
 
-Want to contribute or modify the code? See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+Want to contribute or modify the code? See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for:
 - Development setup instructions
 - Testing guidelines
 - Code quality standards
 - Pull request process
 
 Technical documentation:
-- [CONTRIBUTING.md](CONTRIBUTING.md) - Developer guide
-- [BEST_PRACTICES.md](BEST_PRACTICES.md) - Code standards and architecture
-- [TEST_WORKFLOW.md](TEST_WORKFLOW.md) - Testing documentation
+- [CONTRIBUTING.md](docs/CONTRIBUTING.md) - Developer guide
+- [BEST_PRACTICES.md](docs/BEST_PRACTICES.md) - Code standards and architecture
+- [TEST_WORKFLOW.md](docs/TEST_WORKFLOW.md) - Testing documentation
 
 ## Credits
 
