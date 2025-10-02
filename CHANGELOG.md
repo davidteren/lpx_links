@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **aria2 installation script** (`scripts/install_aria2.sh`) - One-command installation of aria2 without requiring Homebrew
   - Automatic detection of macOS version and architecture (Intel/Apple Silicon)
   - Downloads official Homebrew bottles (aria2 v1.37.0)
-  - Installs to `/usr/local/bin/aria2c` with verification
+  - Installs to `~/.local/bin/aria2c` (user directory, no sudo required)
+  - Automatic shell detection and PATH configuration (supports zsh, bash, and other shells)
   - Color-coded output and error handling
   - **Homebrew detection** - Automatically detects if Homebrew is installed and offers user choice between Homebrew or bundled binary installation
 - CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)

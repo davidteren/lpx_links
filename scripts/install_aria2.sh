@@ -228,27 +228,32 @@ chmod +x "$INSTALL_DIR/aria2c"
 
 print_green "Installation complete"
 
-# Add to PATH in .zshrc if not already there
-ZSHRC="$HOME/.zshrc"
-PATH_EXPORT="export PATH=\"\$HOME/.local/bin:\$PATH\""
-
-if [ -f "$ZSHRC" ]; then
-    if ! grep -q "\.local/bin" "$ZSHRC"; then
-        print_blue "Adding $INSTALL_DIR to PATH in .zshrc..."
-        echo "" >> "$ZSHRC"
-        echo "# Added by lpx_links aria2 installer" >> "$ZSHRC"
-        echo "$PATH_EXPORT" >> "$ZSHRC"
-        print_green "PATH updated in .zshrc"
-        print_yellow "Please restart your terminal or run: source ~/.zshrc"
-    else
-        print_blue ".local/bin already in PATH"
-    fi
+# Detect shell and determine appropriate RC file
+# Check for common shells in order of preference
+if [ -n "$ZSH_VERSION" ] || [ "$SHELL" = "$(command -v zsh)" ]; then
+    RC_FILE="$HOME/.zshrc"
+elif [ -n "$BASH_VERSION" ] || [ "$SHELL" = "$(command -v bash)" ]; then
+    RC_FILE="$HOME/.bashrc"
 else
-    print_yellow "Warning: .zshrc not found. Creating it..."
-    echo "# Added by lpx_links aria2 installer" > "$ZSHRC"
-    echo "$PATH_EXPORT" >> "$ZSHRC"
-    print_green "Created .zshrc with PATH configuration"
-    print_yellow "Please restart your terminal or run: source ~/.zshrc"
+    # Fallback for other shells like sh, ksh, etc.
+    RC_FILE="$HOME/.profile"
+fi
+
+PATH_EXPORT="export PATH=\"\$HOME/.local/bin:\$PATH\""
+INSTALLER_COMMENT="# Added by lpx_links aria2 installer"
+
+if ! grep -qF "$INSTALLER_COMMENT" "$RC_FILE" 2>/dev/null; then
+    print_blue "Adding $INSTALL_DIR to PATH in $RC_FILE..."
+    # Create file if it doesn't exist
+    touch "$RC_FILE"
+    # Add a newline for separation if file is not empty
+    [ -s "$RC_FILE" ] && echo "" >> "$RC_FILE"
+    echo "$INSTALLER_COMMENT" >> "$RC_FILE"
+    echo "$PATH_EXPORT" >> "$RC_FILE"
+    print_green "PATH updated in $RC_FILE"
+    print_yellow "Please restart your terminal or run: source $RC_FILE"
+else
+    print_blue "$INSTALL_DIR is already configured in your shell's PATH."
 fi
 
 # Add to current session PATH
