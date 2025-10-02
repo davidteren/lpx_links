@@ -123,5 +123,5 @@ Special thanks to [Matteo Ceruti (Matatata)](https://github.com/matatata) for th
 
 ## License
 
-MIT License - Free to use, modify, and distribute. See [LICENSE](LICENSE) for details.
+MIT License - Free to use, modify, and distribute. See [LICENSE](docs/LICENSE) for details.
 
