@@ -1028,7 +1028,7 @@
                     </div>
 
                     <div class="sub-step">
-                        <strong>Download packages:</strong>
+                        <strong>Essential packages only (28 items):</strong>
                         <div class="terminal-mini">
                             <div class="terminal-header">
                                 <div class="terminal-dots">
@@ -1044,15 +1044,29 @@
                             </div>
                             <div class="terminal-content-mini">
                                 <div class="terminal-line">
-                                    <span class="comment"># Essential packages only (28 items):</span>
-                                </div>
-                                <div class="terminal-line">
                                     <span class="prompt">$</span>
                                     <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span>
                                 </div>
-                                <div class="terminal-line" style="margin-top: 0.5rem;">
-                                    <span class="comment"># OR all packages (900+ items):</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-step">
+                        <strong>OR all packages (900+ items):</strong>
+                        <div class="terminal-mini">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
                                 </div>
+                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
+                                    <span class="copy-icon">📋</span>
+                                    <span class="copy-text">Copy</span>
+                                </button>
+                            </div>
+                            <div class="terminal-content-mini">
                                 <div class="terminal-line">
                                     <span class="prompt">$</span>
                                     <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</span>
