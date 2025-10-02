@@ -57,16 +57,17 @@ For faster, resumable downloads, use **aria2** (a download manager):
 curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
 ```
 
-**Alternative - Using Homebrew**:
-```bash
-brew install aria2
-```
-
 The installation script automatically:
 - Detects your Mac type (Intel or Apple Silicon)
 - Downloads the latest aria2 (v1.37.0)
 - Installs it without requiring Homebrew
 - Takes less than a minute
+
+**Alternative - If you have Homebrew installed**:
+```bash
+brew install aria2
+```
+> **Note:** If you already have Homebrew installed, using `brew install aria2` is the simplest option.
 
 ### Download Content
 
