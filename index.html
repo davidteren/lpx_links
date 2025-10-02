@@ -16,7 +16,7 @@
     <meta name="twitter:description" content="Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader.">
     <meta name="twitter:image" content="https://davidteren.github.io/lpx_links/images/og-image.png">
     <link rel="canonical" href="https://davidteren.github.io/lpx_links/">
-    <title>lpx_links - Direct Download Links for Logic Pro & MainStage Content</title>
+    <title>LPX Links - Fast Downloads for Logic Pro Content</title>
 
     <!-- Structured Data (JSON-LD) for SEO -->
     <script type="application/ld+json">
@@ -191,10 +191,22 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+        }
+
+        .logo-text {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
@@ -846,7 +858,10 @@
 
     <nav>
         <div class="nav-container">
-            <div class="logo">🎹 lpx_links</div>
+            <div class="logo">
+                <span class="logo-icon">🎹</span>
+                <span class="logo-text">LPX Links</span>
+            </div>
             <div class="hamburger">
                 <span></span>
                 <span></span>
