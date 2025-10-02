@@ -1,6 +1,18 @@
 #!/bin/bash
 # aria2 Installation Script for macOS
 # Downloads and installs aria2 from Homebrew bottles without requiring Homebrew
+#
+# Supports macOS 12+ (Monterey, Ventura, Sonoma, Sequoia)
+# Supports both Intel (x86_64) and Apple Silicon (ARM64)
+#
+# MAINTENANCE NOTE: SHA256 checksums are tied to aria2 v1.37.0
+# When aria2 is updated, checksums must be refreshed from:
+# https://formulae.brew.sh/api/formula/aria2.json
+#
+# SECURITY NOTE: This script downloads precompiled binaries from Homebrew's
+# official infrastructure (ghcr.io) and verifies them with SHA256 checksums.
+# While this provides reasonable security, users who require maximum security
+# should install via Homebrew directly: brew install aria2
 
 set -e  # Exit on error
 
@@ -139,8 +151,8 @@ if ! tar -xzf "$BOTTLE_FILE"; then
 fi
 print_green "Extraction complete"
 
-# Find aria2c binary
-ARIA2C_BINARY=$(find "$TEMP_DIR" -name "aria2c" -type f | head -n 1)
+# Find aria2c binary (look specifically in bin subdirectory for robustness)
+ARIA2C_BINARY=$(find "$TEMP_DIR" -path "*/bin/aria2c" -type f | head -n 1)
 if [ -z "$ARIA2C_BINARY" ]; then
     print_red "Could not find aria2c binary in extracted files"
     exit 1
@@ -149,6 +161,9 @@ fi
 # Install to /usr/local/bin
 print_blue "Installing aria2c to /usr/local/bin..."
 print_yellow "This step requires administrator privileges (sudo)"
+
+# Validate sudo privileges upfront to avoid multiple prompts
+sudo -v
 
 # Create /usr/local/bin if it doesn't exist
 if [ ! -d "/usr/local/bin" ]; then
@@ -168,8 +183,8 @@ print_green "Installation complete"
 
 # Verify installation
 print_blue "Verifying installation..."
-if command -v aria2c &> /dev/null; then
-    INSTALLED_VERSION=$(aria2c --version | head -n 1)
+if [ -x "/usr/local/bin/aria2c" ]; then
+    INSTALLED_VERSION=$(/usr/local/bin/aria2c --version | head -n 1)
     print_green "aria2 successfully installed!"
     echo ""
     print_blue "═══════════════════════════════════════════════════════"
@@ -180,10 +195,17 @@ if command -v aria2c &> /dev/null; then
     echo ""
     echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
     echo ""
+
+    # Check if aria2c is in PATH
+    if ! command -v aria2c &> /dev/null; then
+        print_yellow "Note: aria2c is not in your PATH. You may need to:"
+        print_yellow "  - Restart your terminal, or"
+        print_yellow "  - Add /usr/local/bin to your PATH"
+        print_yellow "  - Use the full path: /usr/local/bin/aria2c"
+    fi
 else
     print_red "Installation verification failed"
-    print_yellow "aria2c was installed but is not in your PATH"
-    print_yellow "You may need to restart your terminal or add /usr/local/bin to your PATH"
+    print_yellow "Could not find an executable aria2c at /usr/local/bin/aria2c"
     exit 1
 fi
 
