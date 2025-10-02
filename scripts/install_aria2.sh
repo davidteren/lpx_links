@@ -41,7 +41,7 @@ echo ""
 if command -v aria2c &> /dev/null; then
     CURRENT_VERSION=$(aria2c --version | head -n 1 | awk '{print $3}')
     print_yellow "aria2 is already installed (version $CURRENT_VERSION)"
-    read -p "Do you want to reinstall? (y/N): " -n 1 -r
+    read -p "Do you want to reinstall? (y/N): " -n 1 -r </dev/tty
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         print_blue "Installation cancelled."
@@ -67,7 +67,7 @@ if command -v brew &> /dev/null; then
     echo "     - Apple Silicon (ARM64) only"
     echo "     - No automatic updates"
     echo ""
-    read -p "Choose installation method (1=Homebrew, 2=Bundled): " -n 1 -r
+    read -p "Choose installation method (1=Homebrew, 2=Bundled): " -n 1 -r </dev/tty
     echo
     echo ""
 
