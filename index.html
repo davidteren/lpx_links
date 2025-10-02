@@ -457,9 +457,6 @@
         }
 
         .step-number {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
             width: 50px;
             height: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -470,11 +467,19 @@
             font-size: 1.5rem;
             font-weight: 800;
             color: white;
+            flex-shrink: 0;
         }
 
         .step-icon {
             font-size: 3rem;
-            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .step-card h3 {
@@ -865,8 +870,10 @@
             <div class="steps-cards">
                 <!-- Step 1: Generate Links -->
                 <div class="step-card fade-in">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">📝</div>
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">📝</div>
+                    </div>
                     <h3>Generate Download Links</h3>
                     <p class="step-description">Run the tool to create text files with direct download links for all Logic Pro content.</p>
 
@@ -914,8 +921,10 @@
 
                 <!-- Step 2: Download Content -->
                 <div class="step-card fade-in">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">⬇️</div>
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">⬇️</div>
+                    </div>
                     <h3>Download Content</h3>
                     <p class="step-description">Use aria2 for fast, resumable downloads. Install aria2 first if you don't have it.</p>
 
@@ -984,8 +993,10 @@
 
                 <!-- Step 3: Install Packages -->
                 <div class="step-card fade-in">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">📦</div>
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">📦</div>
+                    </div>
                     <h3>Install Packages</h3>
                     <p class="step-description">Run the install script to install all downloaded packages at once.</p>
 
