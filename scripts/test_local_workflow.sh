@@ -15,7 +15,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TEST_DIR="$HOME/Desktop/lpx_links_test"
 TEST_APP_DIR="$TEST_DIR/app"
 TEST_DOWNLOAD_DIR="$TEST_DIR/downloads"
