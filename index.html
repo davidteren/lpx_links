@@ -423,8 +423,8 @@
         }
 
         .steps-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -478,7 +478,7 @@
         .step-header {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            justify-content: space-between;
             margin-bottom: 1.5rem;
         }
 
@@ -722,16 +722,23 @@
                 grid-template-columns: 1fr;
             }
 
-            .steps-cards {
-                grid-template-columns: 1fr;
-            }
-
             .step-card {
                 padding: 2rem 1.5rem;
             }
 
+            .step-icon {
+                font-size: 2.5rem;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
             .terminal-content-mini {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+                padding: 0.75rem;
             }
 
             .stats-grid {
@@ -871,8 +878,8 @@
                 <!-- Step 1: Generate Links -->
                 <div class="step-card fade-in">
                     <div class="step-header">
-                        <div class="step-number">1</div>
                         <div class="step-icon">📝</div>
+                        <div class="step-number">1</div>
                     </div>
                     <h3>Generate Download Links</h3>
                     <p class="step-description">Run the tool to create text files with direct download links for all Logic Pro content.</p>
@@ -922,8 +929,8 @@
                 <!-- Step 2: Download Content -->
                 <div class="step-card fade-in">
                     <div class="step-header">
-                        <div class="step-number">2</div>
                         <div class="step-icon">⬇️</div>
+                        <div class="step-number">2</div>
                     </div>
                     <h3>Download Content</h3>
                     <p class="step-description">Use aria2 for fast, resumable downloads. Install aria2 first if you don't have it.</p>
@@ -994,8 +1001,8 @@
                 <!-- Step 3: Install Packages -->
                 <div class="step-card fade-in">
                     <div class="step-header">
-                        <div class="step-number">3</div>
                         <div class="step-icon">📦</div>
+                        <div class="step-number">3</div>
                     </div>
                     <h3>Install Packages</h3>
                     <p class="step-description">Run the install script to install all downloaded packages at once.</p>
