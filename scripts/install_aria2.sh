@@ -41,8 +41,17 @@ echo ""
 if command -v aria2c &> /dev/null; then
     CURRENT_VERSION=$(aria2c --version | head -n 1 | awk '{print $3}')
     print_yellow "aria2 is already installed (version $CURRENT_VERSION)"
-    read -p "Do you want to reinstall? (y/N): " -n 1 -r </dev/tty
-    echo
+
+    # Check if we can prompt for input (interactive environment)
+    if [ -c /dev/tty ]; then
+        read -p "Do you want to reinstall? (y/N): " -n 1 -r </dev/tty
+        echo
+    else
+        # In non-interactive environments, default to 'No' (safe default)
+        print_yellow "Non-interactive mode detected. Skipping reinstallation."
+        REPLY="n"
+    fi
+
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         print_blue "Installation cancelled."
         exit 0
@@ -67,6 +76,17 @@ if command -v brew &> /dev/null; then
     echo "     - Apple Silicon (ARM64) only"
     echo "     - No automatic updates"
     echo ""
+
+    # Check if we can prompt for input (interactive environment)
+    if ! [ -c /dev/tty ]; then
+        print_red "Cannot prompt for installation method in a non-interactive environment."
+        print_yellow "Please run this script in an interactive terminal, or"
+        print_yellow "install aria2 directly using one of these methods:"
+        print_yellow "  - Homebrew: brew install aria2"
+        print_yellow "  - Clone repo and run: bash scripts/install_aria2.sh"
+        exit 1
+    fi
+
     read -p "Choose installation method (1=Homebrew, 2=Bundled): " -n 1 -r </dev/tty
     echo
     echo ""
