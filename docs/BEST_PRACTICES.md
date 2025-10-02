@@ -10,7 +10,8 @@ A small Ruby utility that extracts direct download URLs for Logic Pro X and Main
   - `Rakefile` — Test task wiring for Minitest via `rake test`.
   - `Gemfile` — Development/test dependencies (Minitest, reporters, SimpleCov, Rake).
   - `.rubocop.yml` — Style and metrics configuration (Ruby 2.7 target).
-  - Scripts/docs: `install.sh`, `test_local_workflow.sh`, `TEST_WORKFLOW.md`, `README.md`.
+  - Scripts: `scripts/install.sh`, `scripts/test_local_workflow.sh`
+  - Docs: `docs/CONTRIBUTING.md`, `docs/BEST_PRACTICES.md`, `docs/TEST_WORKFLOW.md`, `README.md`.
   - Meta/config: `.qodo_merge.toml` (PR review/quality automation), CI in `.github/`.
 - `lib/` — Library code (non-executable code, helpers, utilities).
 - `test/` — Minitest test suite
@@ -28,14 +29,14 @@ Conventions
 - Organization: Tests reside under `test/`, mirroring code locations (e.g., `test/lib/..._test.rb`). Files end with `_test.rb`.
 - Execution:
   - Unit tests: `bundle exec rake test` or `rake test` if environment is set up.
-  - Local end-to-end workflow: `./test_local_workflow.sh` (runs RuboCop, test suite, and simulates user flow).
+  - Local end-to-end workflow: `./scripts/test_local_workflow.sh` (runs RuboCop, test suite, and simulates user flow).
 - Mocking/Stubbing: Prefer Minitest’s built-in `stub` to isolate filesystem, environment, and shell calls:
   - Stub `File.read`, `File.exist?`, `Dir.home`, backticks (`` `cmd` ``), and helpers in `FileHelpers` as needed.
   - Keep tests deterministic and independent of host macOS setup.
 - Coverage Expectations: Target 90%+ line coverage; cover success paths, edge cases, and error branches.
 - Unit vs Integration:
   - Unit: Validate pure logic (path building, sorting, filtering, memoization, error propagation).
-  - Integration/E2E: Use `test_local_workflow.sh` to simulate the full CLI pipeline and verify generated files where possible.
+  - Integration/E2E: Use `scripts/test_local_workflow.sh` to simulate the full CLI pipeline and verify generated files where possible.
 
 ## 4. Code Style
 - Ruby Version: Target Ruby 2.7 (see `.rubocop.yml`).
@@ -51,7 +52,7 @@ Conventions
   - Files: snake_case matching the primary class/module where applicable.
 - Comments/Docs:
   - Use concise comments where non-obvious behavior exists (shelling out, side effects, OS assumptions).
-  - Keep README/TEST_WORKFLOW.md up to date when user-facing behavior changes.
+  - Keep README/docs/TEST_WORKFLOW.md up to date when user-facing behavior changes.
 - Error Handling:
   - Raise clear errors in helpers (e.g., when app resources are missing) and handle at the top-level (`run`) with user-friendly messages and non-zero exit.
   - Avoid rescuing overly-broad exceptions unless necessary; allow JSON parsing errors to surface in tests when appropriate.
@@ -67,7 +68,7 @@ Conventions
 
 ## 6. Do's and Don'ts
 - Do
-  - Run `./test_local_workflow.sh` before pushing changes; it enforces RuboCop, tests, and basic workflow.
+  - Run `./scripts/test_local_workflow.sh` before pushing changes; it enforces RuboCop, tests, and basic workflow.
   - Keep code RuboCop-clean; adjust `.rubocop.yml` sparingly and with justification.
   - Add unit tests for new logic, including error branches and edge cases (nil/missing keys, empty structures).
   - Use `File.join`, `URI`, `Pathname.cleanpath` for all paths/URLs; avoid manual string concatenation.
@@ -95,7 +96,7 @@ Conventions
 - Setup
   - Install Ruby dependencies: `bundle install`
   - Run tests: `bundle exec rake test`
-  - Local workflow validation: `./test_local_workflow.sh`
+  - Local workflow validation: `./scripts/test_local_workflow.sh`
 
 ## 8. Other Notes
 - Platform Assumptions: macOS with Logic Pro or MainStage installed for the full workflow; unit tests do not require installed apps.

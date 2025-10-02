@@ -1,10 +1,10 @@
 # Local Workflow Testing Guide
 
-This document explains how to use the `test_local_workflow.sh` script to validate changes before pushing to GitHub.
+This document explains how to use the `scripts/test_local_workflow.sh` script to validate changes before pushing to GitHub.
 
 ## Purpose
 
-The `test_local_workflow.sh` script simulates the complete end-user workflow using your local code changes, allowing you to:
+The `scripts/test_local_workflow.sh` script simulates the complete end-user workflow using your local code changes, allowing you to:
 
 - Test changes without pushing to GitHub
 - Validate that the workflow works end-to-end
@@ -27,7 +27,7 @@ The `test_local_workflow.sh` script simulates the complete end-user workflow usi
 Simply run the script from the repository root:
 
 ```bash
-./test_local_workflow.sh
+./scripts/test_local_workflow.sh
 ```
 
 ### What the Script Does
@@ -93,7 +93,7 @@ After a successful run, you'll find:
 ### Test Current Branch
 
 ```bash
-./test_local_workflow.sh
+./scripts/test_local_workflow.sh
 ```
 
 ### Test After Making Changes
@@ -101,7 +101,7 @@ After a successful run, you'll find:
 1. Make your code changes
 2. Run the script again:
    ```bash
-   ./test_local_workflow.sh
+   ./scripts/test_local_workflow.sh
    ```
 3. The script automatically cleans up and re-tests
 
@@ -112,7 +112,7 @@ After a successful run, you'll find:
 git checkout feature/my-branch
 
 # Run the test script
-./test_local_workflow.sh
+./scripts/test_local_workflow.sh
 ```
 
 ## Troubleshooting
@@ -142,7 +142,7 @@ If tests fail:
 
 If you get a "Permission denied" error:
 ```bash
-chmod +x test_local_workflow.sh
+chmod +x scripts/test_local_workflow.sh
 ```
 
 ## Integration with Development Workflow
@@ -152,7 +152,7 @@ chmod +x test_local_workflow.sh
 1. **Make changes** to your code
 2. **Run the test script**:
    ```bash
-   ./test_local_workflow.sh
+   ./scripts/test_local_workflow.sh
    ```
 3. **Review generated files** in `~/Desktop/lpx_download_links/`
 4. **If tests pass**, commit your changes:
@@ -174,7 +174,7 @@ Always run this script before creating or updating a pull request:
 git checkout fix/rubocop-linting
 
 # Run the test script
-./test_local_workflow.sh
+./scripts/test_local_workflow.sh
 
 # If all tests pass, push
 git push origin fix/rubocop-linting
