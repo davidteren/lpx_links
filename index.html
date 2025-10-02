@@ -952,7 +952,7 @@
             <div class="section-header fade-in">
                 <h2 class="section-title">Three Simple Steps</h2>
                 <p class="section-subtitle">
-                    Get your Logic Pro content downloaded and installed in minutes
+                    Get your Logic Pro and MainStage content downloaded and installed in minutes
                 </p>
             </div>
 
@@ -963,7 +963,7 @@
                         <div class="step-number">1</div>
                     </div>
                     <h3>Generate Download Links</h3>
-                    <p class="step-description">Run the tool to create text files with direct download links for all Logic Pro content.</p>
+                    <p class="step-description">Run this single command to create text files with direct download links for both Logic Pro and MainStage content.</p>
 
                     <div class="terminal-mini">
                         <div class="terminal-header">
@@ -981,19 +981,7 @@
                         <div class="terminal-content-mini">
                             <div class="terminal-line">
                                 <span class="prompt">$</span>
-                                <span class="command">cd ~/Downloads; mkdir -p lpx_links/app</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">cd lpx_links/app</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">./lpx_links.rb -n Logic</span>
+                                <span class="command">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span>
                             </div>
                         </div>
                     </div>
