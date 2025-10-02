@@ -30,9 +30,9 @@ if [ ! -x "$BUNDLED_BINARY" ]; then
 fi
 echo -e "${GREEN}✓ Binary is executable${NC}"
 
-# Test 3: Check binary architecture
-ARCH=$("$BUNDLED_BINARY" --version | head -1)
-echo -e "${GREEN}✓ Binary version: $ARCH${NC}"
+# Test 3: Check binary version
+VERSION_INFO=$("$BUNDLED_BINARY" --version | head -1)
+echo -e "${GREEN}✓ Binary version: $VERSION_INFO${NC}"
 
 # Test 4: Verify it's ARM64
 FILE_INFO=$(file "$BUNDLED_BINARY")
