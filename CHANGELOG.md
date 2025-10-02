@@ -13,7 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Downloads official Homebrew bottles (aria2 v1.37.0)
   - Installs to `/usr/local/bin/aria2c` with verification
   - Color-coded output and error handling
+  - **Homebrew detection** - Automatically detects if Homebrew is installed and offers user choice between Homebrew or bundled binary installation
 - CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)
+- **Bundled aria2 binary** - Pre-compiled aria2 v1.37.0 ARM64 binary in `vendor/aria2/bin/` for offline installation
+- **Test scripts** for aria2 installation verification (`test_aria2_bundle.sh`, `test_installation_flow.sh`, `test_homebrew_detection.sh`)
 
 ### Changed
 - **README.md aria2 installation instructions** - Replaced outdated v1.33.0 DMG installer with new one-command installation script

@@ -49,6 +49,57 @@ if command -v aria2c &> /dev/null; then
     fi
 fi
 
+# Check if Homebrew is installed
+HOMEBREW_INSTALLED=false
+if command -v brew &> /dev/null; then
+    HOMEBREW_INSTALLED=true
+    print_blue "Homebrew detected on your system"
+    echo ""
+    print_blue "You have two installation options:"
+    echo ""
+    echo "  1. Install via Homebrew (recommended if you use Homebrew)"
+    echo "     - Automatically updates with 'brew upgrade'"
+    echo "     - Works on both Intel and Apple Silicon"
+    echo "     - Managed by Homebrew"
+    echo ""
+    echo "  2. Install bundled binary (faster, no Homebrew needed)"
+    echo "     - Instant installation from bundled binary"
+    echo "     - Apple Silicon (ARM64) only"
+    echo "     - No automatic updates"
+    echo ""
+    read -p "Choose installation method (1=Homebrew, 2=Bundled): " -n 1 -r
+    echo
+    echo ""
+
+    if [[ $REPLY =~ ^[1]$ ]]; then
+        print_blue "Installing via Homebrew..."
+        if brew install aria2; then
+            print_green "aria2 successfully installed via Homebrew!"
+            INSTALLED_VERSION=$(aria2c --version | head -n 1)
+            echo ""
+            print_blue "═══════════════════════════════════════════════════════"
+            print_green "$INSTALLED_VERSION"
+            print_blue "═══════════════════════════════════════════════════════"
+            echo ""
+            print_blue "You can now use aria2c to download Logic Pro content:"
+            echo ""
+            echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
+            echo ""
+            exit 0
+        else
+            print_red "Homebrew installation failed"
+            print_yellow "Falling back to bundled binary installation..."
+            echo ""
+        fi
+    elif [[ $REPLY =~ ^[2]$ ]]; then
+        print_blue "Proceeding with bundled binary installation..."
+        echo ""
+    else
+        print_red "Invalid choice. Please run the script again and choose 1 or 2."
+        exit 1
+    fi
+fi
+
 # Detect architecture
 ARCH=$(uname -m)
 print_blue "Detecting system architecture..."
