@@ -21,9 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Simplified installation from manual DMG to single command
   - Added Homebrew as alternative installation method
 - Improved file handling robustness in `print_file` method by using block form of `File.open` to ensure automatic file closure even if exceptions occur
+- **aria2 installation approach** - Changed from downloading Homebrew bottles to bundling pre-compiled binary
+  - Bundled aria2 v1.37.0 ARM64 binary in `vendor/aria2/bin/` directory
+  - Eliminates GitHub Container Registry authentication issues
+  - Provides faster, more reliable installation experience
+  - Currently supports Apple Silicon (ARM64) only
 
 ### Fixed
 - Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
+- **aria2 installation script** - Fixed 401 Unauthorized error by bundling aria2 binary instead of downloading from GitHub Container Registry
 
 ### Changed
 - **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon

@@ -1,18 +1,19 @@
 #!/bin/bash
 # aria2 Installation Script for macOS
-# Downloads and installs aria2 from Homebrew bottles without requiring Homebrew
+# Installs bundled aria2 binary without requiring Homebrew
 #
 # Supports macOS 12+ (Monterey, Ventura, Sonoma, Sequoia)
-# Supports both Intel (x86_64) and Apple Silicon (ARM64)
+# Currently supports Apple Silicon (ARM64) only
 #
-# MAINTENANCE NOTE: SHA256 checksums are tied to aria2 v1.37.0
-# When aria2 is updated, checksums must be refreshed from:
-# https://formulae.brew.sh/api/formula/aria2.json
+# MAINTENANCE NOTE: Binary is bundled in vendor/aria2/bin/aria2c
+# When aria2 needs to be updated:
+# 1. Install via Homebrew: brew install aria2
+# 2. Copy binary: cp /opt/homebrew/Cellar/aria2/VERSION/bin/aria2c vendor/aria2/bin/
+# 3. Update vendor/aria2/README.md with version info
 #
-# SECURITY NOTE: This script downloads precompiled binaries from Homebrew's
-# official infrastructure (ghcr.io) and verifies them with SHA256 checksums.
-# While this provides reasonable security, users who require maximum security
-# should install via Homebrew directly: brew install aria2
+# SECURITY NOTE: This script installs a pre-compiled binary bundled with lpx_links.
+# The binary is sourced from official Homebrew bottles.
+# Users who require maximum security should install via Homebrew directly: brew install aria2
 
 set -e  # Exit on error
 
@@ -53,10 +54,13 @@ ARCH=$(uname -m)
 print_blue "Detecting system architecture..."
 if [ "$ARCH" = "arm64" ]; then
     print_green "Apple Silicon (ARM64) detected"
-    ARCH_TYPE="arm64"
 elif [ "$ARCH" = "x86_64" ]; then
-    print_green "Intel (x86_64) detected"
-    ARCH_TYPE="x86_64"
+    print_red "Intel (x86_64) detected"
+    print_yellow "This script currently only supports Apple Silicon (ARM64)"
+    print_yellow "You can install aria2 using Homebrew instead:"
+    print_yellow "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+    print_yellow "  brew install aria2"
+    exit 1
 else
     print_red "Unsupported architecture: $ARCH"
     exit 1
@@ -65,97 +69,36 @@ fi
 # Detect macOS version
 print_blue "Detecting macOS version..."
 MACOS_VERSION=$(sw_vers -productVersion | cut -d. -f1)
-case $MACOS_VERSION in
-    15)
-        MACOS_NAME="sequoia"
-        print_green "macOS Sequoia (15.x) detected"
-        ;;
-    14)
-        MACOS_NAME="sonoma"
-        print_green "macOS Sonoma (14.x) detected"
-        ;;
-    13)
-        MACOS_NAME="ventura"
-        print_green "macOS Ventura (13.x) detected"
-        ;;
-    12)
-        MACOS_NAME="monterey"
-        print_green "macOS Monterey (12.x) detected"
-        ;;
-    *)
-        print_yellow "macOS version $MACOS_VERSION detected"
-        print_yellow "This script supports macOS 12-15 (Monterey through Sequoia)"
-        print_yellow "Attempting to use Monterey bottle as fallback..."
-        MACOS_NAME="monterey"
-        ;;
-esac
-
-# Homebrew bottle SHA256 checksums (aria2 1.37.0)
-# Source: https://formulae.brew.sh/api/formula/aria2.json
-declare -A BOTTLE_SHAS
-BOTTLE_SHAS["arm64_sequoia"]="fa42d58d43ca08575c6df1b9c8b6141edc97fdeec4c60fc3e39c50fffc7a301e"
-BOTTLE_SHAS["arm64_sonoma"]="89117256b91a5a87d4e31fb4054f7a0b45681a97627547b4db7498930486ff05"
-BOTTLE_SHAS["arm64_ventura"]="fd06b5b187243559c5f286767ab8f7f7d5f16d361bbd3ff9faf0909643920849"
-BOTTLE_SHAS["arm64_monterey"]="515cf8d197ec78753fa6b7462f775a3e625340e04f02207ae6dd1b6135afecdd"
-BOTTLE_SHAS["x86_64_sonoma"]="7ad8b56e2edf9df28458b88cc88faec5e7ada3bd9b5652420aa6168325a10260"
-BOTTLE_SHAS["x86_64_ventura"]="2821ec44b09994465d3bb8f8e4da6af8d2dd70cbdbf92f3b75d18ba65064e681"
-BOTTLE_SHAS["x86_64_monterey"]="41ce19b788f94a35025e306afa0f90a85164243d18f7350340cf75b9edf18b6c"
-
-# Determine bottle key
-BOTTLE_KEY="${ARCH_TYPE}_${MACOS_NAME}"
-BOTTLE_SHA="${BOTTLE_SHAS[$BOTTLE_KEY]}"
-
-if [ -z "$BOTTLE_SHA" ]; then
-    print_red "No precompiled binary available for $ARCH_TYPE on macOS $MACOS_NAME"
+if [ "$MACOS_VERSION" -lt 12 ]; then
+    print_red "macOS version $MACOS_VERSION detected"
+    print_yellow "This script supports macOS 12+ (Monterey and later)"
     print_yellow "You can install aria2 using Homebrew instead:"
     print_yellow "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
     print_yellow "  brew install aria2"
     exit 1
 fi
+print_green "macOS $(sw_vers -productVersion) detected"
 
-# Construct download URL
-BOTTLE_URL="https://ghcr.io/v2/homebrew/core/aria2/blobs/sha256:${BOTTLE_SHA}"
+# Determine script location to find bundled binary
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPO_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+BUNDLED_BINARY="$REPO_ROOT/vendor/aria2/bin/aria2c"
 
-# Create temporary directory
-TEMP_DIR=$(mktemp -d)
-trap "rm -rf $TEMP_DIR" EXIT
-
-print_blue "Downloading aria2 1.37.0..."
-BOTTLE_FILE="$TEMP_DIR/aria2.tar.gz"
-
-if ! curl -fsSL -o "$BOTTLE_FILE" "$BOTTLE_URL"; then
-    print_red "Failed to download aria2 bottle"
-    print_yellow "Please check your internet connection and try again"
+# Check if bundled binary exists
+if [ ! -f "$BUNDLED_BINARY" ]; then
+    print_red "Bundled aria2 binary not found at: $BUNDLED_BINARY"
+    print_yellow "This may indicate a corrupted installation or incomplete download"
+    print_yellow "Please try downloading lpx_links again from:"
+    print_yellow "  https://github.com/davidteren/lpx_links"
     exit 1
 fi
 
-print_green "Download complete"
+print_blue "Found bundled aria2 binary"
 
-# Verify checksum
-print_blue "Verifying download integrity..."
-DOWNLOADED_SHA=$(shasum -a 256 "$BOTTLE_FILE" | awk '{print $1}')
-if [ "$DOWNLOADED_SHA" != "$BOTTLE_SHA" ]; then
-    print_red "Checksum verification failed!"
-    print_red "Expected: $BOTTLE_SHA"
-    print_red "Got:      $DOWNLOADED_SHA"
-    exit 1
-fi
-print_green "Checksum verified"
-
-# Extract bottle
-print_blue "Extracting aria2..."
-cd "$TEMP_DIR"
-if ! tar -xzf "$BOTTLE_FILE"; then
-    print_red "Failed to extract aria2 bottle"
-    exit 1
-fi
-print_green "Extraction complete"
-
-# Find aria2c binary (look specifically in bin subdirectory for robustness)
-ARIA2C_BINARY=$(find "$TEMP_DIR" -path "*/bin/aria2c" -type f | head -n 1)
-if [ -z "$ARIA2C_BINARY" ]; then
-    print_red "Could not find aria2c binary in extracted files"
-    exit 1
+# Verify the bundled binary is executable
+if [ ! -x "$BUNDLED_BINARY" ]; then
+    print_blue "Making bundled binary executable..."
+    chmod +x "$BUNDLED_BINARY"
 fi
 
 # Install to /usr/local/bin
@@ -171,7 +114,7 @@ if [ ! -d "/usr/local/bin" ]; then
 fi
 
 # Copy binary
-if ! sudo cp "$ARIA2C_BINARY" /usr/local/bin/aria2c; then
+if ! sudo cp "$BUNDLED_BINARY" /usr/local/bin/aria2c; then
     print_red "Failed to install aria2c"
     exit 1
 fi
