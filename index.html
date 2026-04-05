@@ -3,1298 +3,1086 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader. Perfect for musicians and producers.">
-    <meta name="keywords" content="Logic Pro, MainStage, download links, Logic Pro content, Logic Pro sounds, Logic Pro loops, Logic Pro instruments, music production, audio production, DAW">
+    <meta name="description" content="Download all your Logic Pro and MainStage sounds, loops, and instruments faster than the built-in downloader. A free tool for musicians and producers.">
+    <meta name="keywords" content="Logic Pro, MainStage, download, sounds, loops, instruments, music production, DAW, Apple">
     <meta name="author" content="David Teren">
-    <meta property="og:title" content="lpx_links - Direct Download Links for Logic Pro Content">
-    <meta property="og:description" content="Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader.">
+    <meta property="og:title" content="LPX Links - Faster Logic Pro Content Downloads">
+    <meta property="og:description" content="Download all your Logic Pro sounds, loops, and instruments faster than the built-in downloader. Free and open source.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://davidteren.github.io/lpx_links/">
-    <meta property="og:image" content="https://davidteren.github.io/lpx_links/images/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="lpx_links - Direct Download Links for Logic Pro Content">
-    <meta name="twitter:description" content="Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader.">
-    <meta name="twitter:image" content="https://davidteren.github.io/lpx_links/images/og-image.png">
-    <link rel="canonical" href="https://davidteren.github.io/lpx_links/">
-
-    <!-- Preconnect to external domains for faster loading -->
+    <title>LPX Links - Faster Logic Pro Content Downloads</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- Async font loading - loads without blocking render -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
-
-    <title>LPX Links - Fast Downloads for Logic Pro Content</title>
-
-    <!-- Structured Data (JSON-LD) for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "lpx_links",
-      "description": "Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader.",
-      "url": "https://davidteren.github.io/lpx_links/",
-      "downloadUrl": "https://github.com/davidteren/lpx_links/releases",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "macOS",
-      "softwareVersion": "0.0.10",
-      "author": {
-        "@type": "Person",
-        "name": "David Teren",
-        "url": "https://github.com/davidteren"
-      },
-      "codeRepository": "https://github.com/davidteren/lpx_links",
-      "programmingLanguage": "Ruby",
-      "license": "https://opensource.org/licenses/MIT",
-      "keywords": [
-        "Logic Pro",
-        "MainStage",
-        "download links",
-        "Logic Pro content",
-        "Logic Pro sounds",
-        "Logic Pro loops",
-        "Logic Pro instruments",
-        "music production",
-        "audio production",
-        "DAW"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "ratingCount": "1"
-      }
-    }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
+            --bg: #111113;
+            --surface: #1a1a1f;
+            --surface-2: #222228;
+            --border: #2a2a32;
+            --border-bright: #3a3a45;
+            --text: #e8e8ec;
+            --text-dim: #9494a0;
+            --text-faint: #6b6b78;
+            --accent: #5e8ce6;
+            --accent-bright: #7ca3f0;
+            --accent-dim: rgba(94, 140, 230, 0.12);
+            --green: #4ade80;
+            --green-dim: rgba(74, 222, 128, 0.12);
+            --amber: #fbbf24;
+            --amber-dim: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark);
-            color: var(--light);
-            overflow-x: hidden;
-            line-height: 1.6;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated background */
-        .bg-canvas {
-            position: fixed;
+        /* --- Layout --- */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* --- Header --- */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background: rgba(17, 17, 19, 0.92);
+            backdrop-filter: blur(16px);
+            z-index: 100;
         }
 
-        .bg-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-move 20s linear infinite;
-        }
-
-        @keyframes grid-move {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .floating-orbs {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            animation: float-orb 15s ease-in-out infinite;
-        }
-
-        .orb:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent);
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .orb:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent);
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .orb:nth-child(3) {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.3), transparent);
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float-orb {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            backdrop-filter: blur(20px);
-            background: rgba(15, 23, 42, 0.8);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .logo-icon {
-            font-size: 1.8rem;
-            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
-        }
-
-        .logo-text {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--light);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            z-index: 10;
-        }
-
-        .hero-badge {
+        .logo-mark {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            animation: pulse-glow 2s ease-in-out infinite;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.5); }
+        .header-links { display: flex; gap: 1.25rem; align-items: center; }
+        .header-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .header-links a:hover { color: var(--text); }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 5rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent-bright);
+            background: var(--accent-dim);
+            border: 1px solid rgba(94, 140, 230, 0.2);
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            margin-bottom: 1.75rem;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff, #e2e8f0, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Interactive Cards Section */
-        .cards-section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 3rem;
+            font-size: clamp(2.25rem, 5.5vw, 3.25rem);
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.25rem;
         }
 
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.65;
         }
 
-        .cards-grid {
+        /* --- Waveform visualizer --- */
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 48px;
+            margin-bottom: 2.5rem;
+        }
+
+        .waveform .bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.3); opacity: 0.4; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* --- What is this --- */
+        .what-section {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .what-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-
-        .card p {
-            color: var(--gray);
-            line-height: 1.6;
-        }
-
-        /* Steps Section */
-        .steps-section {
-            padding: 6rem 0;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(20px);
-        }
-
-        .steps-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .steps-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2.5rem;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-        }
-
-        .step-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .step-icon {
-            font-size: 3rem;
-            flex-shrink: 0;
-        }
-
-        .step-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .step-card h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-
-        .step-description {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .sub-step {
-            margin: 1.5rem 0;
-        }
-
-        .sub-step strong {
-            display: block;
-            color: var(--light);
-            margin-bottom: 0.5rem;
-        }
-
-        .terminal-mini {
-            background: #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .terminal-header {
-            background: #334155;
-            padding: 0.5rem 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            justify-content: space-between;
-        }
-
-        .terminal-dots {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .copy-btn {
-            background: rgba(99, 102, 241, 0.2);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: var(--light);
-            padding: 0.3rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .copy-btn:hover {
-            background: rgba(99, 102, 241, 0.3);
-            border-color: rgba(99, 102, 241, 0.5);
-        }
-
-        .copy-btn.copied {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: rgba(16, 185, 129, 0.5);
-            color: var(--success);
-        }
-
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-
-        .terminal-content-mini {
-            padding: 1rem;
-            text-align: left;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.75rem;
-            line-height: 1.5;
-            overflow-x: auto;
-        }
-
-        .terminal-line {
-            margin-bottom: 0.3rem;
-            white-space: nowrap;
-        }
-
-        .prompt { color: var(--success); }
-        .command { color: var(--accent); }
-        .output { color: var(--gray); }
-        .comment { color: #64748b; font-style: italic; }
-
-        .step-result {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 3px solid var(--success);
-            padding: 1rem;
-            border-radius: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
             margin-top: 1.5rem;
         }
 
-        .step-result strong {
-            color: var(--success);
-            display: block;
+        .what-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .what-card-icon {
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
 
-        .step-result ul {
-            margin: 0.5rem 0 0 1.5rem;
-            color: var(--gray);
+        .what-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
         }
 
-        .step-result li {
-            margin: 0.3rem 0;
-        }
-
-        .step-result code {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
+        .what-card p {
             font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.55;
         }
 
-        .step-note {
-            background: rgba(245, 158, 11, 0.1);
-            border-left: 3px solid var(--warning);
-            padding: 1rem;
-            border-radius: 8px;
+        /* --- Before you start --- */
+        .prereqs {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .prereq-list {
+            list-style: none;
             margin-top: 1rem;
         }
 
-        .step-note strong {
-            color: var(--warning);
-            display: block;
-            margin-bottom: 0.3rem;
+        .prereq-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            font-size: 0.95rem;
         }
 
-        .step-note code {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.2rem 0.4rem;
+        .prereq-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--green-dim);
+            color: var(--green);
+            border-radius: 50%;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* --- Terminal section --- */
+        .terminal-intro {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .callout {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .callout p {
+            font-size: 0.92rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .callout strong { color: var(--text); }
+
+        .callout ol {
+            margin: 0.75rem 0 0 1.25rem;
+            font-size: 0.92rem;
+            color: var(--text-dim);
+        }
+
+        .callout ol li { margin-bottom: 0.35rem; }
+
+        .kbd {
+            display: inline-block;
+            background: var(--surface-2);
+            border: 1px solid var(--border-bright);
             border-radius: 4px;
-            font-size: 0.85rem;
+            padding: 0.1rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.5;
         }
 
-        /* Stats Section */
-        .stats-section {
-            padding: 6rem 2rem;
-            text-align: center;
+        /* --- Steps --- */
+        .steps { padding: 2rem 0; }
+
+        .step {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 800px;
-            margin: 3rem auto 0;
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
         }
 
-        .stat-item {
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.72rem;
+            font-weight: 700;
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .step h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            color: var(--gray);
-            font-weight: 500;
+        .step-explain {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+            max-width: 620px;
         }
 
-        /* Footer */
-        footer {
-            padding: 4rem 2rem 2rem;
+        .step-meta {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .step-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.82rem;
+            color: var(--text-faint);
+        }
+
+        .step-meta-item .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-green { background: var(--green); }
+        .dot-amber { background: var(--amber); }
+
+        /* Terminal block */
+        .terminal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.85rem;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dots { display: flex; gap: 6px; }
+        .terminal-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        .td-r { background: #ff5f57; }
+        .td-y { background: #febc2e; }
+        .td-g { background: #28c840; }
+
+        .terminal-title {
+            font-size: 0.75rem;
+            color: var(--text-faint);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: transparent;
+            border: 1px solid var(--border-bright);
+            color: var(--text-dim);
+            padding: 0.25rem 0.65rem;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .terminal-body {
+            padding: 1rem 1.15rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .terminal-body .prompt { color: var(--green); user-select: none; }
+        .terminal-body .cmd { color: var(--text); }
+        .terminal-body .comment { color: var(--text-faint); font-style: italic; }
+
+        /* Result box */
+        .result {
+            background: var(--green-dim);
+            border-left: 3px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1.15rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .result strong { color: var(--green); }
+        .result code {
+            background: rgba(0,0,0,0.25);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        .result ul {
+            margin: 0.5rem 0 0 1.25rem;
+            color: var(--text-dim);
+            font-size: 0.88rem;
+        }
+
+        .result li { margin-bottom: 0.2rem; }
+
+        /* Note box */
+        .note {
+            background: var(--amber-dim);
+            border-left: 3px solid var(--amber);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1.15rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        .note strong { color: var(--amber); }
+
+        /* Sub-steps */
+        .sub-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.25rem;
+        }
+
+        .or-divider {
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-faint);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
         }
 
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
+        /* --- Disk space table --- */
+        .space-section {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .space-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.65rem 1rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* --- FAQ --- */
+        .faq-section {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .faq-q:hover { color: var(--accent-bright); }
+
+        .faq-arrow {
+            font-size: 0.75rem;
+            color: var(--text-faint);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+        .faq-a {
+            display: none;
+            padding: 0 0 1rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.open .faq-a { display: block; }
+
+        .faq-a code {
+            background: var(--surface-2);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        /* --- Quick ref --- */
+        .quickref {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .quickref h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .quickref > p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+            text-align: center;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .footer-links a {
-            color: var(--gray);
+            color: var(--text-dim);
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
         }
 
-        .footer-links a:hover {
-            color: var(--primary);
+        .footer-links a:hover { color: var(--accent-bright); }
+
+        .footer-note {
+            font-size: 0.82rem;
+            color: var(--text-faint);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
+        .footer-note a { color: var(--accent); text-decoration: none; }
 
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 70%;
-                max-width: 300px;
-                background: rgba(15, 23, 42, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 5rem 2rem 2rem;
-                gap: 2rem;
-                transition: right 0.3s ease;
-                border-left: 1px solid rgba(99, 102, 241, 0.2);
-                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 0.5rem 0;
-            }
-
-            .nav-links a::after {
-                display: none;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .step-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .step-icon {
-                font-size: 2.5rem;
-            }
-
-            .step-number {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .terminal-content-mini {
-                font-size: 0.65rem;
-                padding: 0.75rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom cursor */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        .cursor.hover {
-            transform: scale(2);
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            .hero { padding: 3.5rem 0 2.5rem; }
+            .hero h1 { font-size: 1.85rem; }
+            .waveform { height: 36px; }
+            .what-grid { grid-template-columns: 1fr; }
+            .step h2 { font-size: 1.25rem; }
+            .terminal-body { font-size: 0.7rem; padding: 0.75rem; }
+            .header-links { gap: 0.75rem; }
+            .header-links a { font-size: 0.82rem; }
+            table { font-size: 0.82rem; }
+            th, td { padding: 0.5rem 0.65rem; }
         }
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    
-    <div class="bg-canvas">
-        <div class="bg-grid"></div>
-        <div class="floating-orbs">
-            <div class="orb"></div>
-            <div class="orb"></div>
-            <div class="orb"></div>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="logo-mark">LP</span>
+            LPX Links
+        </div>
+        <div class="header-links">
+            <a href="#guide">Guide</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://github.com/davidteren/lpx_links" target="_blank" rel="noopener">GitHub</a>
         </div>
     </div>
+</header>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-icon">🎹</span>
-                <span class="logo-text">LPX Links</span>
-            </div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#quickstart">Quick Start</a></li>
-                <li><a href="https://github.com/davidteren/lpx_links" target="_blank" rel="noopener noreferrer">⭐ Star on GitHub</a></li>
-            </ul>
-        </div>
-    </nav>
+<main class="container">
 
+    <!-- Hero -->
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span>✨</span>
-                <span>Version 0.0.10 • Free & Open Source</span>
+        <div class="hero-eyebrow">v1.0.0 &middot; Free &amp; open source</div>
+
+        <div class="waveform" aria-hidden="true"></div>
+
+        <h1>Get your Logic Pro sounds<br>downloaded and installed, fast.</h1>
+
+        <p class="hero-sub">
+            Logic Pro's built-in downloader is slow and unreliable. This tool gives you
+            direct download links so you can grab all your sounds, loops, and instruments
+            at full speed.
+        </p>
+
+        <a href="#guide" style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.95rem;padding:0.7rem 1.5rem;border-radius:8px;text-decoration:none;transition:background 0.2s;">
+            Follow the guide below
+            <span style="font-size:0.85rem;">&#8595;</span>
+        </a>
+    </section>
+
+    <!-- What is this -->
+    <section class="what-section">
+        <div class="what-grid">
+            <div class="what-card">
+                <div class="what-card-icon">&#9889;</div>
+                <h3>Much faster downloads</h3>
+                <p>Download many files at once instead of one at a time. Most people see 5-10x speed improvements.</p>
             </div>
-            <h1>Supercharge Your Logic Pro Downloads</h1>
-            <p class="hero-subtitle">
-                Get direct download links for all Logic Pro and MainStage content. 
-                Skip the slow in-app downloader and manage your sound library like a pro.
-            </p>
-            <div class="hero-cta">
-                <a href="#quickstart" class="btn btn-primary">Get Started Now</a>
-                <a href="https://github.com/davidteren/lpx_links" class="btn btn-secondary">View on GitHub</a>
+            <div class="what-card">
+                <div class="what-card-icon">&#128260;</div>
+                <h3>Pick up where you left off</h3>
+                <p>Internet dropped? Laptop went to sleep? Just run the command again. It won't re-download anything.</p>
+            </div>
+            <div class="what-card">
+                <div class="what-card-icon">&#127925;</div>
+                <h3>Choose what you need</h3>
+                <p>Get just the 28 essential packages, or the full 900+ item library. Start small, add more later.</p>
             </div>
         </div>
     </section>
 
-    <section id="features" class="cards-section">
-        <div class="section-header fade-in">
-            <h2 class="section-title">Why Musicians Love lpx_links</h2>
-            <p class="section-subtitle">
-                Built specifically for Logic Pro users who want faster, more reliable content downloads
+    <!-- Before you start -->
+    <section class="prereqs">
+        <h2>Before you start</h2>
+        <ul class="prereq-list">
+            <li><span class="prereq-check">&#10003;</span> <span><strong>Logic Pro</strong> (or MainStage) is installed on your Mac</span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>You have an <strong>internet connection</strong></span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>You have <strong>free disk space</strong> &mdash; at least 10 GB for essentials, 70+ GB for everything (<a href="#space" style="color:var(--accent);">details below</a>)</span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>About <strong>30 minutes</strong> for the full library (depending on your internet speed)</span></li>
+        </ul>
+    </section>
+
+    <!-- How to open Terminal -->
+    <section class="terminal-intro">
+        <h2>Never used Terminal before? No worries.</h2>
+        <div class="callout">
+            <p>
+                <strong>Terminal</strong> is a built-in app on every Mac. It lets you type commands to tell your computer what to do. You just need to paste the commands from each step below &mdash; nothing to memorise.
             </p>
-        </div>
-
-        <div class="cards-grid">
-            <div class="card fade-in">
-                <div class="card-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Download content 5-10x faster than Logic's built-in downloader using aria2 or any download manager.</p>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-icon">🎯</div>
-                <h3>Smart Selection</h3>
-                <p>Choose between essential packages (28 items) or the complete library (900+ items) based on your needs.</p>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-icon">🔄</div>
-                <h3>Resume Downloads</h3>
-                <p>Never lose progress. Resume interrupted downloads and skip files you already have.</p>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-icon">🖥️</div>
-                <h3>Multi-Machine</h3>
-                <p>Perfect for studios with multiple Macs. Download once, install everywhere.</p>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-icon">🎵</div>
-                <h3>Complete Compatibility</h3>
-                <p>Works with Logic Pro 11, Logic Pro X, and MainStage 3. Always up-to-date.</p>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-icon">🛠️</div>
-                <h3>Easy Setup</h3>
-                <p>One command gets you started. No complex installation or configuration required.</p>
-            </div>
+            <ol>
+                <li>Press <span class="kbd">Cmd</span> + <span class="kbd">Space</span> to open Spotlight</li>
+                <li>Type <strong>Terminal</strong></li>
+                <li>Press <span class="kbd">Enter</span></li>
+            </ol>
+            <p style="margin-top:0.75rem;">
+                A window with a text cursor will appear. To paste a command, press <span class="kbd">Cmd</span> + <span class="kbd">V</span>, then press <span class="kbd">Enter</span> to run it.
+            </p>
         </div>
     </section>
 
-    <section id="quickstart" class="steps-section">
-        <div class="steps-container">
-            <div class="section-header fade-in">
-                <h2 class="section-title">Three Simple Steps</h2>
-                <p class="section-subtitle">
-                    Get your Logic Pro and MainStage content downloaded and installed in minutes
-                </p>
+    <!-- Steps -->
+    <section id="guide" class="steps">
+
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">1</span> Step one</div>
+            <h2>Generate your download links</h2>
+            <p class="step-explain">
+                This downloads a small tool, reads your Logic Pro installation to find all available content, and creates text files listing every download link.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> Takes a few seconds</span>
             </div>
 
-            <div class="steps-cards">
-                <!-- Step 1: Generate Links -->
-                <div class="step-card fade-in">
-                    <div class="step-header">
-                        <div class="step-number">1</div>
-                    </div>
-                    <h3>Generate Download Links</h3>
-                    <p class="step-description">Run this single command to create text files with direct download links for both Logic Pro and MainStage content.</p>
-
-                    <div class="terminal-mini">
-                        <div class="terminal-header">
-                            <div class="terminal-dots">
-                                <div class="terminal-dot dot-red"></div>
-                                <div class="terminal-dot dot-yellow"></div>
-                                <div class="terminal-dot dot-green"></div>
-                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyTerminalCommands(this)">
-                                <span class="copy-icon">📋</span>
-                                <span class="copy-text">Copy</span>
-                            </button>
-                        </div>
-                        <div class="terminal-content-mini">
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-result">
-                        <strong>✅ Result:</strong> Creates <code>~/Desktop/lpx_download_links/</code> with:
-                        <ul>
-                            <li><code>mandatory_download_links.txt</code> - 28 essential packages</li>
-                            <li><code>all_download_links.txt</code> - 900+ complete library</li>
-                        </ul>
-                    </div>
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
                 </div>
-
-                <!-- Step 2: Download Content -->
-                <div class="step-card fade-in">
-                    <div class="step-header">
-                        <div class="step-number">2</div>
-                    </div>
-                    <h3>Download Content</h3>
-                    <p class="step-description">Use aria2 for fast, resumable downloads. Install aria2 first if you don't have it.</p>
-
-                    <div class="sub-step">
-                        <strong>Install aria2 (one-time setup):</strong>
-                        <div class="terminal-mini">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <div class="terminal-dot dot-red"></div>
-                                    <div class="terminal-dot dot-yellow"></div>
-                                    <div class="terminal-dot dot-green"></div>
-                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
-                                </div>
-                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
-                                    <span class="copy-icon">📋</span>
-                                    <span class="copy-text">Copy</span>
-                                </button>
-                            </div>
-                            <div class="terminal-content-mini">
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sub-step">
-                        <strong>Essential packages only (28 items):</strong>
-                        <div class="terminal-mini">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <div class="terminal-dot dot-red"></div>
-                                    <div class="terminal-dot dot-yellow"></div>
-                                    <div class="terminal-dot dot-green"></div>
-                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
-                                </div>
-                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
-                                    <span class="copy-icon">📋</span>
-                                    <span class="copy-text">Copy</span>
-                                </button>
-                            </div>
-                            <div class="terminal-content-mini">
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sub-step">
-                        <strong>OR all packages (900+ items):</strong>
-                        <div class="terminal-mini">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <div class="terminal-dot dot-red"></div>
-                                    <div class="terminal-dot dot-yellow"></div>
-                                    <div class="terminal-dot dot-green"></div>
-                                    <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
-                                </div>
-                                <button class="copy-btn" onclick="copyTerminalCommands(this)">
-                                    <span class="copy-icon">📋</span>
-                                    <span class="copy-text">Copy</span>
-                                </button>
-                            </div>
-                            <div class="terminal-content-mini">
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-result">
-                        <strong>✅ Result:</strong> All <code>.pkg</code> files downloaded to <code>~/Downloads/logic_content/</code>
-                    </div>
-                </div>
-
-                <!-- Step 3: Install Packages -->
-                <div class="step-card fade-in">
-                    <div class="step-header">
-                        <div class="step-number">3</div>
-                    </div>
-                    <h3>Install Packages</h3>
-                    <p class="step-description">Run the install script to install all downloaded packages at once.</p>
-
-                    <div class="terminal-mini">
-                        <div class="terminal-header">
-                            <div class="terminal-dots">
-                                <div class="terminal-dot dot-red"></div>
-                                <div class="terminal-dot dot-yellow"></div>
-                                <div class="terminal-dot dot-green"></div>
-                                <span style="margin-left: 0.5rem; color: #94a3b8; font-size: 0.8rem;">Terminal</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyTerminalCommands(this)">
-                                <span class="copy-icon">📋</span>
-                                <span class="copy-text">Copy</span>
-                            </button>
-                        </div>
-                        <div class="terminal-content-mini">
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-result">
-                        <strong>✅ Result:</strong> All Logic Pro content installed and ready to use!
-                    </div>
-
-                    <div class="step-note">
-                        <strong>⚠️ Note:</strong> The install script needs a folder containing <code>.pkg</code> files, not the text file with links.
-                    </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span>
                 </div>
             </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> Text scrolls for a few seconds, then a Finder window opens with a folder called <code>lpx_download_links</code> on your Desktop containing:
+                <ul>
+                    <li><code>mandatory_download_links.txt</code> &mdash; 28 essential packages</li>
+                    <li><code>all_download_links.txt</code> &mdash; 900+ packages (the full library)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">2</span> Step two</div>
+            <h2>Install the download tool</h2>
+            <p class="step-explain">
+                This installs <strong>aria2</strong>, a small download manager that can grab many files at once and resume if your internet drops. You only need to do this once.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> Takes under a minute</span>
+                <span class="step-meta-item"><span class="dot dot-amber"></span> One-time setup</span>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> A couple of prompts, then a green checkmark and success message. If you already have <a href="https://brew.sh" style="color:var(--accent);">Homebrew</a>, you can run <code>brew install aria2</code> instead.
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">3</span> Step three</div>
+            <h2>Download your content</h2>
+            <p class="step-explain">
+                This downloads the actual sound files from Apple's servers to a folder on your Mac. Pick the essential packages if you're short on space, or grab everything.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-amber"></span> Depends on internet speed</span>
+            </div>
+
+            <p class="sub-label">Essential packages only (28 items):</p>
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="or-divider">or</div>
+
+            <p class="sub-label">The complete library (900+ items):</p>
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> Progress bars for each file. If a download gets interrupted, just run the same command again &mdash; it picks up where it left off and skips files you already have.
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">4</span> Step four</div>
+            <h2>Install the packages</h2>
+            <p class="step-explain">
+                This takes the downloaded files and installs them into Logic Pro so your sounds, loops, and instruments are ready to use.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> A few minutes</span>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> A summary of how many packages were found, how much disk space you have, and a prompt asking whether to delete each package after it installs (saves space) or keep them.
+            </div>
+
+            <div class="note">
+                <strong>Asking for your password?</strong> The <code>sudo</code> command needs your Mac login password. When you type it, nothing will appear on screen &mdash; that's normal. Just type your password and press Enter.
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Disk space -->
+    <section id="space" class="space-section">
+        <h2>How much space do I need?</h2>
+        <p style="color:var(--text-dim);font-size:0.92rem;margin-bottom:0.5rem;">
+            If your Mac is tight on space, start with the essential packages. They include everything Logic Pro needs to work fully. You can always add more later.
+        </p>
+
+        <!-- TODO: Replace these estimates with actual measured sizes from a fresh Logic Pro install -->
+        <table>
+            <thead>
+                <tr>
+                    <th>What</th>
+                    <th>Download size (approx.)</th>
+                    <th>Installed size (approx.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Essential packages (28 items)</td>
+                    <td>~5 GB</td>
+                    <td>~5 GB</td>
+                </tr>
+                <tr>
+                    <td>Full library (900+ items)</td>
+                    <td>~70 GB</td>
+                    <td>~70 GB</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note" style="margin-top:1rem;">
+            <strong>Tip:</strong> When installing (Step 4), choose "delete after install" to avoid needing double the disk space.
         </div>
     </section>
 
-    <section class="stats-section">
-        <div class="section-header fade-in">
-            <h2 class="section-title">Trusted by Producers Worldwide</h2>
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <h2>Common questions</h2>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Is this safe? What does it actually do?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Yes. The tool reads your existing Logic Pro installation to find the list of available content packages (Apple publishes this list inside the app). It then creates text files with direct download links to Apple's own servers. You're downloading official Apple content &mdash; the same files Logic Pro's built-in downloader would fetch, just faster.
+                <br><br>
+                The tool is open source (MIT license). You can <a href="https://github.com/davidteren/lpx_links" style="color:var(--accent);">read every line of code on GitHub</a>.
+            </div>
         </div>
-        
-        <div class="stats-grid">
-            <div class="stat-item fade-in">
-                <div class="stat-number">900+</div>
-                <div class="stat-label">Content Packages</div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                My download was interrupted. Do I have to start over?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                No. Just run the same aria2 command again (Step 3). It automatically resumes where it left off and skips files you already have. That's the whole point of using aria2.
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-number">10x</div>
-                <div class="stat-label">Faster Downloads</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                It's asking for my password and nothing appears when I type
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                That's normal. Terminal hides your password for security &mdash; no characters, dots, or asterisks will appear. Just type your Mac login password and press Enter. If you get it wrong, it'll ask again.
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Supported Apps</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                I get a "Logic Pro not found" error
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                The tool needs Logic Pro (or MainStage) to be installed first. It reads the app to find the list of available content. Make sure Logic Pro is in your Applications folder before running Step 1.
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-number">0</div>
-                <div class="stat-label">Cost</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Do I need the essential packages or the full library?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                The 28 essential packages contain the core sounds Logic Pro needs to function &mdash; you'll be able to open any project and use all the built-in instruments. The full library adds hundreds of additional loops, drum kits, and instrument patches. If you're not sure, start with essentials. You can always download the rest later.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                My disk filled up during installation
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Re-download the tool (Step 1) and re-run the installer (Step 4). The latest version checks your disk space before starting and lets you choose to delete each package right after it installs, so you don't need the space for both the downloads and the installed content at the same time.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Can I use this for MainStage too?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Yes. The tool generates links for both Logic Pro and MainStage content automatically.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Something else went wrong
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                <a href="https://github.com/davidteren/lpx_links/issues" style="color:var(--accent);">Open an issue on GitHub</a> and we'll help you out. Include what step you were on and what error message you saw.
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer-content fade-in">
-            <div class="footer-links">
-                <a href="https://github.com/davidteren/lpx_links" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://github.com/davidteren/lpx_links/issues" target="_blank" rel="noopener noreferrer">Support</a>
-                <a href="https://github.com/davidteren/lpx_links/blob/main/docs/LICENSE" target="_blank" rel="noopener noreferrer">License</a>
+    <!-- Quick reference -->
+    <section class="quickref">
+        <h2>Quick reference</h2>
+        <p>Already know what you're doing? Here are all the commands in one place.</p>
+
+        <div class="terminal" style="margin-top:1rem;">
+            <div class="terminal-bar">
+                <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                <span class="terminal-title">All commands</span>
+                <button class="copy-btn" onclick="copyCmd(this)">Copy all</button>
             </div>
-            <p style="color: var(--gray); margin-bottom: 1rem;">
-                Built with ❤️ by <a href="https://github.com/davidteren" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">David Teren</a>
-            </p>
-            <p style="color: var(--gray); font-size: 0.9rem;">
-                MIT License • Free to use, modify, and distribute
-            </p>
+            <div class="terminal-body">
+                <span class="comment"># 1. Generate links</span><br>
+                <span class="prompt">$ </span><span class="cmd">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span><br><br>
+                <span class="comment"># 2. Install aria2 (one-time)</span><br>
+                <span class="prompt">$ </span><span class="cmd">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span><br><br>
+                <span class="comment"># 3. Download essential packages</span><br>
+                <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span><br><br>
+                <span class="comment"># 4. Install</span><br>
+                <span class="prompt">$ </span><span class="cmd">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
+            </div>
         </div>
-    </footer>
+    </section>
 
-    <script>
-        // Hamburger menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+</main>
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://github.com/davidteren/lpx_links">GitHub</a>
+            <a href="https://github.com/davidteren/lpx_links/issues">Help &amp; Issues</a>
+            <a href="https://github.com/davidteren/lpx_links/blob/main/docs/LICENSE">License (MIT)</a>
+        </div>
+        <p class="footer-note">
+            Built by <a href="https://github.com/davidteren">David Teren</a> &middot; Works with Logic Pro 11, Logic Pro X, and MainStage 3
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Generate waveform bars
+    (function() {
+        const waveform = document.querySelector('.waveform');
+        const barCount = 48;
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            // Create a natural waveform shape - taller in the middle, shorter at edges
+            const position = i / barCount;
+            const envelope = Math.sin(position * Math.PI);
+            const height = 8 + envelope * 36 + Math.random() * 8;
+            bar.style.height = height + 'px';
+            bar.style.animationDelay = (i * 0.04) + 's';
+            bar.style.opacity = 0.3 + envelope * 0.7;
+            waveform.appendChild(bar);
+        }
+    })();
+
+    // Copy terminal commands
+    function copyCmd(button) {
+        const terminal = button.closest('.terminal');
+        const cmds = [];
+        terminal.querySelectorAll('.cmd').forEach(function(el) {
+            cmds.push(el.textContent.trim());
         });
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+        const text = cmds.join('\n');
+        navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            setTimeout(function() {
+                button.textContent = button.closest('.terminal').querySelectorAll('.cmd').length > 1 ? 'Copy all' : 'Copy';
+                button.classList.remove('copied');
+            }, 2000);
         });
+    }
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+    // FAQ accordion
+    function toggleFaq(button) {
+        const item = button.parentElement;
+        const wasOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(function(el) {
+            el.classList.remove('open');
+        });
+        // Toggle clicked
+        if (!wasOpen) item.classList.add('open');
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
+    });
+</script>
 
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        let mouseX = 0, mouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Cursor hover effects
-        document.querySelectorAll('a, button, .card').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Copy terminal commands function
-        function copyTerminalCommands(button) {
-            const terminal = button.closest('.terminal-mini');
-            const commands = [];
-            terminal.querySelectorAll('.command').forEach(cmd => {
-                commands.push(cmd.textContent.trim());
-            });
-
-            if (commands.length > 0) {
-                navigator.clipboard.writeText(commands.join(' && ')).then(() => {
-                    // Update button state
-                    const copyText = button.querySelector('.copy-text');
-                    const copyIcon = button.querySelector('.copy-icon');
-                    const originalText = copyText.textContent;
-                    const originalIcon = copyIcon.textContent;
-
-                    button.classList.add('copied');
-                    copyText.textContent = 'Copied!';
-                    copyIcon.textContent = '✓';
-
-                    setTimeout(() => {
-                        button.classList.remove('copied');
-                        copyText.textContent = originalText;
-                        copyIcon.textContent = originalIcon;
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy:', err);
-                });
-            }
-        }
-
-        // Parallax effect for orbs
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 0.5;
-                const xPos = (x - 0.5) * speed * 50;
-                const yPos = (y - 0.5) * speed * 50;
-                orb.style.transform = `translate(${xPos}px, ${yPos}px)`;
-            });
-        });
-
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-    </script>
 </body>
 </html>

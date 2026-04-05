@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://davidteren.github.io/lpx_links/sitemap.xml
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1
