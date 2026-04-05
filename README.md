@@ -3,15 +3,15 @@
 [![Ruby CI](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml/badge.svg)](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Download all your Logic Pro and MainStage sounds, loops, and instruments — faster and more reliably than the built-in downloader.**
+**Download all your Logic Pro, MainStage, and GarageBand sounds, loops, and instruments — faster and more reliably than the built-in downloader.**
 
-If you've ever sat waiting for Logic Pro's in-app downloader to crawl through hundreds of packages (or watched it fail halfway through), this tool is for you. It gives you direct download links so you can grab everything at full speed.
+If you've ever sat waiting for the in-app downloader to crawl through hundreds of packages (or watched it fail halfway through), this tool is for you. It gives you direct download links so you can grab everything at full speed.
 
 ## What you'll need
 
 Before you start, make sure you have:
 
-- **Logic Pro** (or MainStage) installed on your Mac
+- **Logic Pro**, **MainStage**, or **GarageBand** installed on your Mac
 - **An internet connection** (the downloads are large)
 - **Free disk space** — see [How much space do I need?](#how-much-space-do-i-need) below
 
@@ -27,7 +27,7 @@ A window will appear with a text cursor — that's where you'll paste the comman
 
 ## Step 1: Generate your download links
 
-**What this does:** Downloads a small tool to your Mac, reads your Logic Pro installation to find all available content, and creates text files listing every download link.
+**What this does:** Downloads a small tool to your Mac, reads your app installation to find all available content, and creates text files listing every download link. By default it generates links for Logic Pro. For MainStage or GarageBand, see the [quick reference](#quick-reference-for-experienced-users) below.
 
 **How long it takes:** A few seconds.
 
@@ -97,14 +97,13 @@ After installation, open Logic Pro — all your new content will be there.
 
 ## How much space do I need?
 
-<!-- TODO: Replace these estimates with actual measured sizes -->
+| App | Packages | Essential download | Essential installed | Full download | Full installed |
+|---|---|---|---|---|---|
+| **Logic Pro** | 915 (28 essential) | ~1.3 GB | ~1.6 GB | ~78 GB | ~101 GB |
+| **MainStage** | 917 (32 essential) | ~1.4 GB | ~1.8 GB | ~77 GB | ~100 GB |
+| **GarageBand** | 707 (38 essential) | ~2.2 GB | ~2.7 GB | ~43 GB | ~56 GB |
 
-| What you're downloading | Download size (approx.) | Installed size (approx.) |
-|---|---|---|
-| Essential packages (28 items) | ~5 GB | ~5 GB |
-| Full library (900+ items) | ~70 GB | ~70 GB |
-
-If your Mac is low on space, start with the **essential packages** — they include everything Logic Pro needs to function fully. The rest is additional loops, instruments, and sound packs you can always add later.
+If your Mac is low on space, start with the **essential packages** — they're only 1-3 GB and include everything the app needs to function fully. The rest is additional loops, instruments, and sound packs you can always add later.
 
 > **Tip:** When installing, choose Option 1 ("delete after install") to avoid needing double the disk space.
 
@@ -113,8 +112,8 @@ If your Mac is low on space, start with the **essential packages** — they incl
 **"Command not found" when running lpx_links.rb**
 Your Mac needs Ruby installed. All recent versions of macOS include it. If you've removed it, install Ruby via [Homebrew](https://brew.sh): `brew install ruby`
 
-**"Logic Pro not found" error**
-The tool reads your Logic Pro (or MainStage) installation to find the content list. Make sure Logic Pro is installed before running Step 1.
+**"Logic Pro not found" / "MainStage not found" / "GarageBand not found"**
+The tool reads your app installation to find the content list. Make sure the app is installed in your Applications folder before running Step 1. The tool supports all versions including the newer "Creator Studio" editions.
 
 **Downloads are very slow**
 Make sure you're using aria2 (Step 2). Without it, downloads go through your browser one at a time instead of in parallel.
@@ -134,8 +133,12 @@ See issue [#75](https://github.com/davidteren/lpx_links/issues/75). The latest v
 ## Quick reference (for experienced users)
 
 ```bash
-# Generate links
+# Generate links (Logic Pro is the default)
 cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb
+
+# For MainStage or GarageBand, use the -n flag:
+./lpx_links.rb -n Mainstage
+./lpx_links.rb -n GarageBand
 
 # Install aria2
 curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
@@ -152,9 +155,10 @@ sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content
 
 ## Compatibility
 
-- Logic Pro 11 (current)
+- Logic Pro 11 / Logic Pro Creator Studio (current)
 - Logic Pro X 10.x
-- MainStage 3
+- MainStage 3 / MainStage Creator Studio
+- GarageBand 10.4+
 - macOS Monterey (12) and later
 
 ## Version
