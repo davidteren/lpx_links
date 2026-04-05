@@ -39,8 +39,8 @@ cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https:/
 
 **What you'll see:** Some text will scroll in the Terminal window. When it finishes, a Finder window will open showing a folder called `lpx_download_links` on your Desktop with two files:
 
-- **`mandatory_download_links.txt`** — 28 essential packages (the core sounds Logic Pro needs)
-- **`all_download_links.txt`** — 900+ packages (the complete sound library)
+- **`mandatory_download_links.txt`** — the essential packages your app needs to function (28-38 depending on the app)
+- **`all_download_links.txt`** — the complete content library (707-917 packages depending on the app)
 
 ## Step 2: Install the download tool (aria2)
 
