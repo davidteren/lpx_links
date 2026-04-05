@@ -4,10 +4,10 @@ require 'test_helper'
 
 class FileHelpersTest < Minitest::Test
   def test_plist_file_path_returns_correct_path_for_logic_pro
-    logic_path = '/Applications/Logic Pro X.app/Contents/Resources'
+    logic_path = '/Applications/Logic Pro.app/Contents/Resources'
     FileHelpers.stub(:app_path, logic_path) do
-      FileHelpers.stub(:plist_file_name, 'logicpro1040.plist') do
-        expected_path = "#{logic_path}/logicpro1040.plist"
+      FileHelpers.stub(:plist_file_name, 'logicpro1120.plist') do
+        expected_path = "#{logic_path}/logicpro1120.plist"
 
         assert_equal expected_path, FileHelpers.plist_file_path('LOGIC')
       end
@@ -17,24 +17,36 @@ class FileHelpersTest < Minitest::Test
   def test_plist_file_path_returns_correct_path_for_mainstage
     mainstage_path = '/Applications/MainStage 3.app/Contents/Resources'
     FileHelpers.stub(:app_path, mainstage_path) do
-      FileHelpers.stub(:plist_file_name, 'mainstage360.plist') do
-        expected_path = "#{mainstage_path}/mainstage360.plist"
+      FileHelpers.stub(:plist_file_name, 'mainstage370.plist') do
+        expected_path = "#{mainstage_path}/mainstage370.plist"
 
         assert_equal expected_path, FileHelpers.plist_file_path('MAINSTAGE')
       end
     end
   end
 
-  def test_app_path_returns_correct_path_when_logic_pro_x_is_installed
-    File.stub(:exist?, true) do
-      result = FileHelpers.app_path('LOGIC')
+  def test_plist_file_path_returns_correct_path_for_garageband
+    gb_path = '/Applications/GarageBand.app/Contents/Resources'
+    FileHelpers.stub(:app_path, gb_path) do
+      FileHelpers.stub(:plist_file_name, 'garageband10412.plist') do
+        expected_path = "#{gb_path}/garageband10412.plist"
 
-      assert_equal '/Applications/Logic Pro X.app/Contents/Resources', result
+        assert_equal expected_path, FileHelpers.plist_file_path('GARAGEBAND')
+      end
     end
   end
 
-  def test_app_path_returns_correct_path_when_logic_pro_is_installed
-    # Create a custom stub that returns different values based on the path
+  # Logic Pro path detection — tries Creator Studio, then Logic Pro, then Logic Pro X
+  def test_app_path_finds_logic_pro_creator_studio
+    File.stub(:exist?, lambda { |path|
+      path == '/Applications/Logic Pro Creator Studio.app/Contents/Resources'
+    }) do
+      result = FileHelpers.app_path('LOGIC')
+      assert_equal '/Applications/Logic Pro Creator Studio.app/Contents/Resources', result
+    end
+  end
+
+  def test_app_path_finds_logic_pro
     File.stub(:exist?, lambda { |path|
       path == '/Applications/Logic Pro.app/Contents/Resources'
     }) do
@@ -43,31 +55,71 @@ class FileHelpersTest < Minitest::Test
     end
   end
 
-  def test_app_path_raises_error_when_neither_logic_pro_version_is_installed
+  def test_app_path_finds_logic_pro_x
+    File.stub(:exist?, lambda { |path|
+      path == '/Applications/Logic Pro X.app/Contents/Resources'
+    }) do
+      result = FileHelpers.app_path('LOGIC')
+      assert_equal '/Applications/Logic Pro X.app/Contents/Resources', result
+    end
+  end
+
+  def test_app_path_raises_error_when_no_logic_pro_found
     File.stub(:exist?, false) do
       error = assert_raises(RuntimeError) do
         FileHelpers.app_path('LOGIC')
       end
 
-      assert_equal 'Logic Pro X not found', error.message
+      assert_equal 'Logic Pro not found', error.message
     end
   end
 
-  def test_links_dir_returns_correct_directory_path
-    Dir.stub(:home, '/Users/testuser') do
-      expected_path = '/Users/testuser/Desktop/lpx_download_links'
-
-      assert_equal expected_path, FileHelpers.links_dir
+  # MainStage path detection — tries Creator Studio, then MainStage 3, then MainStage
+  def test_app_path_finds_mainstage_creator_studio
+    File.stub(:exist?, lambda { |path|
+      path == '/Applications/MainStage Creator Studio.app/Contents/Resources'
+    }) do
+      result = FileHelpers.app_path('MAINSTAGE')
+      assert_equal '/Applications/MainStage Creator Studio.app/Contents/Resources', result
     end
   end
 
-  def test_app_path_raises_error_for_mainstage_when_not_installed
+  def test_app_path_finds_mainstage_three
+    File.stub(:exist?, lambda { |path|
+      path == '/Applications/MainStage 3.app/Contents/Resources'
+    }) do
+      result = FileHelpers.app_path('MAINSTAGE')
+      assert_equal '/Applications/MainStage 3.app/Contents/Resources', result
+    end
+  end
+
+  def test_app_path_raises_error_when_no_mainstage_found
     File.stub(:exist?, false) do
       error = assert_raises(RuntimeError) do
         FileHelpers.app_path('MAINSTAGE')
       end
 
-      assert_equal 'Mainstage not found', error.message
+      assert_equal 'MainStage not found', error.message
+    end
+  end
+
+  # GarageBand path detection
+  def test_app_path_finds_garageband
+    File.stub(:exist?, lambda { |path|
+      path == '/Applications/GarageBand.app/Contents/Resources'
+    }) do
+      result = FileHelpers.app_path('GARAGEBAND')
+      assert_equal '/Applications/GarageBand.app/Contents/Resources', result
+    end
+  end
+
+  def test_app_path_raises_error_when_no_garageband_found
+    File.stub(:exist?, false) do
+      error = assert_raises(RuntimeError) do
+        FileHelpers.app_path('GARAGEBAND')
+      end
+
+      assert_equal 'GarageBand not found', error.message
     end
   end
 
@@ -79,11 +131,11 @@ class FileHelpersTest < Minitest::Test
     assert_equal 'No application paths found', error.message
   end
 
-  def test_find_mainstage_path_returns_correct_path
-    File.stub(:exist?, true) do
-      result = FileHelpers.find_mainstage_path
+  def test_links_dir_returns_correct_directory_path
+    Dir.stub(:home, '/Users/testuser') do
+      expected_path = '/Users/testuser/Desktop/lpx_download_links'
 
-      assert_equal '/Applications/MainStage 3.app/Contents/Resources', result
+      assert_equal expected_path, FileHelpers.links_dir
     end
   end
 
@@ -126,23 +178,31 @@ class FileHelpersTest < Minitest::Test
   end
 
   def test_plist_file_name_returns_correct_filename
-    # Stub the backtick command execution
-    FileHelpers.stub(:`, 'logicpro1040.plist') do
+    FileHelpers.stub(:`, 'logicpro1120.plist') do
       FileHelpers.stub(:app_path, '/Applications/Logic Pro.app/Contents/Resources') do
         result = FileHelpers.plist_file_name('LOGIC')
 
-        assert_equal 'logicpro1040.plist', result
+        assert_equal 'logicpro1120.plist', result
       end
     end
   end
 
   def test_plist_file_name_strips_dot_slash_prefix
-    # Stub the backtick command execution with ./ prefix
-    FileHelpers.stub(:`, './logicpro1040.plist') do
+    FileHelpers.stub(:`, './logicpro1120.plist') do
       FileHelpers.stub(:app_path, '/Applications/Logic Pro.app/Contents/Resources') do
         result = FileHelpers.plist_file_name('LOGIC')
 
-        assert_equal 'logicpro1040.plist', result
+        assert_equal 'logicpro1120.plist', result
+      end
+    end
+  end
+
+  def test_plist_file_name_finds_garageband_plist
+    FileHelpers.stub(:`, 'garageband10412.plist') do
+      FileHelpers.stub(:app_path, '/Applications/GarageBand.app/Contents/Resources') do
+        result = FileHelpers.plist_file_name('GARAGEBAND')
+
+        assert_equal 'garageband10412.plist', result
       end
     end
   end

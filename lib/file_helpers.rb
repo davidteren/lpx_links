@@ -14,31 +14,44 @@ module FileHelpers
       find_logic_path
     when 'MAINSTAGE'
       find_mainstage_path
+    when 'GARAGEBAND'
+      find_garageband_path
     else
       raise 'No application paths found'
     end
   end
 
   def find_logic_path
-    path = '/Applications/Logic Pro X.app/Contents/Resources'
-    return path if File.exist?(path)
+    [
+      '/Applications/Logic Pro Creator Studio.app/Contents/Resources',
+      '/Applications/Logic Pro.app/Contents/Resources',
+      '/Applications/Logic Pro X.app/Contents/Resources'
+    ].each { |p| return p if File.exist?(p) }
 
-    path = '/Applications/Logic Pro.app/Contents/Resources'
-    return path if File.exist?(path)
-
-    raise 'Logic Pro X not found'
+    raise 'Logic Pro not found'
   end
 
   def find_mainstage_path
-    path = '/Applications/MainStage 3.app/Contents/Resources'
-    return path if File.exist?(path)
+    [
+      '/Applications/MainStage Creator Studio.app/Contents/Resources',
+      '/Applications/MainStage 3.app/Contents/Resources',
+      '/Applications/MainStage.app/Contents/Resources'
+    ].each { |p| return p if File.exist?(p) }
 
-    raise 'Mainstage not found'
+    raise 'MainStage not found'
   end
 
-  # Returns current filename: i.e. 'logicpro1040.plist' or 'mainstage360.plist'
+  def find_garageband_path
+    path = '/Applications/GarageBand.app/Contents/Resources'
+    return path if File.exist?(path)
+
+    raise 'GarageBand not found'
+  end
+
+  # Returns current filename: i.e. 'logicpro1040.plist' or 'mainstage360.plist' or 'garageband10412.plist'
   def plist_file_name(app_name)
-    `cd '#{app_path(app_name)}' && find . -name  logicpro\*.plist -o -name mainstage\*.plist`
+    pattern = '-name logicpro\\*.plist -o -name mainstage\\*.plist -o -name garageband\\*.plist'
+    `cd '#{app_path(app_name)}' && find . #{pattern}`
       .gsub('./', '').chomp
   end
 
