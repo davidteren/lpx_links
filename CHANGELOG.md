@@ -7,73 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-04-05
+
 ### Added
+- **Disk space check in install script** - Checks available space before installing, warns when tight, lets users choose to delete packages after install to save space (#75)
+- **Install script test suite** (`scripts/test_install_pkg.sh`) - 8 tests covering validation, disk reporting, and mode detection
+- **CI test matrix** - Tests across Ruby 3.2, 3.3, 3.4, and 4.0 (all currently maintained versions)
+- **macOS shell test job** in CI - Validates install scripts on the target platform
+- **GitHub Pages site redesign** - Replaced marketing-style landing page with a practical, musician-friendly guide
 - **aria2 installation script** (`scripts/install_aria2.sh`) - One-command installation of aria2 without requiring Homebrew
   - Automatic detection of macOS version and architecture (Intel/Apple Silicon)
-  - Downloads official Homebrew bottles (aria2 v1.37.0)
   - Installs to `~/.local/bin/aria2c` (user directory, no sudo required)
   - Automatic shell detection and PATH configuration (supports zsh, bash, and other shells)
-  - Color-coded output and error handling
-  - **Homebrew detection** - Automatically detects if Homebrew is installed and offers user choice between Homebrew or bundled binary installation
-- CONTRIBUTING.md with comprehensive developer documentation (setup, testing, code quality, PR process)
-- **Bundled aria2 binary** - Pre-compiled aria2 v1.37.0 ARM64 binary in `vendor/aria2/bin/` for offline installation
-- **Test scripts** for aria2 installation verification (`test_aria2_bundle.sh`, `test_installation_flow.sh`, `test_homebrew_detection.sh`)
+  - Homebrew detection with user choice between Homebrew or bundled binary
+- CONTRIBUTING.md with comprehensive developer documentation
+- **Bundled aria2 binary** - Pre-compiled aria2 v1.37.0 ARM64 binary for offline installation
+- **Test scripts** for aria2 installation verification
+- COPYRIGHT file documenting all contributors and license change rationale
+- Minitest test framework with 90%+ coverage (34 tests, 65 assertions)
+- Rakefile for running tests with `bundle exec rake test`
 
 ### Changed
-- **README.md aria2 installation instructions** - Replaced outdated v1.33.0 DMG installer with new one-command installation script
-  - Updated from aria2 v1.33.0 (2017) to v1.37.0 (2023)
-  - Simplified installation from manual DMG to single command
-  - Added Homebrew as alternative installation method
-- Improved file handling robustness in `print_file` method by using block form of `File.open` to ensure automatic file closure even if exceptions occur
-- **aria2 installation approach** - Changed from downloading Homebrew bottles to bundling pre-compiled binary
-  - Bundled aria2 v1.37.0 ARM64 binary in `vendor/aria2/bin/` directory
-  - Eliminates GitHub Container Registry authentication issues
-  - Provides faster, more reliable installation experience
-  - Currently supports Apple Silicon (ARM64) only
+- **README completely rewritten for musicians** - Plain language, step-by-step guide with explanations of what each command does, Terminal introduction for beginners, disk space guidance, and expanded troubleshooting
+- **Install script overhauled** - Input validation, progress tracking (`[1/N]`), disk space summary, cleanup prompts, non-interactive mode support
+- Updated minitest to 5.27.0 for Ruby 4.0 compatibility
+- Migrated test suite from RSpec to Minitest
+- Updated CI from single Ruby 3.3.1 to matrix of 3.2, 3.3, 3.4, 4.0
+- Simplified aria2 installation from manual DMG to single command (v1.33.0 → v1.37.0)
 
 ### Fixed
-- Fixed input handling logic in option parser where `upcase!` returned `nil` for already-uppercase input (e.g., 'LOGIC'), causing valid input to be rejected
-- **aria2 installation script** - Fixed 401 Unauthorized error by bundling aria2 binary instead of downloading from GitHub Container Registry
-- **aria2 installation script** - Fixed `curl | bash` installation method by downloading binary from GitHub when not running from local repository
-- **aria2 installation script** - Added SHA256 checksum verification for binary integrity and security
-- **aria2 installation script** - Fixed user input prompts not working with `curl | bash` by reading from `/dev/tty` instead of stdin
-- **aria2 installation script** - Added non-interactive environment detection with graceful fallbacks (skip reinstall prompt, exit with helpful message for installation method choice)
-- **aria2 installation script** - Changed installation location from `/usr/local/bin` (requires sudo) to `~/.local/bin` (user directory, no sudo needed)
-- **aria2 installation script** - Automatically adds `~/.local/bin` to PATH in `.zshrc` for immediate availability of `aria2c` command
-
-### Changed
-- **README.md rewritten for musicians** - User-focused content with plain language, clear steps, and no technical jargon
-- Moved all developer/technical content from README.md to CONTRIBUTING.md
-- Simplified installation and usage instructions for non-technical users
-- Updated Logic Pro version references to Logic Pro 11 (current version)
-- Reorganized documentation structure with clear separation between user and developer content
-
-### Added
-- COPYRIGHT file documenting all contributors and license change rationale
-- Reference to COPYRIGHT file in README license section
-- Minitest test framework with minitest-reporters for better output
-- Rakefile for running tests with `bundle exec rake test`
-- test/ directory structure following Rails conventions
-- Comprehensive test coverage for edge cases and error handling (22 new tests)
-- Tests for relative path resolution in download URLs
-- Tests for error handling (invalid JSON, missing files, runtime errors)
-- Tests for file system operations (directory creation, file writing)
-- Tests for command execution (plutil, open commands)
-
-### Changed
-- **Migrated test suite from RSpec to Minitest** for better Rails alignment and TDD practices
-- Updated GitHub Actions CI to run Minitest instead of RSpec
-- Updated test_local_workflow.sh to run Minitest tests
-- Updated all documentation (README.md, TEST_WORKFLOW.md) to reference Minitest
-- Enabled warnings in Rakefile test configuration to catch potential code issues early
-- **Restored test coverage threshold to 90%** in CI workflow (from 60%)
-- Increased test coverage from 62.89% to 91.75% (89/97 lines covered)
-- Updated .rubocop.yml to exclude test files from metrics cops
-
-### Removed
-- RSpec gem and all RSpec-related dependencies
-- spec/ directory and all RSpec test files
-- RSpec configuration files (.rspec, spec_helper.rb)
+- **Disk filling up during package installation** - Packages and installed content no longer coexist by default (#75)
+- Fixed input handling where `upcase!` returned `nil` for already-uppercase input
+- Fixed aria2 installer: 401 errors, `curl | bash` mode, checksum verification, non-interactive fallbacks
+- All RuboCop linting issues resolved
 
 ## [0.0.11] - 2025-10-01
 
@@ -156,7 +122,9 @@ Earlier version history was not tracked in a formal changelog.
 - **Fixed** for any bug fixes
 - **Security** in case of vulnerabilities
 
-[Unreleased]: https://github.com/davidteren/lpx_links/compare/v0.0.10...HEAD
+[Unreleased]: https://github.com/davidteren/lpx_links/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/davidteren/lpx_links/compare/v0.0.11...v1.0.0
+[0.0.11]: https://github.com/davidteren/lpx_links/compare/v0.0.10...v0.0.11
 [0.0.10]: https://github.com/davidteren/lpx_links/compare/v0.0.9...v0.0.10
 [0.0.9]: https://github.com/davidteren/lpx_links/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/davidteren/lpx_links/compare/v0.0.7...v0.0.8
