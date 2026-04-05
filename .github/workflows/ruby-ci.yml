@@ -15,7 +15,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.3.1'
+        ruby-version: '3.3'
         bundler-cache: true
 
     - name: Install dependencies
@@ -29,13 +29,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        ruby-version: ['3.3.1']
+        ruby-version:
+          - '3.2'   # security maintenance
+          - '3.3'   # stable maintenance
+          - '3.4'   # current
+          - '4.0'   # latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Ruby
+    - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
@@ -51,7 +56,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: coverage-report
+        name: coverage-report-ruby-${{ matrix.ruby-version }}
         path: coverage
         retention-days: 7
 
@@ -63,3 +68,17 @@ jobs:
           echo "Test coverage is below 90%"
           exit 1
         fi
+
+  shell-test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Verify install.sh syntax
+      run: bash -n scripts/install.sh
+
+    - name: Run install.sh tests
+      run: bash scripts/test_install_pkg.sh
+
+    - name: Verify install_aria2.sh syntax
+      run: bash -n scripts/install_aria2.sh
