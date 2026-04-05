@@ -1,0 +1,31 @@
+gh-pages/index.html
+  bfa208fd12021678 1-1088
+CHANGELOG.md
+  bfa208fd12021678 10-11,13-17,22-25,27,31-36,38-42,125-127
+gh-pages/robots.txt
+  bfa208fd12021678 1-4
+gh-pages/sitemap.xml
+  bfa208fd12021678 1-15
+README.md
+  bfa208fd12021678 1,6,8,10,12-24,26,28,30,32,40,42-43,45,47,49,55,57,59-65,70,75,77,79,81,83,89-105,107,109,113-114,117,119-120,122-123,125-144,146-147,149-151,153,155-158,162,166,168,176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "e9659af4485ca07d6fa83bc015b889f1cffc025a",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 1245,
+      "total_deletions": 136,
+      "accepted_lines": 1244,
+      "overriden_lines": 0
+    }
+  }
+}
