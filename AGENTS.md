@@ -14,8 +14,9 @@ The audience is **musicians and producers**, many of whom have never used Termin
 lpx_links.rb                 # CLI entry point — arg parsing, orchestration, output
 lib/file_helpers.rb           # App discovery, path resolution, URL helpers
 scripts/install.sh            # Bulk .pkg installer with disk space check
-scripts/install_aria2.sh      # aria2 download manager installer
+scripts/install_aria2.sh      # aria2 installer (via Homebrew — no bundled binaries)
 scripts/test_install_pkg.sh   # Shell tests for install.sh
+scripts/test_installation_flow.sh  # Shell tests for install_aria2.sh
 test/                         # Minitest suite (mirrors lib/ structure)
 gh-pages/                     # GitHub Pages site source
 docs/                         # LICENSE, COPYRIGHT
