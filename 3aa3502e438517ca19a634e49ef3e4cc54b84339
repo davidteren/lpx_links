@@ -1,0 +1,23 @@
+.github/workflows/ruby-ci.yml
+  bfa208fd12021678 18,32,34-38,43,59,71-84
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "3aa3502e438517ca19a634e49ef3e4cc54b84339",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 57,
+      "total_deletions": 38,
+      "accepted_lines": 23,
+      "overriden_lines": 0
+    }
+  }
+}
