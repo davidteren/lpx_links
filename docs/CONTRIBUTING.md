@@ -16,9 +16,9 @@ Thank you for your interest in contributing to lpx_links! This guide will help y
 
 ### Prerequisites
 
-- **Ruby 2.7 or higher** (Ruby 3.3+ recommended)
+- **Ruby 3.2 or higher** (Ruby 3.3+ recommended; CI tests 3.2, 3.3, 3.4, and 4.0)
 - **Bundler** gem installed
-- **Logic Pro** or **MainStage** installed (for full workflow testing)
+- **Logic Pro**, **MainStage**, or **GarageBand** installed (for full workflow testing)
 - **Git** for version control
 
 ### Installation
@@ -52,8 +52,10 @@ lpx_links/
 │   └── lib/
 │       └── file_helpers_test.rb  # Helper module tests
 ├── scripts/
-│   ├── test_local_workflow.sh    # Local validation script
-│   └── install.sh                # Package installation script
+│   ├── install.sh                # Package installation script
+│   ├── install_aria2.sh          # aria2 download manager installer
+│   ├── test_install_pkg.sh       # Install script tests
+│   └── test_local_workflow.sh    # Local validation script
 ├── docs/
 │   ├── CONTRIBUTING.md       # Developer guide
 │   ├── BEST_PRACTICES.md     # Code standards
@@ -66,7 +68,7 @@ lpx_links/
 ### Key Files
 
 - **`lpx_links.rb`**: Main executable that handles CLI argument parsing, orchestrates the workflow, and generates output files
-- **`lib/file_helpers.rb`**: Module containing path resolution, URL construction, and application discovery logic
+- **`lib/file_helpers.rb`**: Module containing path resolution, URL construction, and application discovery logic (Logic Pro, MainStage, GarageBand — including Creator Studio editions)
 - **`scripts/test_local_workflow.sh`**: Comprehensive local testing script that validates RuboCop compliance, runs tests, and simulates end-user workflow
 
 ## Testing
@@ -161,7 +163,7 @@ bundle exec rubocop -a
 ```
 
 **Configuration**: See `.rubocop.yml` for project-specific rules
-- Target Ruby version: 2.7
+- Target Ruby version: 3.2
 - Custom metrics for test files
 - Style preferences aligned with Ruby community standards
 
@@ -326,7 +328,8 @@ The project uses GitHub Actions for continuous integration:
 1. **RuboCop Linting**: Must pass with 0 offenses
 2. **Test Suite**: All tests must pass
 3. **Code Coverage**: Must maintain 90%+ coverage
-4. **Ruby Versions**: Tests run on multiple Ruby versions
+4. **Ruby Versions**: Tests run on Ruby 3.2, 3.3, 3.4, and 4.0
+5. **Shell Tests**: Install scripts validated on macOS
 
 **Viewing Results**:
 - Check the "Actions" tab in GitHub
@@ -357,5 +360,5 @@ Automated PR review tool configured in `.qodo_merge.toml`:
 
 ---
 
-Thank you for contributing to lpx_links! Your efforts help make this tool better for the Logic Pro and MainStage community. 🎹
+Thank you for contributing to lpx_links! Your efforts help make this tool better for the Logic Pro, MainStage, and GarageBand community.
 

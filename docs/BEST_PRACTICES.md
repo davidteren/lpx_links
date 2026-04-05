@@ -1,7 +1,7 @@
 # 📘 Project Best Practices
 
 ## 1. Project Purpose
-A small Ruby utility that extracts direct download URLs for Logic Pro X and MainStage additional content by parsing Apple-provided package metadata (plist converted to JSON). It generates organized text files with all links and mandatory-only links and opens the destination folder for user convenience. The project emphasizes reliability, clear CLI behavior, and a robust automated test suite.
+A small Ruby utility that extracts direct download URLs for Logic Pro, MainStage, and GarageBand additional content by parsing Apple-provided package metadata (plist converted to JSON). It generates organized text files with all links and mandatory-only links and opens the destination folder for user convenience. Supports all app editions including the newer Creator Studio variants. The project emphasizes reliability, clear CLI behavior, and a robust automated test suite.
 
 ## 2. Project Structure
 - Root
@@ -20,7 +20,7 @@ A small Ruby utility that extracts direct download URLs for Logic Pro X and Main
 - `images/` — Documentation assets.
 
 Conventions
-- Source files use `# frozen_string_literal: true` and idiomatic Ruby 2.7.
+- Source files use `# frozen_string_literal: true` and idiomatic Ruby 3.2+.
 - File names are snake_case; modules/classes are CamelCase; methods are snake_case.
 - Output artifacts are written to the user’s Desktop under `~/Desktop/lpx_download_links`.
 
@@ -39,7 +39,7 @@ Conventions
   - Integration/E2E: Use `scripts/test_local_workflow.sh` to simulate the full CLI pipeline and verify generated files where possible.
 
 ## 4. Code Style
-- Ruby Version: Target Ruby 2.7 (see `.rubocop.yml`).
+- Ruby Version: Target Ruby 3.2 (see `.rubocop.yml`). CI tests 3.2, 3.3, 3.4, and 4.0.
 - Linting: Must pass RuboCop with project rules.
 - Idioms:
   - Use `module_function` for modules with stateless helpers.
@@ -84,7 +84,7 @@ Conventions
 
 ## 7. Tools & Dependencies
 - Runtime
-  - Ruby (2.7 compatible environment)
+  - Ruby (3.2+ compatible environment)
   - macOS tools: `plutil` (for plist→JSON), `open` (to open output directory)
 - Development/Test Gems (Gemfile)
   - `minitest` — Unit testing framework
@@ -99,7 +99,7 @@ Conventions
   - Local workflow validation: `./scripts/test_local_workflow.sh`
 
 ## 8. Other Notes
-- Platform Assumptions: macOS with Logic Pro or MainStage installed for the full workflow; unit tests do not require installed apps.
+- Platform Assumptions: macOS with Logic Pro, MainStage, or GarageBand installed for the full workflow; unit tests do not require installed apps.
 - File Outputs: Generated under `~/Desktop/lpx_download_links/` with `all_download_links.txt`, `mandatory_download_links.txt`, and `json/logicpro_content.json`.
 - Safety & Reliability:
   - Avoid command injection by keeping shell inputs constrained to known paths and quoting arguments.
