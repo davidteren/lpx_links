@@ -3,7 +3,7 @@
 AllCops:
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
 
 # Allow longer blocks in tests - tests naturally have more setup/assertions
 Metrics/BlockLength:

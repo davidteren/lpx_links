@@ -15,7 +15,7 @@ The `scripts/test_local_workflow.sh` script simulates the complete end-user work
 ## Prerequisites
 
 - Ruby installed (the version specified in `.ruby-version`)
-- Logic Pro or Logic Pro X installed (for full workflow testing)
+- Logic Pro, MainStage, or GarageBand installed (for full workflow testing)
 - RuboCop installed: `gem install rubocop`
 - Bundler installed: `gem install bundler`
 - Dependencies installed: `bundle install`
@@ -45,8 +45,9 @@ Simply run the script from the repository root:
 
 3. **Prerequisites Check**: Verifies system requirements
    - Checks Ruby installation
-   - Checks for Logic Pro / Logic Pro X
-   - Checks for MainStage
+   - Checks for Logic Pro / Logic Pro X / Logic Pro Creator Studio
+   - Checks for MainStage / MainStage Creator Studio
+   - Checks for GarageBand
 
 4. **RuboCop Lint Check**: Runs linting
    - Executes `rubocop` on the codebase
@@ -117,9 +118,9 @@ git checkout feature/my-branch
 
 ## Troubleshooting
 
-### "Logic Pro not found" Warning
+### "Logic Pro not found" / "GarageBand not found" Warning
 
-If you don't have Logic Pro installed, the workflow test will fail. This is expected. The script will still:
+If you don't have Logic Pro (or your target app) installed, the workflow test will fail. This is expected. The script will still:
 - Run RuboCop checks
 - Run the test suite
 - Validate code quality
