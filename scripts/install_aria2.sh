@@ -1,36 +1,26 @@
 #!/bin/bash
 # aria2 Installation Script for macOS
-# Installs bundled aria2 binary without requiring Homebrew
+#
+# Installs aria2 via Homebrew. If Homebrew isn't installed, offers to
+# install it first. This avoids bundling GPL-licensed binaries.
 #
 # Supports macOS 12+ (Monterey, Ventura, Sonoma, Sequoia)
-# Currently supports Apple Silicon (ARM64) only
-#
-# MAINTENANCE NOTE: Binary is bundled in vendor/aria2/bin/aria2c
-# When aria2 needs to be updated:
-# 1. Install via Homebrew: brew install aria2
-# 2. Copy binary: cp /opt/homebrew/Cellar/aria2/VERSION/bin/aria2c vendor/aria2/bin/
-# 3. Update vendor/aria2/README.md with version info
-#
-# SECURITY NOTE: This script installs a pre-compiled binary bundled with lpx_links.
-# The binary is sourced from official Homebrew bottles.
-# Users who require maximum security should install via Homebrew directly: brew install aria2
+# Works on both Intel and Apple Silicon
 
-set -e  # Exit on error
+set -e
 
 # Colors for output
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Print colored output
 print_blue() { echo -e "${BLUE}$1${NC}"; }
 print_green() { echo -e "${GREEN}✓ $1${NC}"; }
 print_yellow() { echo -e "${YELLOW}⚠ $1${NC}"; }
 print_red() { echo -e "${RED}✗ $1${NC}"; }
 
-# Print header
 echo ""
 print_blue "═══════════════════════════════════════════════════════"
 print_blue "  aria2 Installation Script for macOS"
@@ -39,257 +29,137 @@ echo ""
 
 # Check if aria2c is already installed
 if command -v aria2c &> /dev/null; then
-    CURRENT_VERSION=$(aria2c --version | head -n 1 | awk '{print $3}')
-    print_yellow "aria2 is already installed (version $CURRENT_VERSION)"
-
-    # Check if we can prompt for input (interactive environment)
-    if [ -c /dev/tty ]; then
-        read -p "Do you want to reinstall? (y/N): " -n 1 -r </dev/tty
-        echo
-    else
-        # In non-interactive environments, default to 'No' (safe default)
-        print_yellow "Non-interactive mode detected. Skipping reinstallation."
-        REPLY="n"
-    fi
-
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        print_blue "Installation cancelled."
-        exit 0
-    fi
+    CURRENT_VERSION=$(aria2c --version | head -n 1)
+    print_green "aria2 is already installed!"
+    echo ""
+    print_blue "═══════════════════════════════════════════════════════"
+    print_green "$CURRENT_VERSION"
+    print_blue "═══════════════════════════════════════════════════════"
+    echo ""
+    exit 0
 fi
 
-# Check if Homebrew is installed
-HOMEBREW_INSTALLED=false
-if command -v brew &> /dev/null; then
-    HOMEBREW_INSTALLED=true
-    print_blue "Homebrew detected on your system"
-    echo ""
-    print_blue "You have two installation options:"
-    echo ""
-    echo "  1. Install via Homebrew (recommended if you use Homebrew)"
-    echo "     - Automatically updates with 'brew upgrade'"
-    echo "     - Works on both Intel and Apple Silicon"
-    echo "     - Managed by Homebrew"
-    echo ""
-    echo "  2. Install bundled binary (faster, no Homebrew needed)"
-    echo "     - Instant installation from bundled binary"
-    echo "     - Apple Silicon (ARM64) only"
-    echo "     - No automatic updates"
-    echo ""
-
-    # Check if we can prompt for input (interactive environment)
-    if ! [ -c /dev/tty ]; then
-        print_red "Cannot prompt for installation method in a non-interactive environment."
-        print_yellow "Please run this script in an interactive terminal, or"
-        print_yellow "install aria2 directly using one of these methods:"
-        print_yellow "  - Homebrew: brew install aria2"
-        print_yellow "  - Clone repo and run: bash scripts/install_aria2.sh"
-        exit 1
-    fi
-
-    read -p "Choose installation method (1=Homebrew, 2=Bundled): " -n 1 -r </dev/tty
-    echo
-    echo ""
-
-    if [[ $REPLY =~ ^[1]$ ]]; then
-        print_blue "Installing via Homebrew..."
-        if brew install aria2; then
-            print_green "aria2 successfully installed via Homebrew!"
-            INSTALLED_VERSION=$(aria2c --version | head -n 1)
-            echo ""
-            print_blue "═══════════════════════════════════════════════════════"
-            print_green "$INSTALLED_VERSION"
-            print_blue "═══════════════════════════════════════════════════════"
-            echo ""
-            print_blue "You can now use aria2c to download Logic Pro content:"
-            echo ""
-            echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
-            echo ""
-            exit 0
-        else
-            print_red "Homebrew installation failed"
-            print_yellow "Falling back to bundled binary installation..."
-            echo ""
-        fi
-    elif [[ $REPLY =~ ^[2]$ ]]; then
-        print_blue "Proceeding with bundled binary installation..."
-        echo ""
-    else
-        print_red "Invalid choice. Please run the script again and choose 1 or 2."
-        exit 1
-    fi
-fi
-
-# Detect architecture
-ARCH=$(uname -m)
-print_blue "Detecting system architecture..."
-if [ "$ARCH" = "arm64" ]; then
-    print_green "Apple Silicon (ARM64) detected"
-elif [ "$ARCH" = "x86_64" ]; then
-    print_red "Intel (x86_64) detected"
-    print_yellow "This script currently only supports Apple Silicon (ARM64)"
-    print_yellow "You can install aria2 using Homebrew instead:"
-    print_yellow "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
-    print_yellow "  brew install aria2"
-    exit 1
-else
-    print_red "Unsupported architecture: $ARCH"
-    exit 1
-fi
-
-# Detect macOS version
-print_blue "Detecting macOS version..."
+# Check macOS version
 MACOS_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 if [ "$MACOS_VERSION" -lt 12 ]; then
     print_red "macOS version $MACOS_VERSION detected"
     print_yellow "This script supports macOS 12+ (Monterey and later)"
-    print_yellow "You can install aria2 using Homebrew instead:"
-    print_yellow "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
-    print_yellow "  brew install aria2"
     exit 1
 fi
-print_green "macOS $(sw_vers -productVersion) detected"
 
-# Determine if we're running from a local clone or via curl | bash
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" 2>/dev/null && pwd )"
-BUNDLED_BINARY=""
+# --- Install via Homebrew ---
+if command -v brew &> /dev/null; then
+    print_blue "Homebrew detected. Installing aria2..."
+    echo ""
 
-# Try to find bundled binary in local repository first
-if [ -n "$SCRIPT_DIR" ]; then
-    REPO_ROOT="$( cd "$SCRIPT_DIR/.." 2>/dev/null && pwd )"
-    if [ -f "$REPO_ROOT/vendor/aria2/bin/aria2c" ]; then
-        BUNDLED_BINARY="$REPO_ROOT/vendor/aria2/bin/aria2c"
-        print_blue "Found bundled aria2 binary in local repository"
-    fi
-fi
-
-# If not found locally, download from GitHub
-if [ -z "$BUNDLED_BINARY" ] || [ ! -f "$BUNDLED_BINARY" ]; then
-    print_blue "Downloading aria2 binary from GitHub..."
-
-    # Create temporary directory
-    TEMP_DIR=$(mktemp -d)
-    trap "rm -rf $TEMP_DIR" EXIT
-
-    BUNDLED_BINARY="$TEMP_DIR/aria2c"
-    BINARY_URL="https://raw.githubusercontent.com/davidteren/lpx_links/main/vendor/aria2/bin/aria2c"
-
-    if ! curl -fsSL -o "$BUNDLED_BINARY" "$BINARY_URL"; then
-        print_red "Failed to download aria2 binary from GitHub"
-        print_yellow "Please check your internet connection and try again"
-        print_yellow "Or clone the repository and run the script locally:"
-        print_yellow "  git clone https://github.com/davidteren/lpx_links.git"
-        print_yellow "  cd lpx_links"
-        print_yellow "  bash scripts/install_aria2.sh"
+    if brew install aria2; then
+        INSTALLED_VERSION=$(aria2c --version | head -n 1)
+        echo ""
+        print_blue "═══════════════════════════════════════════════════════"
+        print_green "$INSTALLED_VERSION"
+        print_blue "═══════════════════════════════════════════════════════"
+        echo ""
+        print_green "Installation complete!"
+        echo ""
+        print_blue "You can now download Logic Pro content with:"
+        echo ""
+        echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
+        echo ""
+        exit 0
+    else
+        print_red "Installation failed. Please try again or run: brew install aria2"
         exit 1
     fi
-
-    print_green "Download complete"
 fi
 
-# Verify binary integrity with SHA256 checksum
-print_blue "Verifying binary integrity..."
-EXPECTED_SHA="70cdce6d22c5208a8175e5906bf04220806850a4c97efa6676e66b0a9c1de751"
-ACTUAL_SHA=$(shasum -a 256 "$BUNDLED_BINARY" | awk '{print $1}')
+# --- No Homebrew — offer to install it ---
+print_blue "aria2 is installed via Homebrew, a free package manager for Mac."
+print_blue "Homebrew is not currently installed on your system."
+echo ""
+print_blue "Homebrew is widely used by Mac users to install command-line tools."
+print_blue "It installs to its own directory and won't interfere with your system."
+echo ""
 
-if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
-    print_red "Binary integrity check failed!"
-    print_red "Expected SHA256: $EXPECTED_SHA"
-    print_red "Actual SHA256:   $ACTUAL_SHA"
-    print_yellow "This may indicate a corrupted download or tampered binary"
-    print_yellow "Please try again or report this issue at:"
-    print_yellow "  https://github.com/davidteren/lpx_links/issues"
+if [ -c /dev/tty ]; then
+    echo "  1. Install Homebrew, then install aria2 (recommended)"
+    echo "  2. Cancel"
+    echo ""
+    read -p "Choose an option (1/2): " -n 1 -r </dev/tty
+    echo ""
+    echo ""
+
+    if [[ ! $REPLY =~ ^[1]$ ]]; then
+        print_blue "Installation cancelled."
+        echo ""
+        print_blue "You can install Homebrew manually anytime:"
+        echo "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+        echo ""
+        print_blue "Then install aria2:"
+        echo "  brew install aria2"
+        echo ""
+        exit 0
+    fi
+else
+    print_red "Cannot prompt for input in a non-interactive environment."
+    print_yellow "Please install Homebrew and aria2 manually:"
+    echo ""
+    echo "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+    echo "  brew install aria2"
+    echo ""
     exit 1
 fi
 
-print_green "Binary integrity verified"
+# Install Homebrew
+print_blue "Installing Homebrew..."
+print_blue "You may be asked for your Mac password during this step."
+echo ""
 
-# Make the binary executable
-chmod +x "$BUNDLED_BINARY"
-
-# Install to user's local bin directory (no sudo needed)
-INSTALL_DIR="$HOME/.local/bin"
-print_blue "Installing aria2c to $INSTALL_DIR..."
-print_blue "(No administrator privileges required)"
-
-# Create ~/.local/bin if it doesn't exist
-if [ ! -d "$INSTALL_DIR" ]; then
-    mkdir -p "$INSTALL_DIR"
-fi
-
-# Copy binary
-if ! cp "$BUNDLED_BINARY" "$INSTALL_DIR/aria2c"; then
-    print_red "Failed to install aria2c"
+if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+    print_green "Homebrew installed!"
+    echo ""
+else
+    print_red "Homebrew installation failed."
+    print_yellow "Please visit https://brew.sh for manual installation instructions."
     exit 1
 fi
 
-# Make executable
-chmod +x "$INSTALL_DIR/aria2c"
-
-print_green "Installation complete"
-
-# Detect shell and determine appropriate RC file
-# Check for common shells in order of preference
-if [ -n "$ZSH_VERSION" ] || [ "$SHELL" = "$(command -v zsh)" ]; then
-    RC_FILE="$HOME/.zshrc"
-elif [ -n "$BASH_VERSION" ] || [ "$SHELL" = "$(command -v bash)" ]; then
-    RC_FILE="$HOME/.bashrc"
-else
-    # Fallback for other shells like sh, ksh, etc.
-    RC_FILE="$HOME/.profile"
+# Add Homebrew to PATH for this session (Apple Silicon)
+if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-PATH_EXPORT="export PATH=\"\$HOME/.local/bin:\$PATH\""
-INSTALLER_COMMENT="# Added by lpx_links aria2 installer"
-
-if ! grep -qF "$INSTALLER_COMMENT" "$RC_FILE" 2>/dev/null; then
-    print_blue "Adding $INSTALL_DIR to PATH in $RC_FILE..."
-    # Create file if it doesn't exist
-    touch "$RC_FILE"
-    # Add a newline for separation if file is not empty
-    [ -s "$RC_FILE" ] && echo "" >> "$RC_FILE"
-    echo "$INSTALLER_COMMENT" >> "$RC_FILE"
-    echo "$PATH_EXPORT" >> "$RC_FILE"
-    print_green "PATH updated in $RC_FILE"
-    print_yellow "Please restart your terminal or run: source $RC_FILE"
-else
-    print_blue "$INSTALL_DIR is already configured in your shell's PATH."
+# Add Homebrew to PATH for this session (Intel)
+if [ -f /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# Add to current session PATH
-export PATH="$HOME/.local/bin:$PATH"
+# Verify brew is available
+if ! command -v brew &> /dev/null; then
+    print_red "Homebrew installed but not found in PATH."
+    print_yellow "Please restart your terminal and run:"
+    echo "  brew install aria2"
+    exit 1
+fi
 
-# Verify installation
-print_blue "Verifying installation..."
-if [ -x "$INSTALL_DIR/aria2c" ]; then
-    INSTALLED_VERSION=$("$INSTALL_DIR/aria2c" --version | head -n 1)
-    print_green "aria2 successfully installed!"
+# Install aria2
+print_blue "Installing aria2..."
+echo ""
+
+if brew install aria2; then
+    INSTALLED_VERSION=$(aria2c --version | head -n 1)
     echo ""
     print_blue "═══════════════════════════════════════════════════════"
     print_green "$INSTALLED_VERSION"
     print_blue "═══════════════════════════════════════════════════════"
     echo ""
-    print_green "Installation location: $INSTALL_DIR/aria2c"
+    print_green "Installation complete!"
     echo ""
-    print_blue "You can now use aria2c to download Logic Pro content:"
+    print_blue "You can now download Logic Pro content with:"
     echo ""
     echo "  aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content"
     echo ""
-
-    # Test if aria2c is accessible in current session
-    if command -v aria2c &> /dev/null; then
-        print_green "✓ aria2c is ready to use in this terminal session"
-    else
-        print_yellow "Note: To use 'aria2c' command in this terminal:"
-        print_yellow "  Run: source ~/.zshrc"
-        print_yellow "  Or restart your terminal"
-        print_yellow ""
-        print_yellow "For now, you can use the full path:"
-        print_yellow "  $INSTALL_DIR/aria2c"
-    fi
 else
-    print_red "Installation verification failed"
-    print_yellow "Could not find an executable aria2c at $INSTALL_DIR/aria2c"
+    print_red "aria2 installation failed."
+    print_yellow "Please try: brew install aria2"
     exit 1
 fi
-

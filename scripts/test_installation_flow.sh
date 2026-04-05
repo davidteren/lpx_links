@@ -1,99 +1,113 @@
 #!/bin/bash
-# Test the complete aria2 installation flow
-# This script simulates what a user would experience
+# Test the aria2 installation script logic
+# Validates syntax, structure, and key paths
 
 set -e
 
 # Colors for output
-GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo ""
-echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}  Testing aria2 Installation Flow${NC}"
-echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
-echo ""
-
-# Test 1: Verify bundled binary exists and works
-echo -e "${BLUE}Test 1: Checking bundled binary...${NC}"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-REPO_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
-BUNDLED_BINARY="$REPO_ROOT/vendor/aria2/bin/aria2c"
+INSTALL_SCRIPT="$SCRIPT_DIR/install_aria2.sh"
+PASSED=0
+FAILED=0
 
-if [ ! -f "$BUNDLED_BINARY" ]; then
-    echo -e "${RED}✗ Bundled binary not found${NC}"
-    exit 1
-fi
+pass() { echo -e "${GREEN}✓ $1${NC}"; PASSED=$((PASSED + 1)); }
+fail() { echo -e "${RED}✗ $1${NC}"; FAILED=$((FAILED + 1)); }
 
-if [ ! -x "$BUNDLED_BINARY" ]; then
-    echo -e "${RED}✗ Bundled binary not executable${NC}"
-    exit 1
-fi
-
-VERSION=$("$BUNDLED_BINARY" --version | head -1)
-echo -e "${GREEN}✓ Bundled binary works: $VERSION${NC}"
-
-# Test 2: Check if aria2c is already installed
 echo ""
-echo -e "${BLUE}Test 2: Checking system installation...${NC}"
+echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
+echo -e "${BLUE}  Testing install_aria2.sh${NC}"
+echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
+echo ""
+
+# Test 1: Script syntax is valid
+echo -e "${BLUE}Test 1: Script syntax check...${NC}"
+if bash -n "$INSTALL_SCRIPT"; then
+    pass "install_aria2.sh syntax is valid"
+else
+    fail "install_aria2.sh has syntax errors"
+fi
+
+# Test 2: Script uses Homebrew for installation
+echo ""
+echo -e "${BLUE}Test 2: Homebrew installation path...${NC}"
+if grep -q "brew install aria2" "$INSTALL_SCRIPT"; then
+    pass "Script installs aria2 via Homebrew"
+else
+    fail "Script missing Homebrew installation"
+fi
+
+# Test 3: Script detects existing Homebrew
+echo ""
+echo -e "${BLUE}Test 3: Homebrew detection...${NC}"
+if grep -q "command -v brew" "$INSTALL_SCRIPT"; then
+    pass "Script detects Homebrew"
+else
+    fail "Script missing Homebrew detection"
+fi
+
+# Test 4: Script offers to install Homebrew if missing
+echo ""
+echo -e "${BLUE}Test 4: Homebrew install offer...${NC}"
+if grep -q "Homebrew/install/HEAD/install.sh" "$INSTALL_SCRIPT"; then
+    pass "Script offers to install Homebrew"
+else
+    fail "Script missing Homebrew install offer"
+fi
+
+# Test 5: Script checks for existing aria2 installation
+echo ""
+echo -e "${BLUE}Test 5: Existing aria2 detection...${NC}"
+if grep -q "command -v aria2c" "$INSTALL_SCRIPT"; then
+    pass "Script checks for existing aria2"
+else
+    fail "Script missing existing aria2 check"
+fi
+
+# Test 6: Script handles non-interactive mode
+echo ""
+echo -e "${BLUE}Test 6: Non-interactive mode handling...${NC}"
+if grep -q '/dev/tty' "$INSTALL_SCRIPT"; then
+    pass "Script handles non-interactive environments"
+else
+    fail "Script missing non-interactive handling"
+fi
+
+# Test 7: No bundled binary references
+echo ""
+echo -e "${BLUE}Test 7: No bundled binary references...${NC}"
+if grep -q "vendor/aria2" "$INSTALL_SCRIPT"; then
+    fail "Script still references bundled binary"
+else
+    pass "No bundled binary references"
+fi
+
+# Test 8: Check current aria2 status on this machine
+echo ""
+echo -e "${BLUE}Test 8: Current system status...${NC}"
 if command -v aria2c &> /dev/null; then
-    INSTALLED_VERSION=$(aria2c --version | head -1)
-    echo -e "${YELLOW}⚠ aria2c is already installed: $INSTALLED_VERSION${NC}"
-    echo -e "${YELLOW}  Location: $(which aria2c)${NC}"
-    echo ""
-    echo -e "${YELLOW}To test the installation script, you would need to:${NC}"
-    echo -e "${YELLOW}  1. Uninstall existing aria2c${NC}"
-    echo -e "${YELLOW}  2. Run: sudo bash scripts/install_aria2.sh${NC}"
-    echo -e "${YELLOW}  3. Verify: aria2c --version${NC}"
+    VERSION=$(aria2c --version | head -1)
+    pass "aria2 is installed: $VERSION"
 else
-    echo -e "${GREEN}✓ No existing aria2c installation found${NC}"
-    echo ""
-    echo -e "${BLUE}To install aria2c, run:${NC}"
-    echo -e "  ${YELLOW}sudo bash scripts/install_aria2.sh${NC}"
-    echo ""
-    echo -e "${BLUE}Or test with the bundled binary directly:${NC}"
-    echo -e "  ${YELLOW}$BUNDLED_BINARY --version${NC}"
+    echo -e "${YELLOW}  aria2 is not installed (expected on clean systems)${NC}"
+    pass "aria2 not installed (test still valid)"
 fi
 
-# Test 3: Verify installation script syntax
-echo ""
-echo -e "${BLUE}Test 3: Verifying installation script syntax...${NC}"
-if bash -n "$REPO_ROOT/scripts/install_aria2.sh"; then
-    echo -e "${GREEN}✓ Installation script syntax is valid${NC}"
-else
-    echo -e "${RED}✗ Installation script has syntax errors${NC}"
-    exit 1
-fi
-
-# Test 4: Check architecture compatibility
-echo ""
-echo -e "${BLUE}Test 4: Checking architecture compatibility...${NC}"
-ARCH=$(uname -m)
-if [ "$ARCH" = "arm64" ]; then
-    echo -e "${GREEN}✓ System is ARM64 (Apple Silicon) - compatible${NC}"
-elif [ "$ARCH" = "x86_64" ]; then
-    echo -e "${YELLOW}⚠ System is Intel (x86_64) - bundled binary is ARM64 only${NC}"
-    echo -e "${YELLOW}  Intel users should install via Homebrew: brew install aria2${NC}"
-else
-    echo -e "${RED}✗ Unknown architecture: $ARCH${NC}"
-fi
-
-# Test 5: Check macOS version
-echo ""
-echo -e "${BLUE}Test 5: Checking macOS version...${NC}"
-MACOS_VERSION=$(sw_vers -productVersion | cut -d. -f1)
-if [ "$MACOS_VERSION" -ge 12 ]; then
-    echo -e "${GREEN}✓ macOS $MACOS_VERSION is supported (requires 12+)${NC}"
-else
-    echo -e "${RED}✗ macOS $MACOS_VERSION is not supported (requires 12+)${NC}"
-fi
-
+# --- Summary ---
 echo ""
 echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}All pre-installation checks passed!${NC}"
+TOTAL=$((PASSED + FAILED))
+if [ "$FAILED" -eq 0 ]; then
+    echo -e "${GREEN}All $TOTAL tests passed!${NC}"
+else
+    echo -e "${YELLOW}$PASSED of $TOTAL tests passed. $FAILED failed.${NC}"
+fi
 echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
 echo ""
 
+exit $FAILED
