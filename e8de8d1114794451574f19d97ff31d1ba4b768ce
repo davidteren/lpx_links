@@ -1,0 +1,25 @@
+scripts/install.sh
+  bfa208fd12021678 2-46,48-142
+scripts/test_install_pkg.sh
+  bfa208fd12021678 1-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "e8de8d1114794451574f19d97ff31d1ba4b768ce",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 267,
+      "total_deletions": 7,
+      "accepted_lines": 263,
+      "overriden_lines": 0
+    }
+  }
+}
