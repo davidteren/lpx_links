@@ -1,0 +1,31 @@
+docs/TEST_WORKFLOW.md
+  bfa208fd12021678 18,48-50,121,123
+docs/CONTRIBUTING.md
+  bfa208fd12021678 19,21,55-58,71,166,331-332,363
+docs/COPYRIGHT
+  bfa208fd12021678 1
+.rubocop.yml
+  bfa208fd12021678 6
+docs/BEST_PRACTICES.md
+  bfa208fd12021678 4,23,42,87,102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "6bc6205be20cf009a9525284bde11a3863311b3e",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 24,
+      "total_deletions": 21,
+      "accepted_lines": 24,
+      "overriden_lines": 0
+    }
+  }
+}
