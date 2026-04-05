@@ -84,7 +84,7 @@ class FileHelpersTest < Minitest::Test
     end
   end
 
-  def test_app_path_finds_mainstage_3
+  def test_app_path_finds_mainstage_three
     File.stub(:exist?, lambda { |path|
       path == '/Applications/MainStage 3.app/Contents/Resources'
     }) do
