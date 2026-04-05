@@ -1,28 +1,35 @@
-# lpx_links
+# LPX Links
 
 [![Ruby CI](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml/badge.svg)](https://github.com/davidteren/lpx_links/actions/workflows/ruby-ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Get direct download links for all Logic Pro and MainStage additional content. Download faster and more reliably than using the in-app downloader.
+**Download all your Logic Pro and MainStage sounds, loops, and instruments — faster and more reliably than the built-in downloader.**
 
-## What It Does
+If you've ever sat waiting for Logic Pro's in-app downloader to crawl through hundreds of packages (or watched it fail halfway through), this tool is for you. It gives you direct download links so you can grab everything at full speed.
 
-This tool creates text files with direct download links for all Logic Pro and MainStage sounds, loops, and instruments. Perfect for:
-- Fresh Logic Pro installations
-- Downloading content faster with a download manager
-- Managing content across multiple machines
-- Avoiding the slow in-app downloader
+## What you'll need
 
-## Compatibility
+Before you start, make sure you have:
 
-✅ **Logic Pro 11** (current version)
-✅ **Logic Pro X 10.x**
-✅ **MainStage 3**
-✅ **macOS** (requires Logic Pro or MainStage installed)
+- **Logic Pro** (or MainStage) installed on your Mac
+- **An internet connection** (the downloads are large)
+- **Free disk space** — see [How much space do I need?](#how-much-space-do-i-need) below
 
-## Quick Start
+## How to open Terminal
 
-### 1. Run the Tool
+Every step below happens in **Terminal**, a built-in app on your Mac. If you've never used it:
+
+1. Press **Cmd + Space** to open Spotlight search
+2. Type **Terminal**
+3. Press **Enter**
+
+A window will appear with a text cursor — that's where you'll paste the commands from each step. To paste, press **Cmd + V**.
+
+## Step 1: Generate your download links
+
+**What this does:** Downloads a small tool to your Mac, reads your Logic Pro installation to find all available content, and creates text files listing every download link.
+
+**How long it takes:** A few seconds.
 
 Open Terminal and paste this command:
 
@@ -30,107 +37,135 @@ Open Terminal and paste this command:
 cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb
 ```
 
-This generates download links for both Logic Pro and MainStage content.
+**What you'll see:** Some text will scroll in the Terminal window. When it finishes, a Finder window will open showing a folder called `lpx_download_links` on your Desktop with two files:
 
-### 2. Find Your Links
+- **`mandatory_download_links.txt`** — 28 essential packages (the core sounds Logic Pro needs)
+- **`all_download_links.txt`** — 900+ packages (the complete sound library)
 
-The tool creates a folder on your Desktop called `lpx_download_links` with two files:
-- **`mandatory_download_links.txt`** - Essential packages only (28 items)
-- **`all_download_links.txt`** - Complete library (900+ items)
+## Step 2: Install the download tool (aria2)
 
-### 3. Download Content
+**What this does:** Installs a small download manager called aria2 that can download many files at once, resume if your internet drops, and skip files you already have. You only need to do this once.
 
-You can download the content using any download manager or your browser.
+**How long it takes:** Under a minute.
 
-## Recommended: Download with aria2
-
-For faster, resumable downloads, use **aria2** (a download manager):
-
-### Install aria2
-
-**Easy Installation** (Recommended):
 ```bash
 curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
 ```
 
-The installation script automatically:
-- **Detects Homebrew** - If you have Homebrew installed, you'll be offered a choice:
-  - Install via Homebrew (works on Intel & Apple Silicon, auto-updates)
-  - Install bundled binary (faster, Apple Silicon only)
-- **No Homebrew?** - Installs bundled aria2 v1.37.0 directly (Apple Silicon only)
-- **No sudo required** - Installs to `~/.local/bin` in your home directory
-- **Automatic PATH setup** - Adds to your `.zshrc` so `aria2c` command works immediately
-- Requires macOS 12+ (Monterey or later)
-- Takes less than a minute
+**What you'll see:** The installer will ask you a couple of questions (just follow the prompts). When it's done, you'll see a green checkmark and a success message.
 
-**Manual Homebrew Installation**:
-```bash
-brew install aria2
-```
-> **Note:** Intel Mac users should use Homebrew. The bundled binary is ARM64 (Apple Silicon) only.
+> If you already have [Homebrew](https://brew.sh) installed, you can also run `brew install aria2` instead.
 
-### Download Content
+## Step 3: Download your content
 
-**Essential packages only** (28 items):
+**What this does:** Downloads the actual sound files from Apple's servers to a folder on your Mac.
+
+**How long it takes:** This depends on your internet speed. The essential packages take a few minutes. The full library can take 30 minutes to several hours.
+
+**For the essential packages only** (recommended if you're short on space):
 ```bash
 aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
 ```
 
-**All packages** (900+ items):
+**For everything** (the complete sound library):
 ```bash
 aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content
 ```
 
-**What these options do**:
-- `-c` - Resume interrupted downloads
-- `--auto-file-renaming=false` - Skip files that already exist (never re-download)
-- `-i` - Path to the file with download links
-- `-d` - Where to save the downloaded files
+**What you'll see:** Progress bars for each file being downloaded. You can close the Terminal and come back later — just run the same command again and it will pick up where it left off.
 
-![aria2 download example](https://github.com/davidteren/lpx_links/blob/master/images/aria2_example.png?raw=true)
+> **Tip:** If a download gets interrupted (laptop goes to sleep, internet drops), just run the same command again. It won't re-download files you already have.
 
-## Install Downloaded Packages
+## Step 4: Install the packages
 
-After downloading, install all packages with this command:
+**What this does:** Takes all the downloaded files and installs them into Logic Pro so your sounds, loops, and instruments are ready to use.
+
+**How long it takes:** A few minutes, depending on how many packages you downloaded.
 
 ```bash
 sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content
 ```
 
-> **Note**: The install script needs a folder containing `.pkg` files, not the text file with links.
+**What you'll see:** First, a summary showing how many packages were found and how much disk space you have. Then you'll be asked:
+
+- **Option 1: Delete each package after it installs** — choose this if you're low on disk space (recommended)
+- **Option 2: Keep the packages** — choose this if you want to keep the files for installing on another Mac
+
+> **"It's asking for my password"** — The `sudo` command needs your Mac login password to install the packages. When you type your password, you won't see any characters appear on screen — that's normal. Just type it and press Enter.
+
+After installation, open Logic Pro — all your new content will be there.
+
+## How much space do I need?
+
+<!-- TODO: Replace these estimates with actual measured sizes -->
+
+| What you're downloading | Download size (approx.) | Installed size (approx.) |
+|---|---|---|
+| Essential packages (28 items) | ~5 GB | ~5 GB |
+| Full library (900+ items) | ~70 GB | ~70 GB |
+
+If your Mac is low on space, start with the **essential packages** — they include everything Logic Pro needs to function fully. The rest is additional loops, instruments, and sound packs you can always add later.
+
+> **Tip:** When installing, choose Option 1 ("delete after install") to avoid needing double the disk space.
 
 ## Troubleshooting
 
-**"Command not found" error**
-Make sure you have Ruby installed. macOS includes Ruby by default.
+**"Command not found" when running lpx_links.rb**
+Your Mac needs Ruby installed. All recent versions of macOS include it. If you've removed it, install Ruby via [Homebrew](https://brew.sh): `brew install ruby`
 
 **"Logic Pro not found" error**
-The tool needs Logic Pro or MainStage installed to find the content list.
+The tool reads your Logic Pro (or MainStage) installation to find the content list. Make sure Logic Pro is installed before running Step 1.
 
-**Downloads are slow**
-Use aria2 (see above) for much faster downloads with resume capability.
+**Downloads are very slow**
+Make sure you're using aria2 (Step 2). Without it, downloads go through your browser one at a time instead of in parallel.
 
-**Need help?**
-[Open an issue](https://github.com/davidteren/lpx_links/issues) on GitHub.
+**A download was interrupted**
+Just run the same aria2 command again (Step 3). It automatically resumes where it left off and skips files you already have.
+
+**"It's asking for my password" and nothing happens when I type**
+That's normal — Terminal hides your password for security. Just type your Mac login password and press Enter.
+
+**My disk filled up during installation**
+See issue [#75](https://github.com/davidteren/lpx_links/issues/75). The latest version of the install script now checks disk space and lets you delete packages as they install. Re-download the tool (Step 1) and re-run the installer (Step 4).
+
+**Something else went wrong?**
+[Open an issue](https://github.com/davidteren/lpx_links/issues) on GitHub and we'll help you out.
+
+## Quick reference (for experienced users)
+
+```bash
+# Generate links
+cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb
+
+# Install aria2
+curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash
+
+# Download (essential only)
+aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content
+
+# Download (everything)
+aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content
+
+# Install
+sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content
+```
+
+## Compatibility
+
+- Logic Pro 11 (current)
+- Logic Pro X 10.x
+- MainStage 3
+- macOS Monterey (12) and later
 
 ## Version
 
-**Current Version**: 0.0.10
+**Current Version**: 1.0.0
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-## For Developers
+## For developers
 
-Want to contribute or modify the code? See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for:
-- Development setup instructions
-- Testing guidelines
-- Code quality standards
-- Pull request process
-
-Technical documentation:
-- [CONTRIBUTING.md](docs/CONTRIBUTING.md) - Developer guide
-- [BEST_PRACTICES.md](docs/BEST_PRACTICES.md) - Code standards and architecture
-- [TEST_WORKFLOW.md](docs/TEST_WORKFLOW.md) - Testing documentation
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for development setup, testing, and contribution guidelines.
 
 ## Credits
 
@@ -138,5 +173,4 @@ Special thanks to [Matteo Ceruti (Matatata)](https://github.com/matatata) for th
 
 ## License
 
-MIT License - Free to use, modify, and distribute. See [LICENSE](docs/LICENSE) for details.
-
+MIT License — free to use, modify, and distribute. See [LICENSE](docs/LICENSE).

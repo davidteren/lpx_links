@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download all your Logic Pro and MainStage sounds, loops, and instruments faster than the built-in downloader. A free tool for musicians and producers.">
+    <meta name="keywords" content="Logic Pro, MainStage, download, sounds, loops, instruments, music production, DAW, Apple">
+    <meta name="author" content="David Teren">
+    <meta property="og:title" content="LPX Links - Faster Logic Pro Content Downloads">
+    <meta property="og:description" content="Download all your Logic Pro sounds, loops, and instruments faster than the built-in downloader. Free and open source.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://davidteren.github.io/lpx_links/">
+    <title>LPX Links - Faster Logic Pro Content Downloads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #111113;
+            --surface: #1a1a1f;
+            --surface-2: #222228;
+            --border: #2a2a32;
+            --border-bright: #3a3a45;
+            --text: #e8e8ec;
+            --text-dim: #9494a0;
+            --text-faint: #6b6b78;
+            --accent: #5e8ce6;
+            --accent-bright: #7ca3f0;
+            --accent-dim: rgba(94, 140, 230, 0.12);
+            --green: #4ade80;
+            --green-dim: rgba(74, 222, 128, 0.12);
+            --amber: #fbbf24;
+            --amber-dim: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Layout --- */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* --- Header --- */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(17, 17, 19, 0.92);
+            backdrop-filter: blur(16px);
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .header-links { display: flex; gap: 1.25rem; align-items: center; }
+        .header-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .header-links a:hover { color: var(--text); }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 5rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent-bright);
+            background: var(--accent-dim);
+            border: 1px solid rgba(94, 140, 230, 0.2);
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.25rem, 5.5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.65;
+        }
+
+        /* --- Waveform visualizer --- */
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 48px;
+            margin-bottom: 2.5rem;
+        }
+
+        .waveform .bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.3); opacity: 0.4; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* --- What is this --- */
+        .what-section {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .what-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .what-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .what-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .what-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .what-card p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        /* --- Before you start --- */
+        .prereqs {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .prereq-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .prereq-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            font-size: 0.95rem;
+        }
+
+        .prereq-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--green-dim);
+            color: var(--green);
+            border-radius: 50%;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* --- Terminal section --- */
+        .terminal-intro {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .callout {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .callout p {
+            font-size: 0.92rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .callout strong { color: var(--text); }
+
+        .callout ol {
+            margin: 0.75rem 0 0 1.25rem;
+            font-size: 0.92rem;
+            color: var(--text-dim);
+        }
+
+        .callout ol li { margin-bottom: 0.35rem; }
+
+        .kbd {
+            display: inline-block;
+            background: var(--surface-2);
+            border: 1px solid var(--border-bright);
+            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* --- Steps --- */
+        .steps { padding: 2rem 0; }
+
+        .step {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .step h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-explain {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+            max-width: 620px;
+        }
+
+        .step-meta {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .step-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.82rem;
+            color: var(--text-faint);
+        }
+
+        .step-meta-item .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-green { background: var(--green); }
+        .dot-amber { background: var(--amber); }
+
+        /* Terminal block */
+        .terminal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.85rem;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dots { display: flex; gap: 6px; }
+        .terminal-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        .td-r { background: #ff5f57; }
+        .td-y { background: #febc2e; }
+        .td-g { background: #28c840; }
+
+        .terminal-title {
+            font-size: 0.75rem;
+            color: var(--text-faint);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: transparent;
+            border: 1px solid var(--border-bright);
+            color: var(--text-dim);
+            padding: 0.25rem 0.65rem;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .terminal-body {
+            padding: 1rem 1.15rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .terminal-body .prompt { color: var(--green); user-select: none; }
+        .terminal-body .cmd { color: var(--text); }
+        .terminal-body .comment { color: var(--text-faint); font-style: italic; }
+
+        /* Result box */
+        .result {
+            background: var(--green-dim);
+            border-left: 3px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1.15rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .result strong { color: var(--green); }
+        .result code {
+            background: rgba(0,0,0,0.25);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        .result ul {
+            margin: 0.5rem 0 0 1.25rem;
+            color: var(--text-dim);
+            font-size: 0.88rem;
+        }
+
+        .result li { margin-bottom: 0.2rem; }
+
+        /* Note box */
+        .note {
+            background: var(--amber-dim);
+            border-left: 3px solid var(--amber);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1.15rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        .note strong { color: var(--amber); }
+
+        /* Sub-steps */
+        .sub-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.25rem;
+        }
+
+        .or-divider {
+            text-align: center;
+            color: var(--text-faint);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+        }
+
+        /* --- Disk space table --- */
+        .space-section {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .space-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.65rem 1rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* --- FAQ --- */
+        .faq-section {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .faq-q:hover { color: var(--accent-bright); }
+
+        .faq-arrow {
+            font-size: 0.75rem;
+            color: var(--text-faint);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+        .faq-a {
+            display: none;
+            padding: 0 0 1rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.open .faq-a { display: block; }
+
+        .faq-a code {
+            background: var(--surface-2);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        /* --- Quick ref --- */
+        .quickref {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .quickref h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .quickref > p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent-bright); }
+
+        .footer-note {
+            font-size: 0.82rem;
+            color: var(--text-faint);
+        }
+
+        .footer-note a { color: var(--accent); text-decoration: none; }
+
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            .hero { padding: 3.5rem 0 2.5rem; }
+            .hero h1 { font-size: 1.85rem; }
+            .waveform { height: 36px; }
+            .what-grid { grid-template-columns: 1fr; }
+            .step h2 { font-size: 1.25rem; }
+            .terminal-body { font-size: 0.7rem; padding: 0.75rem; }
+            .header-links { gap: 0.75rem; }
+            .header-links a { font-size: 0.82rem; }
+            table { font-size: 0.82rem; }
+            th, td { padding: 0.5rem 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="logo-mark">LP</span>
+            LPX Links
+        </div>
+        <div class="header-links">
+            <a href="#guide">Guide</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://github.com/davidteren/lpx_links" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-eyebrow">v1.0.0 &middot; Free &amp; open source</div>
+
+        <div class="waveform" aria-hidden="true"></div>
+
+        <h1>Get your Logic Pro sounds<br>downloaded and installed, fast.</h1>
+
+        <p class="hero-sub">
+            Logic Pro's built-in downloader is slow and unreliable. This tool gives you
+            direct download links so you can grab all your sounds, loops, and instruments
+            at full speed.
+        </p>
+
+        <a href="#guide" style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.95rem;padding:0.7rem 1.5rem;border-radius:8px;text-decoration:none;transition:background 0.2s;">
+            Follow the guide below
+            <span style="font-size:0.85rem;">&#8595;</span>
+        </a>
+    </section>
+
+    <!-- What is this -->
+    <section class="what-section">
+        <div class="what-grid">
+            <div class="what-card">
+                <div class="what-card-icon">&#9889;</div>
+                <h3>Much faster downloads</h3>
+                <p>Download many files at once instead of one at a time. Most people see 5-10x speed improvements.</p>
+            </div>
+            <div class="what-card">
+                <div class="what-card-icon">&#128260;</div>
+                <h3>Pick up where you left off</h3>
+                <p>Internet dropped? Laptop went to sleep? Just run the command again. It won't re-download anything.</p>
+            </div>
+            <div class="what-card">
+                <div class="what-card-icon">&#127925;</div>
+                <h3>Choose what you need</h3>
+                <p>Get just the 28 essential packages, or the full 900+ item library. Start small, add more later.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before you start -->
+    <section class="prereqs">
+        <h2>Before you start</h2>
+        <ul class="prereq-list">
+            <li><span class="prereq-check">&#10003;</span> <span><strong>Logic Pro</strong> (or MainStage) is installed on your Mac</span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>You have an <strong>internet connection</strong></span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>You have <strong>free disk space</strong> &mdash; at least 10 GB for essentials, 70+ GB for everything (<a href="#space" style="color:var(--accent);">details below</a>)</span></li>
+            <li><span class="prereq-check">&#10003;</span> <span>About <strong>30 minutes</strong> for the full library (depending on your internet speed)</span></li>
+        </ul>
+    </section>
+
+    <!-- How to open Terminal -->
+    <section class="terminal-intro">
+        <h2>Never used Terminal before? No worries.</h2>
+        <div class="callout">
+            <p>
+                <strong>Terminal</strong> is a built-in app on every Mac. It lets you type commands to tell your computer what to do. You just need to paste the commands from each step below &mdash; nothing to memorise.
+            </p>
+            <ol>
+                <li>Press <span class="kbd">Cmd</span> + <span class="kbd">Space</span> to open Spotlight</li>
+                <li>Type <strong>Terminal</strong></li>
+                <li>Press <span class="kbd">Enter</span></li>
+            </ol>
+            <p style="margin-top:0.75rem;">
+                A window with a text cursor will appear. To paste a command, press <span class="kbd">Cmd</span> + <span class="kbd">V</span>, then press <span class="kbd">Enter</span> to run it.
+            </p>
+        </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="guide" class="steps">
+
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">1</span> Step one</div>
+            <h2>Generate your download links</h2>
+            <p class="step-explain">
+                This downloads a small tool, reads your Logic Pro installation to find all available content, and creates text files listing every download link.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> Takes a few seconds</span>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> Text scrolls for a few seconds, then a Finder window opens with a folder called <code>lpx_download_links</code> on your Desktop containing:
+                <ul>
+                    <li><code>mandatory_download_links.txt</code> &mdash; 28 essential packages</li>
+                    <li><code>all_download_links.txt</code> &mdash; 900+ packages (the full library)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">2</span> Step two</div>
+            <h2>Install the download tool</h2>
+            <p class="step-explain">
+                This installs <strong>aria2</strong>, a small download manager that can grab many files at once and resume if your internet drops. You only need to do this once.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> Takes under a minute</span>
+                <span class="step-meta-item"><span class="dot dot-amber"></span> One-time setup</span>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> A couple of prompts, then a green checkmark and success message. If you already have <a href="https://brew.sh" style="color:var(--accent);">Homebrew</a>, you can run <code>brew install aria2</code> instead.
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">3</span> Step three</div>
+            <h2>Download your content</h2>
+            <p class="step-explain">
+                This downloads the actual sound files from Apple's servers to a folder on your Mac. Pick the essential packages if you're short on space, or grab everything.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-amber"></span> Depends on internet speed</span>
+            </div>
+
+            <p class="sub-label">Essential packages only (28 items):</p>
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="or-divider">or</div>
+
+            <p class="sub-label">The complete library (900+ items):</p>
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_download_links.txt -d ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> Progress bars for each file. If a download gets interrupted, just run the same command again &mdash; it picks up where it left off and skips files you already have.
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+            <div class="step-label"><span class="step-num">4</span> Step four</div>
+            <h2>Install the packages</h2>
+            <p class="step-explain">
+                This takes the downloaded files and installs them into Logic Pro so your sounds, loops, and instruments are ready to use.
+            </p>
+            <div class="step-meta">
+                <span class="step-meta-item"><span class="dot dot-green"></span> A few minutes</span>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                    <span class="terminal-title">Terminal</span>
+                    <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
+                </div>
+                <div class="terminal-body">
+                    <span class="prompt">$ </span><span class="cmd">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
+                </div>
+            </div>
+
+            <div class="result">
+                <strong>What you'll see:</strong> A summary of how many packages were found, how much disk space you have, and a prompt asking whether to delete each package after it installs (saves space) or keep them.
+            </div>
+
+            <div class="note">
+                <strong>Asking for your password?</strong> The <code>sudo</code> command needs your Mac login password. When you type it, nothing will appear on screen &mdash; that's normal. Just type your password and press Enter.
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Disk space -->
+    <section id="space" class="space-section">
+        <h2>How much space do I need?</h2>
+        <p style="color:var(--text-dim);font-size:0.92rem;margin-bottom:0.5rem;">
+            If your Mac is tight on space, start with the essential packages. They include everything Logic Pro needs to work fully. You can always add more later.
+        </p>
+
+        <!-- TODO: Replace these estimates with actual measured sizes from a fresh Logic Pro install -->
+        <table>
+            <thead>
+                <tr>
+                    <th>What</th>
+                    <th>Download size (approx.)</th>
+                    <th>Installed size (approx.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Essential packages (28 items)</td>
+                    <td>~5 GB</td>
+                    <td>~5 GB</td>
+                </tr>
+                <tr>
+                    <td>Full library (900+ items)</td>
+                    <td>~70 GB</td>
+                    <td>~70 GB</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note" style="margin-top:1rem;">
+            <strong>Tip:</strong> When installing (Step 4), choose "delete after install" to avoid needing double the disk space.
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <h2>Common questions</h2>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Is this safe? What does it actually do?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Yes. The tool reads your existing Logic Pro installation to find the list of available content packages (Apple publishes this list inside the app). It then creates text files with direct download links to Apple's own servers. You're downloading official Apple content &mdash; the same files Logic Pro's built-in downloader would fetch, just faster.
+                <br><br>
+                The tool is open source (MIT license). You can <a href="https://github.com/davidteren/lpx_links" style="color:var(--accent);">read every line of code on GitHub</a>.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                My download was interrupted. Do I have to start over?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                No. Just run the same aria2 command again (Step 3). It automatically resumes where it left off and skips files you already have. That's the whole point of using aria2.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                It's asking for my password and nothing appears when I type
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                That's normal. Terminal hides your password for security &mdash; no characters, dots, or asterisks will appear. Just type your Mac login password and press Enter. If you get it wrong, it'll ask again.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                I get a "Logic Pro not found" error
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                The tool needs Logic Pro (or MainStage) to be installed first. It reads the app to find the list of available content. Make sure Logic Pro is in your Applications folder before running Step 1.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Do I need the essential packages or the full library?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                The 28 essential packages contain the core sounds Logic Pro needs to function &mdash; you'll be able to open any project and use all the built-in instruments. The full library adds hundreds of additional loops, drum kits, and instrument patches. If you're not sure, start with essentials. You can always download the rest later.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                My disk filled up during installation
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Re-download the tool (Step 1) and re-run the installer (Step 4). The latest version checks your disk space before starting and lets you choose to delete each package right after it installs, so you don't need the space for both the downloads and the installed content at the same time.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Can I use this for MainStage too?
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                Yes. The tool generates links for both Logic Pro and MainStage content automatically.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Something else went wrong
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                <a href="https://github.com/davidteren/lpx_links/issues" style="color:var(--accent);">Open an issue on GitHub</a> and we'll help you out. Include what step you were on and what error message you saw.
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick reference -->
+    <section class="quickref">
+        <h2>Quick reference</h2>
+        <p>Already know what you're doing? Here are all the commands in one place.</p>
+
+        <div class="terminal" style="margin-top:1rem;">
+            <div class="terminal-bar">
+                <div class="terminal-dots"><span class="td-r"></span><span class="td-y"></span><span class="td-g"></span></div>
+                <span class="terminal-title">All commands</span>
+                <button class="copy-btn" onclick="copyCmd(this)">Copy all</button>
+            </div>
+            <div class="terminal-body">
+                <span class="comment"># 1. Generate links</span><br>
+                <span class="prompt">$ </span><span class="cmd">cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https://github.com/davidteren/lpx_links/tarball/master | tar -xzv --strip-components 1 && ./lpx_links.rb</span><br><br>
+                <span class="comment"># 2. Install aria2 (one-time)</span><br>
+                <span class="prompt">$ </span><span class="cmd">curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/install_aria2.sh | bash</span><br><br>
+                <span class="comment"># 3. Download essential packages</span><br>
+                <span class="prompt">$ </span><span class="cmd">aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/mandatory_download_links.txt -d ~/Downloads/logic_content</span><br><br>
+                <span class="comment"># 4. Install</span><br>
+                <span class="prompt">$ </span><span class="cmd">sudo ~/Downloads/lpx_links/app/scripts/install.sh ~/Downloads/logic_content</span>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://github.com/davidteren/lpx_links">GitHub</a>
+            <a href="https://github.com/davidteren/lpx_links/issues">Help &amp; Issues</a>
+            <a href="https://github.com/davidteren/lpx_links/blob/main/docs/LICENSE">License (MIT)</a>
+        </div>
+        <p class="footer-note">
+            Built by <a href="https://github.com/davidteren">David Teren</a> &middot; Works with Logic Pro 11, Logic Pro X, and MainStage 3
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Generate waveform bars
+    (function() {
+        const waveform = document.querySelector('.waveform');
+        const barCount = 48;
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            // Create a natural waveform shape - taller in the middle, shorter at edges
+            const position = i / barCount;
+            const envelope = Math.sin(position * Math.PI);
+            const height = 8 + envelope * 36 + Math.random() * 8;
+            bar.style.height = height + 'px';
+            bar.style.animationDelay = (i * 0.04) + 's';
+            bar.style.opacity = 0.3 + envelope * 0.7;
+            waveform.appendChild(bar);
+        }
+    })();
+
+    // Copy terminal commands
+    function copyCmd(button) {
+        const terminal = button.closest('.terminal');
+        const cmds = [];
+        terminal.querySelectorAll('.cmd').forEach(function(el) {
+            cmds.push(el.textContent.trim());
+        });
+        const text = cmds.join('\n');
+        navigator.clipboard.writeText(text).then(function() {
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            setTimeout(function() {
+                button.textContent = button.closest('.terminal').querySelectorAll('.cmd').length > 1 ? 'Copy all' : 'Copy';
+                button.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
+    // FAQ accordion
+    function toggleFaq(button) {
+        const item = button.parentElement;
+        const wasOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(function(el) {
+            el.classList.remove('open');
+        });
+        // Toggle clicked
+        if (!wasOpen) item.classList.add('open');
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

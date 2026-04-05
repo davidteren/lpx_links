@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davidteren.github.io/lpx_links/sitemap.xml
