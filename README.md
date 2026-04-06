@@ -12,12 +12,16 @@ If you've ever sat waiting for the in-app downloader to crawl through hundreds o
 If you've never used Terminal and just want everything done for you:
 
 1. **[Download LPX-Links-Setup.command](https://github.com/davidteren/lpx_links/releases/latest/download/LPX-Links-Setup.command)**
-2. **Double-click** the downloaded file
+2. **Open it** — macOS will block it the first time (see below), so:
+   - Find the file in your **Downloads** folder
+   - **Right-click** (or Control-click) the file
+   - Click **Open** from the menu
+   - In the warning dialog, click **Open** again
 3. Follow the dialog boxes — pick your app, pick essential or full library, and wait
 
 That's it. The tool detects your installed apps, downloads the content, and installs it. No Terminal knowledge needed.
 
-> **First time?** macOS may say the file is from an unidentified developer. Right-click the file and choose **Open** instead of double-clicking, then click **Open** in the dialog.
+> **Why the warning?** macOS blocks files downloaded from the internet that aren't from the App Store. This is normal for open-source tools. You only need to do the right-click → Open step once — after that, double-clicking works normally.
 
 ---
 
