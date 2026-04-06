@@ -11,7 +11,6 @@ The audience is **musicians and producers**, many of whom have never used Termin
 ## Structure
 
 ```
-LPX-Links-Setup.command      # One-click setup — double-click to run, GUI dialogs, no Terminal knowledge needed
 lpx_links.rb                 # CLI entry point — arg parsing, orchestration, output
 lib/file_helpers.rb           # App discovery, path resolution, URL helpers
 scripts/install.sh            # Bulk .pkg installer with disk space check
