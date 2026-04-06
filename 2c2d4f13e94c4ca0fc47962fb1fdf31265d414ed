@@ -1,0 +1,29 @@
+LPX-Links-Setup.command
+  bfa208fd12021678 1-277
+README.md
+  bfa208fd12021678 10,12,14-28,34,44,61,75,95
+gh-pages/index.html
+  bfa208fd12021678 672-683
+AGENTS.md
+  bfa208fd12021678 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "2c2d4f13e94c4ca0fc47962fb1fdf31265d414ed",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 313,
+      "total_deletions": 11,
+      "accepted_lines": 313,
+      "overriden_lines": 0
+    }
+  }
+}
