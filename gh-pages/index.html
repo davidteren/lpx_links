@@ -679,7 +679,7 @@
             </a>
         </div>
         <p style="margin-top:1rem;font-size:0.82rem;color:var(--text-faint);">
-            Download the file, then <strong>right-click &rarr; Open</strong> it (macOS blocks downloaded files the first time).<br>
+            Download the file, then allow it in <strong>System Settings &rarr; Privacy &amp; Security</strong> (see <a href="#faq" style="color:var(--accent);">FAQ</a> below).<br>
             Follow the dialog boxes. No Terminal knowledge needed.
         </p>
     </section>
@@ -928,7 +928,14 @@
                 <span class="faq-arrow">&#9660;</span>
             </button>
             <div class="faq-a">
-                This is normal for any file downloaded from the internet that isn't from the Mac App Store. To open it: find the file in your Downloads folder, <strong>right-click</strong> (or Control-click) it, choose <strong>Open</strong>, then click <strong>Open</strong> again in the warning dialog. You only need to do this once &mdash; after that, double-clicking works normally.
+                This is normal for any file downloaded from the internet that isn't from the Mac App Store. To allow it:
+                <ol style="margin:0.75rem 0 0.75rem 1.25rem;">
+                    <li>Open <strong>System Settings</strong> &rarr; <strong>Privacy &amp; Security</strong></li>
+                    <li>Scroll down &mdash; you'll see a message about the file being blocked</li>
+                    <li>Click <strong>Open Anyway</strong>, then click <strong>Open</strong> in the confirmation</li>
+                </ol>
+                You only need to do this once. If you're comfortable with Terminal, you can also paste this command instead:<br>
+                <code>xattr -d com.apple.quarantine ~/Downloads/LPX-Links-Setup.command</code>
             </div>
         </div>
 
