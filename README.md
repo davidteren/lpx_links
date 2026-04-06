@@ -7,39 +7,13 @@
 
 If you've ever sat waiting for the in-app downloader to crawl through hundreds of packages (or watched it fail halfway through), this tool is for you. It gives you direct download links so you can grab everything at full speed.
 
-## Easiest way: one-click setup
-
-If you've never used Terminal and just want everything done for you:
-
-1. **[Download LPX-Links-Setup.command](https://github.com/davidteren/lpx_links/releases/latest/download/LPX-Links-Setup.command)**
-2. **Allow it to run** — macOS blocks downloaded files by default. To allow it:
-   - Open **System Settings** → **Privacy & Security**
-   - Scroll down — you'll see a message about "LPX-Links-Setup.command" being blocked
-   - Click **Open Anyway**, then click **Open** in the confirmation dialog
-3. Follow the dialog boxes — pick your app, pick essential or full library, and wait
-
-That's it. The tool detects your installed apps, downloads the content, and installs it. No Terminal knowledge needed.
-
-> **Why the warning?** macOS blocks files downloaded from the internet that aren't from the App Store. This is normal for open-source tools. You only need to allow it once.
->
-> **Alternative:** If you're comfortable with Terminal, you can skip the System Settings step by pasting this one line before double-clicking the file:
-> ```
-> xattr -d com.apple.quarantine ~/Downloads/LPX-Links-Setup.command
-> ```
-
----
-
-## Manual setup (step by step)
-
-If you prefer to run things yourself, or the one-click setup doesn't work for your situation, follow the steps below.
-
-### What you'll need
+## What you'll need
 
 - **Logic Pro**, **MainStage**, or **GarageBand** installed on your Mac
 - **An internet connection** (the downloads are large)
 - **Free disk space** — see [How much space do I need?](#how-much-space-do-i-need) below
 
-### How to open Terminal
+## How to open Terminal
 
 Every step below happens in **Terminal**, a built-in app on your Mac. If you've never used it:
 
@@ -49,7 +23,7 @@ Every step below happens in **Terminal**, a built-in app on your Mac. If you've 
 
 A window will appear with a text cursor — that's where you'll paste the commands from each step. To paste, press **Cmd + V**.
 
-### Step 1: Generate your download links
+## Step 1: Generate your download links
 
 **What this does:** Downloads a small tool to your Mac, reads your app installation to find all available content, and creates text files listing every download link. By default it generates links for Logic Pro. For MainStage or GarageBand, see the [quick reference](#quick-reference-for-experienced-users) below.
 
@@ -66,7 +40,7 @@ cd ~/Downloads && mkdir -p lpx_links/app && cd lpx_links/app && curl -#L https:/
 - **`mandatory_download_links.txt`** — the essential packages your app needs to function (28-38 depending on the app)
 - **`all_download_links.txt`** — the complete content library (707-917 packages depending on the app)
 
-### Step 2: Install the download tool (aria2)
+## Step 2: Install the download tool (aria2)
 
 **What this does:** Installs a small download manager called aria2 that can download many files at once, resume if your internet drops, and skip files you already have. You only need to do this once.
 
@@ -80,7 +54,7 @@ curl -fsSL https://raw.githubusercontent.com/davidteren/lpx_links/main/scripts/i
 
 > If you already have [Homebrew](https://brew.sh) installed, you can also run `brew install aria2` instead.
 
-### Step 3: Download your content
+## Step 3: Download your content
 
 **What this does:** Downloads the actual sound files from Apple's servers to a folder on your Mac.
 
@@ -100,7 +74,7 @@ aria2c -c --auto-file-renaming=false -i ~/Desktop/lpx_download_links/all_downloa
 
 > **Tip:** If a download gets interrupted (laptop goes to sleep, internet drops), just run the same command again. It won't re-download files you already have.
 
-### Step 4: Install the packages
+## Step 4: Install the packages
 
 **What this does:** Takes all the downloaded files and installs them into Logic Pro so your sounds, loops, and instruments are ready to use.
 
