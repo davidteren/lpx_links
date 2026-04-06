@@ -669,10 +669,19 @@
             your sounds, loops, and instruments at full speed.
         </p>
 
-        <a href="#guide" style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.95rem;padding:0.7rem 1.5rem;border-radius:8px;text-decoration:none;transition:background 0.2s;">
-            Follow the guide below
-            <span style="font-size:0.85rem;">&#8595;</span>
-        </a>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+            <a href="https://github.com/davidteren/lpx_links/releases/latest/download/LPX-Links-Setup.command" style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.95rem;padding:0.7rem 1.5rem;border-radius:8px;text-decoration:none;transition:background 0.2s;">
+                Download one-click setup
+            </a>
+            <a href="#guide" style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--surface-2);color:var(--text);font-weight:600;font-size:0.95rem;padding:0.7rem 1.5rem;border-radius:8px;text-decoration:none;border:1px solid var(--border-bright);transition:background 0.2s;">
+                Manual setup guide
+                <span style="font-size:0.85rem;">&#8595;</span>
+            </a>
+        </div>
+        <p style="margin-top:1rem;font-size:0.82rem;color:var(--text-faint);">
+            Download the file, then <strong>right-click &rarr; Open</strong> it (macOS blocks downloaded files the first time).<br>
+            Follow the dialog boxes. No Terminal knowledge needed.
+        </p>
     </section>
 
     <!-- What is this -->
@@ -912,6 +921,16 @@
     <!-- FAQ -->
     <section id="faq" class="faq-section">
         <h2>Common questions</h2>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                macOS says it can't verify the file / "unidentified developer"
+                <span class="faq-arrow">&#9660;</span>
+            </button>
+            <div class="faq-a">
+                This is normal for any file downloaded from the internet that isn't from the Mac App Store. To open it: find the file in your Downloads folder, <strong>right-click</strong> (or Control-click) it, choose <strong>Open</strong>, then click <strong>Open</strong> again in the warning dialog. You only need to do this once &mdash; after that, double-clicking works normally.
+            </div>
+        </div>
 
         <div class="faq-item">
             <button class="faq-q" onclick="toggleFaq(this)">
