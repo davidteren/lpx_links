@@ -1,0 +1,25 @@
+README.md
+  bfa208fd12021678 15-18,23-28
+gh-pages/index.html
+  bfa208fd12021678 682,931-938
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "45894cf5fc3f2b4944bef0def3f9385084f2077f",
+  "prompts": {
+    "bfa208fd12021678": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9be99704-df62-4644-988d-0345408f4e67",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "davidteren",
+      "messages": [],
+      "total_additions": 19,
+      "total_deletions": 8,
+      "accepted_lines": 19,
+      "overriden_lines": 0
+    }
+  }
+}
