@@ -11,7 +11,7 @@ If you've ever sat waiting for the in-app downloader to crawl through hundreds o
 
 If you've never used Terminal and just want everything done for you:
 
-1. **[Download LPX-Links-Setup.command](https://raw.githubusercontent.com/davidteren/lpx_links/main/LPX-Links-Setup.command)** (right-click → "Save Link As")
+1. **[Download LPX-Links-Setup.command](https://github.com/davidteren/lpx_links/releases/latest/download/LPX-Links-Setup.command)**
 2. **Double-click** the downloaded file
 3. Follow the dialog boxes — pick your app, pick essential or full library, and wait
 
