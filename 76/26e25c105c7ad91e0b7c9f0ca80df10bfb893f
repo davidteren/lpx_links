@@ -1,0 +1,19 @@
+.github/workflows/ruby-ci.yml
+  s_3ed27381445ff6::t_7bcbb5cd84b35c 56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "7626e25c105c7ad91e0b7c9f0ca80df10bfb893f",
+  "prompts": {},
+  "sessions": {
+    "s_3ed27381445ff6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "055f6051-251a-4647-abcc-9efedc8c192e",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "davidteren <drteren@gmail.com>"
+    }
+  }
+}
