@@ -1,0 +1,22 @@
+.github/workflows/ruby-ci.yml
+  s_3ed27381445ff6::t_bca9680ce6ae51 13,41,75
+.github/workflows/traffic-logger.yml
+  s_3ed27381445ff6::t_3b25f8aa0e3cf8 16
+  s_3ed27381445ff6::t_f9ed02b085cebd 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "89b0071e827106e7e21f26ee081a751fc7e0ade5",
+  "prompts": {},
+  "sessions": {
+    "s_3ed27381445ff6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "055f6051-251a-4647-abcc-9efedc8c192e",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "davidteren <drteren@gmail.com>"
+    }
+  }
+}
